@@ -127,8 +127,8 @@ runs:
         #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
         
         cd ${{ inputs.action_path }}/numberGenerator && python npreader.py -h && python map.py -h
-        #python map.py --dir ./hex --start 0 --finish 1000000000000000000000
-        #exit 1
+        cd python && python phex.py output.txt && cat results/output.txt
+        exit 1
 
     - name: 🚀 Initiate Lexer
       uses: devcontainers/ci@v0.3
