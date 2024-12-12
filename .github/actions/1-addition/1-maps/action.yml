@@ -126,8 +126,15 @@ runs:
         #iree-compile --iree-llvmcpu-list-targets && iree-run-module --list_drivers
         #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
         
-        #cd ${{ inputs.action_path }}/numberGenerator && python npreader.py -h && python map.py -h
-        cd ${{ inputs.action_path }}/numberGenerator/python && python phex.py output.txt && cat results/output.txt
+        cd ${{ inputs.action_path }}
+        javac Main.java && ./app.py Main.class
+
+        cd numberGenerator
+        python npreader.py -h && python map.py -h
+
+        cd python
+        python phex.py output.txt && cat results/output.txt
+
         exit 1
 
     - name: 🚀 Initiate Lexer
