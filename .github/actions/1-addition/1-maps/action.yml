@@ -127,7 +127,7 @@ runs:
         #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
         
         cd ${{ inputs.action_path }}
-        javac Main.java && ./app.py Main.class
+        javac Main.java && python app.py Main.class
 
         cd numberGenerator
         python npreader.py -h && python map.py -h
