@@ -116,24 +116,26 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        python -m pip -q install --upgrade pip setuptools six wheel
+        cd ${{ inputs.action_path }}
+
+        python -m pip -q install --upgrade pip
+        python -m pip -q install -r requirements.txt
         
         #Ref: https://github.com/iree-org/iree-experimental/tree/main
-        python -m pip -q install -r ${{ inputs.action_path }}/requirements.txt
         #python -m pip -q install -e ${{ github.workspace }}/.github/entrypoint/artifact/python
 
         #python ${{ inputs.action_path }}/pythonCode/testIREE.py
         #iree-compile --iree-llvmcpu-list-targets && iree-run-module --list_drivers
         #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
         
-        cd ${{ inputs.action_path }}
+        #Ref: https://github.com/tsoding/JelloVM
         javac Main.java && python app.py Main.class
 
-        cd numberGenerator
-        python npreader.py -h && python map.py -h
-
-        cd python
-        python phex.py output.txt && cat results/output.txt
+        #Ref: https://github.com/eq19/maps/tree/v3/numberGenerator
+        cd numberGenerator && python npreader.py -h && python map.py -h
+     
+        #Ref: https://github.com/eq19/maps/tree/v3/numberGenerator/python
+        cd python && python phex.py output.txt && cat results/output.txt
 
         exit 1
 
