@@ -133,7 +133,7 @@ runs:
         #cd ${{ inputs.action_path }}/numberGenerator && python npreader.py -h && python map.py -h
      
         #Ref: https://github.com/eq19/maps/tree/v3/numberGenerator/python
-        cd ${{ inputs.action_path }}/numberGenerator/python && python phex.py output.txt && cat results/output.txt
+        cd ${{ inputs.action_path }}/numberGenerator/python && python maps.py output.txt && cat results/output.txt
 
         #exit 1
 
