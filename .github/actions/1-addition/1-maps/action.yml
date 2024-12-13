@@ -135,7 +135,7 @@ runs:
         #Ref: https://github.com/eq19/maps/tree/v3/numberGenerator/python
         cd ${{ inputs.action_path }}/numberGenerator/python && python maps.py output.txt && cat results/output.txt
 
-        #exit 1
+        exit 1
 
     - name: 🚀 Initiate Lexer
       uses: devcontainers/ci@v0.3
