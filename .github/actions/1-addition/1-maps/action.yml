@@ -126,7 +126,7 @@ runs:
         #python ${{ inputs.action_path }}/pythonCode/testIREE.py
         
         #Ref: https://github.com/tsoding/JelloVM
-        cd ${{ inputs.action_path }} && javac javaCode/Main.java && python app.py javaCode/Main.class
+        cd ${{ inputs.action_path }} && javac javaCode/Main.java && python app.py output.txt
 
         #Ref: https://github.com/eq19/maps/tree/v3/pythonCode
         #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
