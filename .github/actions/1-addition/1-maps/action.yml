@@ -132,7 +132,7 @@ runs:
         #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
 
         #cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
-        cd ${{ inputs.action_path }}/pythonCode && python maps.py output.txt && cat results/output.txt
+        #cd ${{ inputs.action_path }}/pythonCode && python maps.py output.txt && cat results/output.txt
 
         exit 1
 
