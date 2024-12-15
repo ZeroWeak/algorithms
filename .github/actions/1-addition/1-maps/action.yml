@@ -126,15 +126,14 @@ runs:
         #python ${{ inputs.action_path }}/pythonCode/testIREE.py
         
         #Ref: https://github.com/tsoding/JelloVM
-        cd ${{ inputs.action_path }} && javac javaCode/Main.java && python app.py output.txt
+        cd ${{ inputs.action_path }} && javac javaCode/Main.java
+        python app.py output.txt && cat dataFile/results/output.txt
 
         #Ref: https://github.com/eq19/maps/tree/v3/pythonCode
         #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
-
         #cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
-        #cd ${{ inputs.action_path }}/pythonCode && python maps.py output.txt && cat results/output.txt
 
-        exit 1
+        #exit 1
 
     - name: 🚀 Initiate Lexer
       uses: devcontainers/ci@v0.3
