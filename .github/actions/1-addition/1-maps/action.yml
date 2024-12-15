@@ -117,23 +117,22 @@ runs:
       shell: bash
       run: |
         python -m pip -q install --upgrade pip
-        python -m pip -q install -r ${{ inputs.action_path }}/requirements.txt
+        python -m pip -q install -r ${{ inputs.action_path }}/dataFile/requirements.txt
         
         #python -m pip -q install -e ./.github/entrypoint/artifact/python
         #iree-compile --iree-llvmcpu-list-targets && iree-run-module --list_drivers
 
         #Ref: https://github.com/iree-org/iree-experimental
         #python ${{ inputs.action_path }}/pythonCode/testIREE.py
-        #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
         
         #Ref: https://github.com/tsoding/JelloVM
         cd ${{ inputs.action_path }} && javac javaCode/Main.java && python app.py javaCode/Main.class
 
-        #Ref: https://github.com/eq19/maps/tree/v3/numberGenerator
-        #cd ${{ inputs.action_path }}/numberGenerator && python npreader.py -h && python map.py -h
-     
-        #Ref: https://github.com/eq19/maps/tree/v3/numberGenerator/python
-        cd ${{ inputs.action_path }}/numberGenerator/python && python maps.py output.txt && cat results/output.txt
+        #Ref: https://github.com/eq19/maps/tree/v3/pythonCode
+        #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
+
+        #cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
+        cd ${{ inputs.action_path }}/pythonCode && python maps.py output.txt && cat results/output.txt
 
         exit 1
 
