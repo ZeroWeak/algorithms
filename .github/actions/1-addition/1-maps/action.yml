@@ -84,7 +84,6 @@ runs:
       run: |
         HEADER="Accept: application/vnd.github+json"
         /home/runner/work/_actions/eq19/eq19/v1/.github/entrypoint/init.sh
-        php /home/runner/work/_actions/eq19/eq19/v1/.github/entrypoint/test.php
 
         #See: https://docs.github.com/en/rest/actions/self-hosted-runners
         TOTAL_COUNT=$(gh api -H "${HEADER}" /repos/${{ github.repository }}/actions/runners --jq '.total_count')
@@ -119,7 +118,8 @@ runs:
       run: |
         python -m pip -q install --upgrade pip
         python -m pip -q install -r ${{ inputs.action_path }}/dataFile/requirements.txt
-        
+        python /home/runner/work/_actions/eq19/eq19/v1/.github/entrypoint/ccxt.py
+  
         #python -m pip -q install -e ./.github/entrypoint/artifact/python
         #iree-compile --iree-llvmcpu-list-targets && iree-run-module --list_drivers
 
