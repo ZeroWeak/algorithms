@@ -1,7 +1,7 @@
 <?php
-    $url = $ACCESS_URL;
-    $key = $ACCESS_API;
-    $secretKey = $ACCESS_KEY;
+    $url = getenv('ACCESS_URL');
+    $key = getenv('ACCESS_API');
+    $secretKey = getenv('ACCESS_KEY');
     
 	$data = [
         'method' => 'transHistory',
