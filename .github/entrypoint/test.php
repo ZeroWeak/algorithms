@@ -1,9 +1,7 @@
 <?php
-    $url = 'https://indodax.com/tapi';
-    // Please find Key from trade API Indodax exchange
-    $key = '${{ secrets.ACCESS_API}}';
-    // Please find Secret Key from trade API Indodax exchange
-    $secretKey = '{{ secrets.ACCESS_KEY }}';
+    $url = '${ACCESS_URL}';
+    $key = '${ACCESS_API}';
+    $secretKey = '{ACCESS_KEY}';
     
 	$data = [
 	        'method' => 'getInfo',
