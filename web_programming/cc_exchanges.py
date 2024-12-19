@@ -6,7 +6,7 @@ import ccxt
 print(ccxt.exchanges)
 bitmex   = ccxt.bitmex()
 huobipro = ccxt.huobi()
-exmo     = ccxt.indodax({
+indodax   = ccxt.indodax({
     'apiKey': os.environ['ACCESS_API'],
     'secret': os.environ['ACCESS_KEY'],
 })
@@ -22,7 +22,7 @@ exmo     = ccxt.indodax({
     #'secret': 'YOUR_SECRET',
 #})
 
-#hitbtc   = ccxt.hitbtc({'verbose': True})
+#hitbtc = ccxt.hitbtc({'verbose': True})
 #hitbtc_markets = hitbtc.load_markets()
 
 #print(hitbtc.id, hitbtc_markets)
@@ -33,7 +33,7 @@ exmo     = ccxt.indodax({
 #print(bitmex.fetch_ticker('BTC/USD'))
 #print(huobipro.fetch_trades('LTC/USDT'))
 
-print(exmo.fetch_balance())
+#print(indodax.fetch_balance())
 
 # sell one ฿ for market price and receive $ right now
 #print(exmo.id, exmo.create_market_sell_order('BTC/USD', 1))
