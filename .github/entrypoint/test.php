@@ -4,9 +4,7 @@
     $secretKey = getenv('ACCESS_KEY');
     
 	$data = [
-        'method' => 'transHistory',
-        'timestamp' => '1578304294000',
-        'recvWindow' => '1578303937000'
+        'method' => 'transHistory'
     ];
 	$post_data = http_build_query($data, '', '&');
     $sign = hash_hmac('sha512', $post_data, $secretKey);
