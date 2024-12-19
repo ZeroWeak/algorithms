@@ -6,7 +6,7 @@ import ccxt
 print(ccxt.exchanges)
 #hitbtc   = ccxt.hitbtc({'verbose': True})
 bitmex   = ccxt.bitmex()
-huobipro = ccxt.huobipro()
+huobipro = ccxt.huobipjp()
 exmo     = ccxt.indodax({
     'apiKey': os.environ['ACCESS_API'],
     'secret': os.environ['ACCESS_KEY'],
