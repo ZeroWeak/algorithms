@@ -1,5 +1,5 @@
 <?php
-    $url = getenv('ACCESS_URL');
+    $url = getenv('ACCESS_URL'); echo $url;
     $key = getenv('ACCESS_API');
     $secretKey = getenv('ACCESS_KEY');
     
