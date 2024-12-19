@@ -122,7 +122,7 @@ runs:
         password: GrandMaster
         database: jedi_order
         port: 34837
-        postgres-version: ${{ matrix.postgres-version }}
+        postgres-version: "17"
         ssl: true
 
     - name: 🪂 Test postgres
