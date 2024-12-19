@@ -4,7 +4,6 @@ import os
 import ccxt
 
 print(ccxt.exchanges)
-hitbtc   = ccxt.hitbtc({'verbose': True})
 bitmex   = ccxt.bitmex()
 huobipro = ccxt.huobi()
 exmo     = ccxt.indodax({
@@ -23,15 +22,16 @@ exmo     = ccxt.indodax({
     #'secret': 'YOUR_SECRET',
 #})
 
-hitbtc_markets = hitbtc.load_markets()
+#hitbtc   = ccxt.hitbtc({'verbose': True})
+#hitbtc_markets = hitbtc.load_markets()
 
-print(hitbtc.id, hitbtc_markets)
-print(bitmex.id, bitmex.load_markets())
-print(huobipro.id, huobipro.load_markets())
+#print(hitbtc.id, hitbtc_markets)
+#print(bitmex.id, bitmex.load_markets())
+#print(huobipro.id, huobipro.load_markets())
 
-print(hitbtc.fetch_order_book(hitbtc.symbols[0]))
-print(bitmex.fetch_ticker('BTC/USD'))
-print(huobipro.fetch_trades('LTC/USDT'))
+#print(hitbtc.fetch_order_book(hitbtc.symbols[0]))
+#print(bitmex.fetch_ticker('BTC/USD'))
+#print(huobipro.fetch_trades('LTC/USDT'))
 
 print(exmo.fetch_balance())
 
