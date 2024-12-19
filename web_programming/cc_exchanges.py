@@ -4,7 +4,7 @@ import os
 import ccxt
 
 print(ccxt.exchanges)
-#hitbtc   = ccxt.hitbtc({'verbose': True})
+hitbtc   = ccxt.hitbtc({'verbose': True})
 bitmex   = ccxt.bitmex()
 huobipro = ccxt.huobipjp()
 exmo     = ccxt.indodax({
