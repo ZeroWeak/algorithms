@@ -3,7 +3,8 @@
 import os
 import ccxt
 
-hitbtc   = ccxt.hitbtc({'verbose': True})
+print(ccxt.exchanges)
+#hitbtc   = ccxt.hitbtc({'verbose': True})
 bitmex   = ccxt.bitmex()
 huobipro = ccxt.huobipro()
 exmo     = ccxt.indodax({
