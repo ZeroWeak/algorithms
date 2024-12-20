@@ -105,6 +105,7 @@ if __name__ == "__main__":
 
     # Filter and display cryptocurrencies predicted to increase in price
     increasing_cryptos = [(symbol, round(change, 2)) for symbol, change in predictions if change > 0]
+    increasing_cryptos.sort(key=lambda x: x[1], reverse=True)
     print("Cryptocurrencies predicted to increase in price within the next hour:")
     for symbol, change in increasing_cryptos:
         print(f"{symbol}: {change}%")
