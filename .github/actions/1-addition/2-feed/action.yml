@@ -122,7 +122,7 @@ runs:
         password: GrandMaster
         database: jedi_order
         port: 34837
-        postgres-version: "16"
+        postgres-version: "17"
         ssl: true
 
     - name: 🪂 Test postgres
@@ -132,7 +132,7 @@ runs:
         CERTIFICATE_PATH: ${{ steps.postgres.outputs.certificate-path }}
         EXPECTED_CONNECTION_URI: postgresql://yoda:GrandMaster@localhost:34837/jedi_order?sslmode=verify-ca&sslrootcert=${{ steps.postgres.outputs.certificate-path }}
         EXPECTED_SERVICE_NAME: yoda
-        EXPECTED_SERVER_VERSION: ${{ matrix.postgres-version }}
+        EXPECTED_SERVER_VERSION: 17
         EXPECTED_SSL: true
       shell: bash
       run: |
