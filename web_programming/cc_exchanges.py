@@ -96,7 +96,7 @@ if __name__ == "__main__":
             sample = torch.tensor(sample, dtype=torch.float32).unsqueeze(0)
             predicted_price = model(sample).item()
             current_price = ohlc_data.iloc[-1]['close']
-            percent_change = ((predicted_price - current_price) / current_price) * 100
+            percent_change = ((predicted_price - current_price) / current_price)
             predictions.append((pair, round(percent_change, 2)))
 
     # Filter and sort results
