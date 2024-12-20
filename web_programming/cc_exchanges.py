@@ -11,6 +11,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 from datetime import datetime, timedelta
 
+
 #print(ccxt.exchanges)
 #indodax   = ccxt.indodax({
     #'apiKey': os.environ['ACCESS_API'],
@@ -55,8 +56,8 @@ class LSTMModel(nn.Module):
         self.fc = nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
-        h_0 = torch.zeros(1, x.size(0), 50)  # Initial hidden state
-        c_0 = torch.zeros(1, x.size(0), 50)  # Initial cell state
+        h_0 = torch.zeros(1, x.size(0), hidden_size)  # Initial hidden state
+        c_0 = torch.zeros(1, x.size(0), hidden_size)  # Initial cell state
         output, _ = self.lstm(x, (h_0, c_0))
         output = self.fc(output[:, -1, :])
         return output
@@ -66,11 +67,13 @@ if __name__ == "__main__":
     # Fetch data
     tickers = fetch_cryptocurrency_data()
     data = []
+    symbols = []
     for symbol, ticker in tickers.items():
         if 'c' in ticker:
             price = float(ticker['c'][0])  # Last trade price
             volume = float(ticker['v'][0])  # 24h volume
             data.append([price, volume, price])  # Assuming price as target for simplicity
+            symbols.append(symbol)
     
     # Convert to numpy array
     data = np.array(data)
@@ -88,7 +91,7 @@ if __name__ == "__main__":
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-    # Train the model
+    # Train the model (for simplicity, using the mock dataset)
     epochs = 10
     for epoch in range(epochs):
         for x, y in dataloader:
@@ -99,9 +102,21 @@ if __name__ == "__main__":
             optimizer.step()
         print(f"Epoch {epoch+1}/{epochs}, Loss: {loss.item()}")
 
-    # Example Prediction
+    # Predict price change for each cryptocurrency
+    predictions = []
     with torch.no_grad():
-        sample = data[-60:, :-1]  # Use the last 60 data points
-        sample = torch.tensor(sample, dtype=torch.float32).unsqueeze(0)
-        prediction = model(sample)
-        print(f"Predicted Price Change: {prediction.item()}")
+        for i, symbol in enumerate(symbols):
+            sample = data[i:i + 60, :-1]  # Last 60 data points
+            if len(sample) < 60:
+                continue  # Skip incomplete windows
+            sample = torch.tensor(sample, dtype=torch.float32).unsqueeze(0)
+            predicted_price = model(sample).item()
+            current_price = data[i + 59, 0]
+            percent_change = ((predicted_price - current_price) / current_price) * 100
+            predictions.append((symbol, percent_change))
+
+    # Filter and display cryptocurrencies predicted to increase in price
+    increasing_cryptos = [(symbol, round(change, 2)) for symbol, change in predictions if change > 0]
+    print("Cryptocurrencies predicted to increase in price within the next hour:")
+    for symbol, change in increasing_cryptos:
+        print(f"{symbol}: {change}%")
