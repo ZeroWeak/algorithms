@@ -118,7 +118,6 @@ runs:
       run: |
         python -m pip -q install --upgrade pip
         python -m pip -q install -r ${{ inputs.action_path }}/dataFile/requirements.txt
-        python ./web_programming/cc_exchanges.py
   
         #python -m pip -q install -e ./.github/entrypoint/artifact/python
         #iree-compile --iree-llvmcpu-list-targets && iree-run-module --list_drivers
