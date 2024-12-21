@@ -146,7 +146,7 @@ runs:
         imageName: ${{ inputs.image_name }}
         imageTag: target-${{ github.run_number }}
         configFile: ${{ inputs.action_path }}/.devcontainer.json
-        runCmd: freqtrade trade --config /user_data/config.json
+        runCmd: freqtrade show-config --config /user_data/config.json
 
     - name: 💎 Variables
       id: variables
