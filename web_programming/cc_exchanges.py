@@ -21,7 +21,25 @@ def fetch_cryptocurrency_data():
         response = requests.get(ticker_url)
         if response.status_code == 200:
             tickers[pair] = response.json().get('result', {}).get(pair, {})
-    return tickers
+    
+    # Get top 10 pairs based on transaction volume in the last 60 minutes
+    volumes = []
+    for pair, data in tickers.items():
+        if 'v' in data:
+            volume = float(data['v'][1])  # Transaction volume in the last 24 hours
+            volumes.append((pair, volume))
+    volumes.sort(key=lambda x: x[1], reverse=True)
+    top_10_pairs = volumes[:10]
+    
+    # Fetch ticker data for top 10 pairs in the last 60 minutes
+    top_10_tickers = {}
+    for pair, _ in top_10_pairs:
+        ticker_url = f"https://api.kraken.com/0/public/Ticker?pair={pair}"
+        response = requests.get(ticker_url)
+        if response.status_code == 200:
+            top_10_tickers[pair] = response.json().get('result', {}).get(pair, {})
+    
+    return top_10_tickers
 
 # Step 2: Prepare Dataset
 class CryptoDataset(Dataset):
