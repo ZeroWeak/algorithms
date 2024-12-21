@@ -46,8 +46,8 @@ class LSTMModel(nn.Module):
         self.fc = nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
-        h_0 = torch.zeros(1, x.size(0), hidden_size)  # Initial hidden state
-        c_0 = torch.zeros(1, x.size(0), hidden_size)  # Initial cell state
+        h_0 = torch.zeros(self.lstm.num_layers, x.size(0), self.lstm.hidden_size)  # Initial hidden state
+        c_0 = torch.zeros(self.lstm.num_layers, x.size(0), self.lstm.hidden_size)  # Initial cell state
         output, _ = self.lstm(x, (h_0, c_0))
         output = self.dropout(output)
         output = self.fc(output[:, -1, :])
@@ -68,6 +68,9 @@ if __name__ == "__main__":
     
     # Convert to numpy array
     data = np.array(data)
+    
+    # Handle missing or NaN values
+    data = np.nan_to_num(data)
     
     # Normalize the data
     scaler = MinMaxScaler()
