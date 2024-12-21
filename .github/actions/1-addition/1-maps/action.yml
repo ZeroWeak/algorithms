@@ -133,17 +133,20 @@ runs:
         #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
         #cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
 
-        #exit 1
+        cd ${{ inputs.action_path }}/dataFile/user_data
+        sed -i "s|{{ repository }}|${{ github.repository }}|g" config.json
+        sed -i "s|{{ branch }}|${{ github.ref_name }}|g" config.json
+        sed -i "s|{{ commit }}|${{ github.sha }}|g" config.json
 
     - name: 🚀 Initiate Lexer
       uses: devcontainers/ci@v0.3
       with:
         push: always
-        runCmd: ls -alR /user_data
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
         imageTag: target-${{ github.run_number }}
         configFile: ${{ inputs.action_path }}/.devcontainer.json
+        runCmd: freqtrade new-config --config /user_data/config.json
 
     - name: 💎 Variables
       id: variables
