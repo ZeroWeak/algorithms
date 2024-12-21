@@ -22,18 +22,18 @@ def fetch_cryptocurrency_data():
         if response.status_code == 200:
             tickers[pair] = response.json().get('result', {}).get(pair, {})
     
-    # Get top 10 pairs based on transaction volume in the last 60 minutes
+    # Get top 100 pairs based on transaction volume in the last 60 minutes
     volumes = []
     for pair, data in tickers.items():
         if 'v' in data:
             volume = float(data['v'][1])  # Transaction volume in the last 24 hours
             volumes.append((pair, volume))
     volumes.sort(key=lambda x: x[1], reverse=True)
-    top_10_pairs = volumes[:10]
+    top_100_pairs = volumes[:100]
     
-    # Fetch ticker data for top 10 pairs in the last 60 minutes
-    top_10_tickers = {}
-    for pair, _ in top_10_pairs:
+    # Fetch ticker data for top 100 pairs in the last 60 minutes
+    top_100_tickers = {}
+    for pair, _ in top_100_pairs:
         ticker_url = f"https://api.kraken.com/0/public/Ticker?pair={pair}"
         response = requests.get(ticker_url)
         if response.status_code == 200:
@@ -97,7 +97,10 @@ if __name__ == "__main__":
     
     # Create dataset and dataloader
     dataset = CryptoDataset(data, window_size=60)
-    dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+    if len(dataset) > 0:
+        dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+    else:
+        print("Data set is too small for the given window size.")
 
     # Initialize model, loss, and optimizer
     input_size = 2
