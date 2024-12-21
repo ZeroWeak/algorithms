@@ -82,7 +82,7 @@ runs:
         BASE: "https://github.com/eq19/eq19.github.io.wiki.git"
         WIKI: "https://github.com/${{ env.TARGET_REPOSITORY }}.wiki.git"
       run: |
-        if [ -d /mnt/disks/platform/usr/local/sbin ]; then
+        if [ -d /mnt/disks/deeplearning/usr/local/sbin ]; then
           export PAULI_SUM=$(echo -n "${{ inputs.pauli_sum }}" | base64 --decode);
           export PATH=/home/runner/_work/_actions/eq19/eq19/v1/.github/entrypoint:$PATH && init.sh
         else

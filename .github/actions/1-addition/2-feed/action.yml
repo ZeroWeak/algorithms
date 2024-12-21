@@ -145,9 +145,9 @@ runs:
         #pip install -r requirements.txt && cd python_packages/iree_cpu_plugin/build/cmake && ninja
         #JAX_PLATFORMS=iree-cpu pytest -n4 --max-worker-restart=9999 -p openxla_pjrt_artifacts --openxla-pjrt-artifact-dir=/tmp/foobar test/test_simple.py
 
-        python ${{ github.workspace }}/web_programming/cc_exchanges.py
         cp ${{ github.workspace }}/.github/entrypoint/test.py . && python3 -m pytest -vv test.py
-
+        python ${{ github.workspace }}/web_programming/cc_exchanges.py
+        
     - name: 🚀 Initiate Feed Container
       if: runner.os != 'Windows'
       uses: devcontainers/ci@v0.3
