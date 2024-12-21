@@ -194,4 +194,4 @@ runs:
         --service-account=project-owner@feedmapping.iam.gserviceaccount.com
         --zone=us-central1-a --machine-type=e2-micro --enable-display-device --tags=https-server
         --boot-disk-device-name=cos --image-project cos-cloud --image-family cos-stable --metadata-from-file=user-data=cloud-config
-        --create-disk=boot=no,auto-delete=no,name=tensorflow,device-name=deeplearning,mode=ro,size=50,type=pd-standard,image-project=deeplearning-platform-release,image-family=tf-ent-latest-gpu
+        --create-disk=boot=no,auto-delete=no,name=tensorflow,device-name=deeplearning,mode=ro,size=50,type=pd-standard,image-project=deeplearning-platform-release,image-family=tf-ent-latest-cpu
