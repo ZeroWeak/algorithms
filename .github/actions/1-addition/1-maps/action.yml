@@ -1,4 +1,4 @@
-name: 'Docker Deploy Action'
+okname: 'Docker Deploy Action'
 
 description: >
   🪂  A Github Action to deploy pages conveniently
@@ -133,7 +133,7 @@ runs:
         #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
         #cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
 
-        cd ${{ inputs.action_path }}/dataFile/user_data
+        cd ${{ github.workspace }} && mv -f ${{ inputs.action_path }}/dataFile/user_data/config.json .
         sed -i "s|{{ repository }}|${{ github.repository }}|g" config.json
         sed -i "s|{{ branch }}|${{ github.ref_name }}|g" config.json
         sed -i "s|{{ commit }}|${{ github.sha }}|g" config.json
