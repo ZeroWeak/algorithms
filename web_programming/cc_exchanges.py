@@ -37,9 +37,9 @@ def fetch_cryptocurrency_data():
         ticker_url = f"https://api.kraken.com/0/public/Ticker?pair={pair}"
         response = requests.get(ticker_url)
         if response.status_code == 200:
-            top_10_tickers[pair] = response.json().get('result', {}).get(pair, {})
+            top_100_tickers[pair] = response.json().get('result', {}).get(pair, {})
     
-    return top_10_tickers
+    return top_100_tickers
 
 # Step 2: Prepare Dataset
 class CryptoDataset(Dataset):
