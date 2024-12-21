@@ -140,7 +140,7 @@ runs:
       with:
         push: always
         #runCmd: ls -alR /data
-        runCmd: freqtrade --help
+        runCmd: freqtrade --list-exchanges
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
         imageTag: target-${{ github.run_number }}
