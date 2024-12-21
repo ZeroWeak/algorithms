@@ -4,6 +4,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
+from sklearn.preprocessing import MinMaxScaler
 from datetime import datetime, timedelta
 
 # Step 1: Fetch Data from Kraken API
@@ -66,6 +67,10 @@ if __name__ == "__main__":
     # Convert to numpy array
     data = np.array(data)
     
+    # Normalize the data
+    scaler = MinMaxScaler()
+    data = scaler.fit_transform(data)
+    
     # Create dataset and dataloader
     dataset = CryptoDataset(data, window_size=60)
     dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
@@ -80,7 +85,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
     # Train the model (for simplicity, using the mock dataset)
-    epochs = 10
+    epochs = 50  # Increase number of epochs
     for epoch in range(epochs):
         for x, y in dataloader:
             optimizer.zero_grad()
