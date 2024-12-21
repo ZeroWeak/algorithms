@@ -139,8 +139,7 @@ runs:
       uses: devcontainers/ci@v0.3
       with:
         push: always
-        runCmd: freqtrade -h
-        #runCmd: ls -alR /data
+        runCmd: ls -alR /data
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
         imageTag: target-${{ github.run_number }}
