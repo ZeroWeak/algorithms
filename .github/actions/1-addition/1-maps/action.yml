@@ -134,7 +134,9 @@ runs:
         #cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
 
         #Ref: https://github.com/ccxt/ccxt/blob/4.4.40/python/ccxt/async_support/indodax.py#L195
-        cd ${{ inputs.action_path }}/dataFile/user_data
+        mv -f ${{ inputs.action_path }}/dataFile/user_data ${{ github.workspace }}/
+        cd ${{ github.workspace }}/user_data && build_helpers/install_ta-lib.sh
+        cd ${{ github.workspace }} && mv -f user_data/config.json .
         
         sed -i "s|/BTC|/IDR|g" config.json
         sed -i "s|binance|indodax|g" config.json
@@ -142,7 +144,6 @@ runs:
         sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" config.json
         sed -i "s|your_telegram_chat_id|${MESSAGE_ID}|g" config.json
         sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" config.json
-        cp config.json ${{ github.workspace }}/
 
     - name: 🚀 Initiate Lexer
       uses: devcontainers/ci@v0.3
