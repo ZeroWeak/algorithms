@@ -142,7 +142,7 @@ runs:
         #sed -i "s|your_telegram_chat_id|${MESSAGE_ID}|g" user_data/config.json
         #sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" user_data/config.json
         #mv user_data/config.json .
-        ${{ inputs.action_path }}/dataFile/user_data/build_helpers/install_ta-lib.sh
+        #${{ inputs.action_path }}/dataFile/user_data/build_helpers/install_ta-lib.sh
 
     - name: 🚀 Initiate Lexer
       uses: devcontainers/ci@v0.3
