@@ -153,8 +153,7 @@ runs:
         imageName: ${{ inputs.image_name }}
         imageTag: target-${{ github.run_number }}
         configFile: ${{ inputs.action_path }}/.devcontainer.json
-        #runCmd: freqtrade trade
-        runCmd: ./.github/entrypoint/idle.sh
+        runCmd: freqtrade trade
 
     - name: 💎 Variables
       id: variables
