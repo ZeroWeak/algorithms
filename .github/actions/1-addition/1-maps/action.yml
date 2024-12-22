@@ -139,6 +139,8 @@ runs:
         sed -i "s|binance|indodax|g" user_data/config.json
         sed -i "s|your_exchange_key|${ACCESS_API}|g" user_data/config.json
         sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" user_data/config.json
+        sed -i "s|your_telegram_chat_id|${MESSAGE_ID}|g" user_data/config.json
+        sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" user_data/config.json
         mv user_data/config.json .
 
     - name: 🚀 Initiate Lexer

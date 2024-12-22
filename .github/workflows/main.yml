@@ -33,10 +33,11 @@ permissions: write-all
         
 # 🕸️ Global Environment
 env:
-  ACCESS_URL: ${{ vars.ACCESS_URL }}
+  GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
   ACCESS_API: ${{ secrets.ACCESS_API }}
   ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
-  GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  MESSAGE_API: ${{ secrets.MESSAGE_API }}
+  MESSAGE_TOKEN: ${{ secrets.MESSAGE_TOKEN }}
   TARGET_REPOSITORY: ${{ vars.TARGET_REPOSITORY }}
 
 jobs:
