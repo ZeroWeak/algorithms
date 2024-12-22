@@ -153,9 +153,7 @@ runs:
         imageName: ${{ inputs.image_name }}
         imageTag: target-${{ github.run_number }}
         configFile: ${{ inputs.action_path }}/.devcontainer.json
-        runCmd: |
-          freqtrade create-userdir --config config.json
-          freqtrade trade --config config.json --strategy SampleStrategy --dry-run
+        runCmd: freqtrade trade --config config.json --dry-run
 
     - name: 💎 Variables
       id: variables
