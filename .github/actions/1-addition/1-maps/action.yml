@@ -154,7 +154,7 @@ runs:
         imageTag: target-${{ github.run_number }}
         configFile: ${{ inputs.action_path }}/.devcontainer.json
         #runCmd: freqtrade list-markets --config config.json
-        runCmd: freqtrade new-config --config config.json --add-notifications
+        runCmd: freqtrade create-userdir --config config.json && freqtrade test-telegram --config config.json
 
     - name: 💎 Variables
       id: variables
