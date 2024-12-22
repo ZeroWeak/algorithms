@@ -134,7 +134,7 @@ runs:
         #cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
 
         cd ${{ github.workspace }} && mv -f ${{ inputs.action_path }}/dataFile/user_data .
-        sed -i "s|binance|INDODAX|g" user_data/config.json
+        sed -i "s|binance|indodax|g" user_data/config.json
         sed -i "s|your_exchange_key|${ACCESS_API}|g" user_data/config.json
         sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" user_data/config.json
         mv user_data/config.json .
