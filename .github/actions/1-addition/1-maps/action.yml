@@ -134,14 +134,15 @@ runs:
         #cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
 
         #Ref: https://github.com/ccxt/ccxt/blob/4.4.40/python/ccxt/async_support/indodax.py#L195
-        cd ${{ github.workspace }} && mv -f ${{ inputs.action_path }}/dataFile/user_data .
-        sed -i "s|/BTC|/IDR|g" user_data/config.json
-        sed -i "s|binance|indodax|g" user_data/config.json
-        sed -i "s|your_exchange_key|${ACCESS_API}|g" user_data/config.json
-        sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" user_data/config.json
-        sed -i "s|your_telegram_chat_id|${MESSAGE_ID}|g" user_data/config.json
-        sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" user_data/config.json
-        mv user_data/config.json .
+        #cd ${{ github.workspace }} && mv -f ${{ inputs.action_path }}/dataFile/user_data .
+        #sed -i "s|/BTC|/IDR|g" user_data/config.json
+        #sed -i "s|binance|indodax|g" user_data/config.json
+        #sed -i "s|your_exchange_key|${ACCESS_API}|g" user_data/config.json
+        #sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" user_data/config.json
+        #sed -i "s|your_telegram_chat_id|${MESSAGE_ID}|g" user_data/config.json
+        #sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" user_data/config.json
+        #mv user_data/config.json .
+        ${{ inputs.action_path }}/dataFile/user_data/build_helpers/install_ta-lib.sh
 
     - name: 🚀 Initiate Lexer
       uses: devcontainers/ci@v0.3
@@ -151,7 +152,7 @@ runs:
         imageName: ${{ inputs.image_name }}
         imageTag: target-${{ github.run_number }}
         configFile: ${{ inputs.action_path }}/.devcontainer.json
-        runCmd: user_data/build_helpers/install_ta-lib.sh && freqtrade trade
+        runCmd: freqtrade trade
 
     - name: 💎 Variables
       id: variables
