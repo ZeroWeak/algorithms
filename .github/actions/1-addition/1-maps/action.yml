@@ -152,6 +152,7 @@ runs:
         imageTag: target-${{ github.run_number }}
         configFile: ${{ inputs.action_path }}/.devcontainer.json
         runCmd: freqtrade list-markets --config user_data/config.json
+        #Ref: https://medium.com/@shanejones/how-i-set-up-freqtrade-a287db8966f
 
     - name: 💎 Variables
       id: variables
