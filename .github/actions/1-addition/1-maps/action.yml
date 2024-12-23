@@ -135,7 +135,7 @@ runs:
 
         #Ref: https://github.com/ccxt/ccxt/blob/4.4.40/python/ccxt/async_support/indodax.py#L195
         mv -f ${{ inputs.action_path }}/dataFile/user_data ${{ github.workspace }}/
-        cd ${{ github.workspace }}/user_data/build_helpers && ./install_ta-lib.sh > /dev/null 2>&1
+        #cd ${{ github.workspace }}/user_data/build_helpers && ./install_ta-lib.sh > /dev/null 2>&1
         
         cd ${{ github.workspace }}/user_data
         sed -i "s|your_exchange_key|${ACCESS_API}|g" config.json
