@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader, Dataset
 from sklearn.preprocessing import MinMaxScaler
 from datetime import datetime, timedelta
 
-# Step 1: Fetch Data from Kraken API
+# Step 1: Fetch Public Data from Kraken API
 def fetch_cryptocurrency_data():
     url = "https://api.kraken.com/0/public/AssetPairs"
     response = requests.get(url)
