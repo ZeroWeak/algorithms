@@ -112,7 +112,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
     # Train the model (for simplicity, using the mock dataset)
-    epochs = 50  # Increase number of epochs
+    epochs = 10  # Increase number of epochs
     for epoch in range(epochs):
         for x, y in dataloader:
             optimizer.zero_grad()
