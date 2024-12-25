@@ -158,9 +158,9 @@ runs:
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
         configFile: ${{ github.workspace }}/_site/.devcontainer.json
-        #runCmd: freqtrade list-markets --config user_data/config.json
+        runCmd: freqtrade trade --config user_data/config.json --dry-run
         #Ref: https://medium.com/@shanejones/how-i-set-up-freqtrade-a287db8966f
-        runCmd: python user_data/fetch_tickers.py
+        #runCmd: python user_data/fetch_tickers.py
 
     - name: 🪂 Remove existing images
       id: variables
