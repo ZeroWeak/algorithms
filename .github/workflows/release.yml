@@ -1,0 +1,59 @@
+name: Build and Release Custom Freqtrade Wheel
+
+on:
+  release:
+    types:
+      - published
+
+env:
+  GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set Up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install Build Tools
+      run: |
+        python3 -m venv venv
+        source venv/bin/activate
+        pip install --upgrade pip build setuptools wheel
+        echo "tag_name=${{ github.event.release.tag_name }}" >> ${GITHUB_ENV}
+
+    - name: Build Wheel
+      run: |
+        source venv/bin/activate
+        python -m build
+        ls -la dist
+
+    - name: Resolve Wheel Path
+      id: resolve_wheel
+      run: |
+        WHEEL_PATH=$(ls dist/freqtrade-*.whl | head -n 1)
+        if [ -z "$WHEEL_PATH" ]; then
+          echo "Wheel file not found in dist/ directory."
+          exit 1
+        else
+          WHEEL_FILE=freqtrade-de${{ env.tag_name }}-py3-none-any.whl
+          mv -f $WHEEL_PATH dist/$WHEEL_FILE
+        fi
+
+        # Use basename to extract
+        echo "Resolved wheel file: $WHEEL_FILE"
+        echo 'wheel='$WHEEL_FILE >> ${GITHUB_ENV}
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      with:
+        asset_name: ${{ env.wheel }}
+        asset_path: ./dist/${{ env.wheel }}
+        asset_content_type: application/octet-stream
+        upload_url: ${{ github.event.release.upload_url }}
