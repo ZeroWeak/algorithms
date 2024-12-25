@@ -157,10 +157,10 @@ runs:
         imageTag: spin-${{ env.ID }}
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
-        configFile: ${{ github.workspace }}/_site/.devcontainer.json
-        runCmd: freqtrade trade --config user_data/config.json --dry-run
-        #Ref: https://medium.com/@shanejones/how-i-set-up-freqtrade-a287db8966f
+        configFile: _site/.devcontainer.json
         #runCmd: python user_data/fetch_tickers.py
+        runCmd: freqtrade trade --config user_data/config.json
+        #Ref: https://medium.com/@shanejones/how-i-set-up-freqtrade-a287db8966f
 
     - name: 🪂 Remove existing images
       id: variables
