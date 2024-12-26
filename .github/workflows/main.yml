@@ -58,6 +58,7 @@ jobs:
     # 🔧 Commutation relations
     runs-on: ${{ matrix.config.os }}
     if: ${{ github.event_name == 'push' ||
+        github.event_name == 'release' ||
         github.event.workflow_run.conclusion == 'success' }}
     continue-on-error: ${{ matrix.config.id != 1 && true || false }}
 
