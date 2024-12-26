@@ -159,8 +159,8 @@ runs:
         imageName: ${{ inputs.image_name }}
         configFile: _site/.devcontainer.json
         #runCmd: python user_data/fetch_tickers.py
-        runCmd: freqtrade trade --config user_data/config.json
         #Ref: https://medium.com/@shanejones/how-i-set-up-freqtrade-a287db8966f
+        runCmd: freqtrade trade --config user_data/config_examples/config_indodax.example.json
 
     - name: 🪂 Remove existing images
       id: variables
