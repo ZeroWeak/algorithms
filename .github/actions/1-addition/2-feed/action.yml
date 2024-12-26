@@ -136,17 +136,17 @@ runs:
         EXPECTED_SSL: true
       shell: bash
       run: |
-        #cd /home/runner/work/_actions/eq19/eq19/v1/integrations/tensorflow
-        #pip install -e python_projects/* && iree-import-tflite -h && iree-import-tf -h
+        ##cd /home/runner/work/_actions/eq19/eq19/v1/integrations/tensorflow
+        ##pip install -e python_projects/* && iree-import-tflite -h && iree-import-tf -h
 
-        #cd /home/runner/work/_actions/eq19/eq19/v1/integrations/pjrt
-        #pip install -e ctstools python_packages/iree_cpu_plugin
+        ##cd /home/runner/work/_actions/eq19/eq19/v1/integrations/pjrt
+        ##pip install -e ctstools python_packages/iree_cpu_plugin
   
-        #pip install -r requirements.txt && cd python_packages/iree_cpu_plugin/build/cmake && ninja
-        #JAX_PLATFORMS=iree-cpu pytest -n4 --max-worker-restart=9999 -p openxla_pjrt_artifacts --openxla-pjrt-artifact-dir=/tmp/foobar test/test_simple.py
+        ##pip install -r requirements.txt && cd python_packages/iree_cpu_plugin/build/cmake && ninja
+        ##JAX_PLATFORMS=iree-cpu pytest -n4 --max-worker-restart=9999 -p openxla_pjrt_artifacts --openxla-pjrt-artifact-dir=/tmp/foobar test/test_simple.py
 
-        cp ${{ github.workspace }}/.github/entrypoint/test.py . && python3 -m pytest -vv test.py
-        python ${{ github.workspace }}/web_programming/cc_exchanges.py
+        #cp ${{ github.workspace }}/.github/entrypoint/test.py . && python3 -m pytest -vv test.py
+        #python ${{ github.workspace }}/web_programming/cc_exchanges.py
         
     - name: 🚀 Initiate Feed Container
       if: runner.os != 'Windows'
@@ -161,7 +161,7 @@ runs:
         #runCmd: python user_data/fetch_tickers.py
         #Ref: https://medium.com/@shanejones/how-i-set-up-freqtrade-a287db8966f
         #runCmd: freqtrade trade --config user_data/config_examples/config_indodax.example.json
-        runCmd: freqtrade --config user_data/config_examples/config_indodax.example.json --loglevel DEBUG
+        runCmd: freqtrade trade --config user_data/config_examples/config_indodax.example.json --loglevel DEBUG
 
     - name: 🪂 Remove existing images
       id: variables

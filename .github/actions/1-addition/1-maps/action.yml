@@ -116,26 +116,26 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        python -m pip -q install --upgrade pip
-        python -m pip -q install -r ${{ inputs.action_path }}/dataFile/requirements.txt
+        #python -m pip -q install --upgrade pip
+        #python -m pip -q install -r ${{ inputs.action_path }}/dataFile/requirements.txt
   
-        #python -m pip -q install -e ./.github/entrypoint/artifact/python
-        #iree-compile --iree-llvmcpu-list-targets && iree-run-module --list_drivers
+        ##python -m pip -q install -e ./.github/entrypoint/artifact/python
+        ##iree-compile --iree-llvmcpu-list-targets && iree-run-module --list_drivers
 
-        #Ref: https://github.com/iree-org/iree-experimental
-        #python ${{ inputs.action_path }}/pythonCode/testIREE.py
+        ##Ref: https://github.com/iree-org/iree-experimental
+        ##python ${{ inputs.action_path }}/pythonCode/testIREE.py
         
-        #Ref: https://github.com/tsoding/JelloVM
-        cd ${{ inputs.action_path }} && javac javaCode/Main.java
-        python app.py output.txt && cat dataFile/results/output.txt
+        ##Ref: https://github.com/tsoding/JelloVM
+        #cd ${{ inputs.action_path }} && javac javaCode/Main.java
+        #python app.py output.txt && cat dataFile/results/output.txt
 
-        #Ref: https://github.com/eq19/maps/tree/v3/pythonCode
-        #python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
-        #cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
+        ##Ref: https://github.com/eq19/maps/tree/v3/pythonCode
+        ##python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
+        ##cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
 
-        #Ref: https://github.com/ccxt/ccxt/blob/4.4.40/python/ccxt/async_support/indodax.py#L195
+        ##Ref: https://github.com/ccxt/ccxt/blob/4.4.40/python/ccxt/async_support/indodax.py#L195
         mv -f ${{ inputs.action_path }}/dataFile/user_data ${{ github.workspace }}/
-        #cd ${{ github.workspace }}/user_data/build_helpers && ./install_ta-lib.sh > /dev/null 2>&1
+        ##cd ${{ github.workspace }}/user_data/build_helpers && ./install_ta-lib.sh > /dev/null 2>&1
         
         cd ${{ github.workspace }}/user_data/config_examples
         sed -i "s|your_exchange_key|${ACCESS_API}|g" *.json
