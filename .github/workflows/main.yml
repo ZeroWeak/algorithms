@@ -19,6 +19,8 @@ name: COmpendium of RElations – Modulo 6
 #
 on:
   #push:
+  repository_dispatch:
+    types: [new_release]
   workflow_run:
     types: [completed]
     workflows: ["pages-build-deployment"]
