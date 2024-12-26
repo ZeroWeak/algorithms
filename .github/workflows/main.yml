@@ -19,8 +19,6 @@ name: COmpendium of RElations – Modulo 6
 #
 on:
   #push:
-  repository_dispatch:
-    types: [new_release]
   workflow_run:
     types: [completed]
     workflows: ["pages-build-deployment"]
@@ -57,9 +55,8 @@ jobs:
 
     # 🔧 Commutation relations
     runs-on: ${{ matrix.config.os }}
-    #if: ${{ github.event_name == 'push' ||
-        #github.event_name == 'release' ||
-        #github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'push' ||
+        github.event.workflow_run.conclusion == 'success' }}
     continue-on-error: ${{ matrix.config.id != 1 && true || false }}
 
     steps:
