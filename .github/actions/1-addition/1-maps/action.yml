@@ -137,11 +137,11 @@ runs:
         mv -f ${{ inputs.action_path }}/dataFile/user_data ${{ github.workspace }}/
         #cd ${{ github.workspace }}/user_data/build_helpers && ./install_ta-lib.sh > /dev/null 2>&1
         
-        cd ${{ github.workspace }}/user_data
-        sed -i "s|your_exchange_key|${ACCESS_API}|g" config.json
-        sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" config.json
-        sed -i "s|your_telegram_chat_id|${MESSAGE_ID}|g" config.json
-        sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" config.json
+        cd ${{ github.workspace }}/user_data/config_examples
+        sed -i "s|your_exchange_key|${ACCESS_API}|g" *.json
+        sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" *.json
+        sed -i "s|your_telegram_chat_id|${MESSAGE_ID}|g" *.json
+        sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" *.json
 
     - name: 🚀 Initiate Lexer
       uses: devcontainers/ci@v0.3
