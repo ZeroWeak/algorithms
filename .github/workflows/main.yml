@@ -36,6 +36,7 @@ permissions: write-all
 # 🕸️ Global Environment
 env:
   GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
   ACCESS_API: ${{ secrets.ACCESS_API }}
   ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
   MESSAGE_API: ${{ secrets.MESSAGE_API }}

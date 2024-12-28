@@ -158,9 +158,7 @@ runs:
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
         configFile: _site/.devcontainer.json
-        runCmd: python user_data/ft_client/test_client/test_client.py
-        #Ref: https://medium.com/@shanejones/how-i-set-up-freqtrade-a287db8966f
-        #runCmd: freqtrade trade --config user_data/config_examples/config_indodax.example.json
+        runCmd: user_data/ft_client/test_client/test_rest_client.sh
 
     - name: 🪂 Remove existing images
       id: variables
