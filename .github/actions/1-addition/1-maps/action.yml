@@ -83,7 +83,7 @@ runs:
         JOB_ID: ${{ inputs.id }}
       run: |
         HEADER="Accept: application/vnd.github+json"
-        /home/runner/work/_actions/eq19/eq19/v1/.github/entrypoint/init.sh
+        /home/runner/work/_actions/eq19/eq19/v1/.github/entrypoint/init.sh ${{ inputs.action_path }}
 
         #See: https://docs.github.com/en/rest/actions/self-hosted-runners
         TOTAL_COUNT=$(gh api -H "${HEADER}" /repos/${{ github.repository }}/actions/runners --jq '.total_count')
@@ -134,7 +134,6 @@ runs:
         ##cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
 
         ##Ref: https://github.com/ccxt/ccxt/blob/4.4.40/python/ccxt/async_support/indodax.py#L195
-        mv -f ${{ inputs.action_path }}/dataFile/user_data ${{ github.workspace }}/
         ##cd ${{ github.workspace }}/user_data/build_helpers && ./install_ta-lib.sh > /dev/null 2>&1
         
     - name: 🚀 Initiate Lexer

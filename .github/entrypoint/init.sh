@@ -55,7 +55,14 @@ if [[ "${JOB_ID}" == "1" ]]; then
     git add . && git commit --allow-empty -m "rerun due to job update" && git push
     exit 1
   else
-    ls -al ${GITHUB_WORKSPACE}
+    mv -f $1/dataFile/user_data ${GITHUB_WORKSPACE}/
+    cd ${GITHUB_WORKSPACE}/user_data/config_examples
+    sed -i "s|your_exchange_key|${ACCESS_API}|g" *.json
+    sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" *.json
+    sed -i "s|your_telegram_chat_id|${MESSAGE_API}|g" *.json
+    sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" *.json
+
+    cd ${GITHUB_WORKSPACE} && ls -al ${GITHUB_WORKSPACE}
   fi
 
 elif [[ "${JOB_ID}" == "2" ]]; then
