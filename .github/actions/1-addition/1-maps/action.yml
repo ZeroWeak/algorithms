@@ -132,9 +132,6 @@ runs:
         ##Ref: https://github.com/eq19/maps/tree/v3/pythonCode
         ##python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
         ##cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
-
-        ##Ref: https://github.com/ccxt/ccxt/blob/4.4.40/python/ccxt/async_support/indodax.py#L195
-        ##cd ${{ github.workspace }}/user_data/build_helpers && ./install_ta-lib.sh > /dev/null 2>&1
         
     - name: 🚀 Initiate Lexer
       uses: devcontainers/ci@v0.3
