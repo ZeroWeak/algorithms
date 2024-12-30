@@ -119,6 +119,6 @@ runs:
 
           echo -e "\n$hr\nFinal Pages\n$hr"
           ls -al ${GITHUB_WORKSPACE//\\//}/docs
-          git add . && git commit --allow-empty -m ${{ env.LATEST_COMMIT }} && git push
+          git add . && git commit --allow-empty -m "${{ env.LATEST_COMMIT }}" && git push
 
         fi
