@@ -107,119 +107,82 @@ runs:
         cat << EOL >> cloud-config
         #cloud-config
         users:
-          - default
-          - uid: 1000
-            name: vscode
-            groups: admin,adm,video,docker,google-sudoers
-          - uid: 2000
-            name: runner
-            groups: admin,adm,video,docker,google-sudoers
+        - default
+        - uid: 1000
+          name: vscode
+          groups: admin,adm,video,docker,google-sudoers
+        - uid: 2000
+          name: runner
+          groups: admin,adm,video,docker,google-sudoers
 
         write_files:
-          - path: /etc/systemd/system/firewall.service
-            permissions: 0644
-            owner: root
-            content: |
-                [Unit]
-                Description=Configures the host firewall
+        - path: /etc/systemd/system/firewall.service
+          permissions: 0644
+          owner: root
+          content: |
+            [Unit]
+            Description=Configures the host firewall
 
-                [Service]
-                Type=oneshot
-                RemainAfterExit=true
-                ExecStart=/sbin/iptables -A INPUT -p tcp --match multiport --dports 80,5432,6379 -j ACCEPT
+            [Service]
+            Type=oneshot
+            RemainAfterExit=true
+            ExecStart=/sbin/iptables -A INPUT -p tcp --match multiport --dports 80,5432,6379 -j ACCEPT
 
-          - path: /etc/systemd/system/redis.service
-            permissions: 0644
-            owner: root
-            content: |
-                [Unit]
-                Description=Redis service
-                After=docker.service firewall.service
-                Wants=docker.service firewall.service
+        - path: /etc/systemd/system/redis.service
+          permissions: 0644
+          owner: root
+          content: |
+            [Unit]
+            Description=Redis service
+            After=docker.service firewall.service
+            Wants=docker.service firewall.service
 
-                [Service]
-                Restart=always
-                ExecStartPre=-/usr/bin/docker rm -f myredis
-                ExecStartPre=-/usr/bin/docker volume create user_data
-                ExecStart=/usr/bin/docker run --rm --env-file /home/runner/.env --name=myredis -p 6379:6379 -v user_data:/home/runner/user_data --pull=always eq19/maps:target-${{ github.run_number }}
+            [Service]
+            Restart=always
+            ExecStop=/usr/bin/docker exec myredis -s quit
+            ExecStart=/usr/bin/docker run --rm --name=myredis -p 6379:6379 --pull=always eq19/maps:target-${{ github.run_number }}
 
-          - path: /etc/systemd/system/postgres.service
-            permissions: 0644
-            owner: root
-            content: |
-                [Unit]
-                Description=Postgres service
-                After=redis.service
-                Wants=redis.service
+        - path: /etc/systemd/system/postgres.service
+          permissions: 0644
+          owner: root
+          content: |
+            [Unit]
+            Description=Postgres service
+            After=redis.service
+            Wants=redis.service
 
-                [Service]
-                Restart=always
-                ExecStartPre=-/usr/bin/docker rm -f mydb
-                ExecStartPre=-/usr/bin/docker volume create user_data
-                ExecStart=/usr/bin/docker run --rm --env-file /home/runner/.env --name=mydb -p 5432:5432 -v user_data:/home/runner/user_data --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
+            [Service]
+            Restart=always
+            ExecStop=/usr/bin/docker exec mydb -s quit
+            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
 
-          - path: /etc/systemd/system/runner.service
-            permissions: 0644
-            owner: root
-            content: |
-                [Unit]
-                Description=gcloud compute
-                Wants=postgres.service
-                After=postgres.service
+        - path: /etc/systemd/system/runner.service
+          permissions: 0644
+          owner: root
+          content: |
+            [Unit]
+            Description=gcloud compute
+            Wants=postgres.service
+            After=postgres.service
 
-                [Service]
-                RestartSec=5s
-                Restart=on-failure
-                EnvironmentFile=/home/runner/.env
-                Environment=HOME=/home/runner
-                ExecStop=/usr/bin/docker stop myrunner
-                ExecStopPost=/usr/bin/docker rm myrunner
-                ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
-                ExecStartPre=-/usr/bin/docker rm -f myrunner
-                ExecStartPre=-/usr/bin/docker volume create user_data
-                ExecStart=/usr/bin/docker run --rm --env-file /home/runner/.env -v /mnt:/mnt -v user_data:/home/runner/user_data -v /var/run/docker.sock:/var/run/docker.sock --name myrunner --pull=always eq19/lexer:id-${{ env.IMAGE_TAG }}
-
-          - path: /etc/systemd/system/check-mount.service
-            permissions: 0644
-            owner: root
-            content: |
-                [Unit]
-                Description=Check Disk Mount and Reboot on Failure
-                After=local-fs.target
-                DefaultDependencies=no
-
-                [Service]
-                Type=oneshot
-                ExecStart=/bin/bash -c "mountpoint -q /mnt/disks/deeplearning || { echo 'Mount failed! Rebooting...'; sleep 5; reboot; }"
-
-                [Install]
-                WantedBy=multi-user.target
-
-          - path: /home/runner/.env
-            permissions: 0644
-            owner: runner:runner
-            content: |
-                POSTGRES_DB=postgres
-                POSTGRES_USER=postgres
-                POSTGRES_PASSWORD=postgres 
-                RUNNER_REPLACE_EXISTING=true
-                RUNNER_NAME=Google-optimized-instance
-                GITHUB_ACCESS_TOKEN=${{ inputs.token }}
-                RUNNER_REPOSITORY_URL=https://github.com/${{ inputs.repository }}
-
-        bootcmd:
-          - fsck.ext4 -tvy /dev/sdb1 || echo "Filesystem check failed!"
-          - mkdir -p /mnt/disks/deeplearning
-          - mount -o nosuid,nodev,commit=30,defaults -t ext4 /dev/sdb1 /mnt/disks/deeplearning || echo "Initial mount failed!"
-          - chown runner:runner /home/runner/.env
-          - chmod 0644 /home/runner/.env
+            [Service]
+            RestartSec=5s
+            Restart=on-failure
+            Environment=HOME=/home/runner
+            ExecStop=/usr/bin/docker stop myrunner
+            ExecStopPost=/usr/bin/docker rm myrunner
+            ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
+            ExecStart=/usr/bin/docker run --rm -e RUNNER_REPLACE_EXISTING=true -e RUNNER_NAME=Google-optimized-instance -e RUNNER_REPOSITORY_URL=https://github.com/${{ inputs.repository }} -e GITHUB_ACCESS_TOKEN=${{ inputs.token }} -v /home/runner/.docker:/home/runner/.docker -v /mnt:/mnt -v /var/run/docker.sock:/var/run/docker.sock --name myrunner --pull=always eq19/lexer:id-${{ env.IMAGE_TAG }}
 
         runcmd:
-          - systemctl daemon-reload
-          - systemctl enable check-mount.service
-          - systemctl start check-mount.service
-          - systemctl start runner.service
-          - systemctl status runner.service
+        - systemctl daemon-reload
+        - systemctl start runner.service
+        - systemctl status runner.service
+
+        bootcmd:
+        - fsck.ext4 -tvy /dev/sdb1
+        - mkdir -p /mnt/disks/deeplearning
+        - mount -o nosuid,nodev,commit=30,defaults -t ext4 /dev/sdb1 /mnt/disks/deeplearning
         EOL
 
     # Ref: https://stackoverflow.com/a/47018417/4058484
