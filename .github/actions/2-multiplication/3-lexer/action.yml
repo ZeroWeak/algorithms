@@ -56,6 +56,9 @@ inputs:
   provider:
     description: 'The deploy provider'
     required: true
+  config:
+    description: The config of secrets variables
+    required: true
   owner:
     description: 'The deploy owner'
     required: false
@@ -112,7 +115,13 @@ runs:
         #ssh-keygen -t rsa -b 3072 -N '' -f $HOME/.ssh/google_compute_engine -C root
         #sed -i.backup "1s|^|runner: |" $HOME/.ssh/google_compute_engine.pub && gh secret set GCP_ID_RSA < $HOME/.ssh/google_compute_engine
 
-        #gcloud compute instances add-metadata grid-${{ env.IMAGE_TAG }} --zone=us-central1-a --metadata-from-file ssh-keys=$HOME/.ssh/google_compute_engine.pub
+        gcloud secrets describe freqtrade-config || \
+          gcloud secrets create freqtrade-config --data="${{ inputs.config }}"
+          gcloud secrets versions add freqtrade-config --data="${{ inputs.config }}"
+
+        gcloud compute instances add-metadata grid-${{ env.IMAGE_TAG }} --zone=us-central1-a \
+          --metadata=startup-script=/home/runner/work/_actions/eq19/eq19/v1/.github/entrypoint/startup.sh
+
         #gcloud compute instances describe grid-${{ env.IMAGE_TAG }} --zone=us-central1-a --format='value(metadata.items)'
         #gcloud compute scp ${{ github.workspace }}/.github/entrypoint/artifact/python/manual_v2.ipynb grid-${{ env.IMAGE_TAG }}:/home/runner/.docker --zone=us-central1-a
 
