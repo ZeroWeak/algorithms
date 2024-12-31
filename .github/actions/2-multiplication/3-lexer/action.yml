@@ -106,7 +106,7 @@ runs:
         rm -rf ${{ github.workspace }}/xml && mv -f xml ${{ github.workspace }}/
 
         cd ${{ github.workspace }} && rm -rf cloud-config
-        git add . && git commit --allow-empty -m ${{ env.LATEST_COMMIT }} && git push
+        git add . && git commit --allow-empty -m "${{ env.LATEST_COMMIT }}" && git push
 
         #ssh-keygen -t rsa -b 3072 -N '' -f $HOME/.ssh/google_compute_engine -C root
         #sed -i.backup "1s|^|runner: |" $HOME/.ssh/google_compute_engine.pub && gh secret set GCP_ID_RSA < $HOME/.ssh/google_compute_engine
