@@ -117,6 +117,7 @@ runs:
 
         cp -R ${{ github.workspace }}/_site/. ${{ inputs.action_path }}/
         mv -f ${{ github.workspace }}/user_data ${{ inputs.action_path }}/
+  
     - uses: ikalnytskyi/action-setup-postgres@v7
       id: postgres
       with:
@@ -160,7 +161,7 @@ runs:
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
         configFile: _site/.devcontainer.json
-        runCmd: printenv && bash /home/runner/user_data/ft_client/test_client/test_rest_client.sh
+        runCmd: printenv && ls -al . && bash /home/runner/user_data/ft_client/test_client/test_rest_client.sh
 
     - name: 🪂 Remove existing images
       id: variables
