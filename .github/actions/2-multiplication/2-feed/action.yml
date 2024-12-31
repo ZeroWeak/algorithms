@@ -139,8 +139,8 @@ runs:
 
                 [Service]
                 Restart=always
-                ExecStartPre=-/usr/bin/docker volume create user_data
                 ExecStartPre=-/usr/bin/docker rm -f myredis
+                ExecStartPre=-/usr/bin/docker volume create user_data
                 ExecStart=/usr/bin/docker run --rm --env-file /home/runner/.env --name=myredis -p 6379:6379 -v user_data:/home/runner/user_data --pull=always eq19/maps:target-${{ github.run_number }}
 
           - path: /etc/systemd/system/postgres.service
@@ -155,6 +155,7 @@ runs:
                 [Service]
                 Restart=always
                 ExecStartPre=-/usr/bin/docker rm -f mydb
+                ExecStartPre=-/usr/bin/docker volume create user_data
                 ExecStart=/usr/bin/docker run --rm --env-file /home/runner/.env --name=mydb -p 5432:5432 -v user_data:/home/runner/user_data --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
 
           - path: /etc/systemd/system/runner.service
