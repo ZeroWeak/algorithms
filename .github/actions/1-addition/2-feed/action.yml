@@ -113,7 +113,10 @@ runs:
         mv -f ${RUNNER_TEMP}/*.json ${{ inputs.action_path }}/_data/
 
         mv -f ${{ inputs.action_path }} ${{ github.workspace }}/_site
-        mkdir -p ${{ inputs.action_path }} && cp -R ${{ github.workspace }}/_site/. ${{ inputs.action_path }}/
+        mkdir -p ${{ inputs.action_path }}
+
+        cp -R ${{ github.workspace }}/_site/. ${{ inputs.action_path }}/
+        mv -f ${{ github.workspace }}/user_data ${{ inputs.action_path }}/
 
     - uses: ikalnytskyi/action-setup-postgres@v7
       id: postgres
@@ -158,7 +161,7 @@ runs:
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
         configFile: _site/.devcontainer.json
-        runCmd: bash user_data/ft_client/test_client/test_rest_client.sh
+        runCmd: printenv && bash /home/runner/user_data/ft_client/test_client/test_rest_client.sh
 
     - name: 🪂 Remove existing images
       id: variables

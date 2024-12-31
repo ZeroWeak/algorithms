@@ -57,12 +57,6 @@ if [[ "${JOB_ID}" == "1" ]]; then
     exit 1
   else
     mv -f $1/dataFile/user_data ${GITHUB_WORKSPACE}/
-    cd ${GITHUB_WORKSPACE}/user_data/config_examples
-    sed -i "s|your_exchange_key|${ACCESS_API}|g" *.json
-    sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" *.json
-    sed -i "s|your_telegram_chat_id|${MESSAGE_API}|g" *.json
-    sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" *.json
-
     cd ${GITHUB_WORKSPACE} && ls -al ${GITHUB_WORKSPACE}
   fi
 
