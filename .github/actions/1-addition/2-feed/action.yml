@@ -117,6 +117,7 @@ runs:
 
         cp -R ${{ github.workspace }}/_site/. ${{ inputs.action_path }}/
         mv -f ${{ github.workspace }}/user_data ${{ inputs.action_path }}/
+        ls -al ${{ inputs.action_path }}
 
     - uses: ikalnytskyi/action-setup-postgres@v7
       id: postgres
