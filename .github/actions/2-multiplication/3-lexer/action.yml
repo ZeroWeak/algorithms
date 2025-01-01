@@ -104,8 +104,12 @@ runs:
 
     #Ref: https://gist.github.com/xtrmstep/92aab2d465e348ce1c07ed903ca0dfb8
     - id: describe
+      if: runner.os == 'Windows'
       shell: bash
+      #env:
+        #CONFIG_JSON: ${{ inputs.config }}
       run: |
+        #echo -n "$CONFIG_JSON" > config.json
         cd ${{ inputs.action_path }} && doxygen > /dev/null 2>&1
         rm -rf ${{ github.workspace }}/xml && mv -f xml ${{ github.workspace }}/
 
@@ -117,8 +121,8 @@ runs:
 
         # Ref: https://console.cloud.google.com/security/secret-manager?hl=en&project=feedmapping
         #gcloud secrets describe freqtrade-config || \
-          #echo "${{ inputs.config }}" | gcloud secrets create freqtrade-config --data-file=-
-        echo "${{ inputs.config }}" | gcloud secrets versions add freqtrade-config --data-file=-
+          #gcloud secrets create freqtrade-config --data-file=config.json
+        #gcloud secrets versions add freqtrade-config --data-file=config.json
 
         gcloud compute instances add-metadata grid-${{ env.IMAGE_TAG }} --zone=us-central1-a \
           --metadata=startup-script=/home/runner/work/_actions/eq19/eq19/v1/.github/entrypoint/startup.sh
