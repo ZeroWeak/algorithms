@@ -116,6 +116,11 @@ runs:
           groups: admin,adm,video,docker,google-sudoers
 
         write_files:
+        - path: /etc/secrets/app-config.json
+          permissions: 0644
+          owner: root
+          content: ""
+
         - path: /etc/systemd/system/firewall.service
           permissions: 0644
           owner: root
@@ -154,7 +159,7 @@ runs:
             [Service]
             Restart=always
             ExecStop=/usr/bin/docker exec mydb -s quit
-            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
+            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v /etc/secrets/app-config.json:/home/runner/config.json --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
 
         - path: /etc/systemd/system/runner.service
           permissions: 0644
@@ -174,15 +179,16 @@ runs:
             ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
             ExecStart=/usr/bin/docker run --rm -e RUNNER_REPLACE_EXISTING=true -e RUNNER_NAME=Google-optimized-instance -e RUNNER_REPOSITORY_URL=https://github.com/${{ inputs.repository }} -e GITHUB_ACCESS_TOKEN=${{ inputs.token }} -v /home/runner/.docker:/home/runner/.docker -v /mnt:/mnt -v /var/run/docker.sock:/var/run/docker.sock --name myrunner --pull=always eq19/lexer:id-${{ env.IMAGE_TAG }}
 
-        runcmd:
-        - systemctl daemon-reload
-        - systemctl start runner.service
-        - systemctl status runner.service
-
         bootcmd:
         - fsck.ext4 -tvy /dev/sdb1
         - mkdir -p /mnt/disks/deeplearning
         - mount -o nosuid,nodev,commit=30,defaults -t ext4 /dev/sdb1 /mnt/disks/deeplearning
+
+        runcmd:
+        - /mnt/disks/deeplearning/usr/bin/gcloud secrets versions access latest --secret=freqtrade-config > /etc/secrets/app-config.json
+        - systemctl daemon-reload
+        - systemctl start runner.service
+        - systemctl status runner.service
         EOL
 
     # Ref: https://stackoverflow.com/a/47018417/4058484
