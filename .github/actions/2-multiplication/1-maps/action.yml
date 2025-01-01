@@ -82,8 +82,7 @@ runs:
 
     - name: 💎 Setup Gcloud
       uses: 'google-github-actions/setup-gcloud@v2'
-      with:
-        install_components: 'alpha'
+      #with:
         #install_components: 'alpha,cloud-datastore-emulator'
 
     # Ref: https://cloud.google.com/compute/docs/instances/create-start-instance
