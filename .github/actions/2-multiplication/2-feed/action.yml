@@ -196,6 +196,7 @@ runs:
       run: >
         gcloud compute instances create grid-${{ env.IMAGE_TAG }}
         --service-account=project-owner@feedmapping.iam.gserviceaccount.com
+        --scopes=https://www.googleapis.com/auth/cloud-platform
         --zone=us-central1-a --machine-type=e2-micro --enable-display-device --tags=https-server
         --boot-disk-device-name=cos --image-project cos-cloud --image-family cos-stable --metadata-from-file=user-data=cloud-config
         --create-disk=boot=no,auto-delete=no,name=tensorflow,device-name=deeplearning,mode=rw,size=50,type=pd-standard,image=projects/ml-images/global/images/c0-deeplearning-common-cpu-v20241118-debian-11-py310
