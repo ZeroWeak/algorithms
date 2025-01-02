@@ -116,7 +116,7 @@ runs:
           groups: admin,adm,video,docker,google-sudoers
 
         write_files:
-        - path: /etc/systemd/app-config.json
+        - path: /etc/systemd/system/app-config.json
           permissions: 0644
           owner: root
           content: ""
@@ -159,7 +159,7 @@ runs:
             [Service]
             Restart=always
             ExecStop=/usr/bin/docker exec mydb -s quit
-            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v /etc/systemd/app-config.json:/home/runner/config.json --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
+            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v /etc/systemd/system/app-config.json:/home/runner/config.json --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
 
         - path: /etc/systemd/system/runner.service
           permissions: 0644
@@ -180,7 +180,7 @@ runs:
             ExecStart=/usr/bin/docker run --rm -e RUNNER_REPLACE_EXISTING=true -e RUNNER_NAME=Google-optimized-instance -e RUNNER_REPOSITORY_URL=https://github.com/${{ inputs.repository }} -e GITHUB_ACCESS_TOKEN=${{ inputs.token }} -v /home/runner/.docker:/home/runner/.docker -v /mnt:/mnt -v /var/log:/host/var/log -v /etc/systemd:/host/etc/systemd -v /var/run/docker.sock:/var/run/docker.sock --name myrunner --pull=always eq19/lexer:id-${{ env.IMAGE_TAG }}
 
         runcmd:
-        - /mnt/disks/deeplearning/usr/bin/gcloud secrets versions access latest --secret=freqtrade-config > /etc/systemd/app-config.json
+        - /mnt/disks/deeplearning/usr/bin/gcloud secrets versions access latest --project feedmapping --secret=freqtrade-config > /etc/systemd/system/app-config.json
         - systemctl daemon-reload
         - systemctl start runner.service
         - systemctl status runner.service
