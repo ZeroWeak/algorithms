@@ -117,12 +117,12 @@ runs:
 
         write_files:
         - path: /etc/systemd/system/app-config.json
-          permissions: 0644
+          permissions: "0644"
           owner: root
           content: ""
 
         - path: /etc/systemd/system/firewall.service
-          permissions: 0644
+          permissions: "0644"
           owner: root
           content: |
             [Unit]
@@ -134,7 +134,7 @@ runs:
             ExecStart=/sbin/iptables -A INPUT -p tcp --match multiport --dports 80,5432,6379 -j ACCEPT
 
         - path: /etc/systemd/system/redis.service
-          permissions: 0644
+          permissions: "0644"
           owner: root
           content: |
             [Unit]
@@ -148,7 +148,7 @@ runs:
             ExecStart=/usr/bin/docker run --rm --name=myredis -p 6379:6379 --pull=always eq19/maps:target-${{ github.run_number }}
 
         - path: /etc/systemd/system/postgres.service
-          permissions: 0644
+          permissions: "0644"
           owner: root
           content: |
             [Unit]
@@ -162,7 +162,7 @@ runs:
             ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v /etc/systemd/system/app-config.json:/home/runner/config.json --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
 
         - path: /etc/systemd/system/runner.service
-          permissions: 0644
+          permissions: "0644"
           owner: root
           content: |
             [Unit]
