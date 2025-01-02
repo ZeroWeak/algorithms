@@ -108,9 +108,6 @@ runs:
         #cloud-config
         users:
         - default
-        - uid: 1000
-          name: vscode
-          groups: admin,adm,video,docker,google-sudoers
         - uid: 2000
           name: runner
           groups: admin,adm,video,docker,google-sudoers
@@ -120,11 +117,6 @@ runs:
           permissions: "0644"
           owner: root
           content: ""
-
-        - path: /etc/environment
-          append: true
-          content: |
-            PATH=/mnt/disks/deeplearning/usr/bin:$PATH
 
         - path: /etc/systemd/system/firewall.service
           permissions: "0644"
@@ -185,6 +177,7 @@ runs:
             ExecStart=/usr/bin/docker run --rm -e RUNNER_REPLACE_EXISTING=true -e RUNNER_NAME=Google-optimized-instance -e RUNNER_REPOSITORY_URL=https://github.com/${{ inputs.repository }} -e GITHUB_ACCESS_TOKEN=${{ inputs.token }} -v /home/runner/.docker:/home/runner/.docker -v /mnt:/mnt -v /var/log:/host/var/log -v /etc/systemd:/host/etc/systemd -v /var/run/docker.sock:/var/run/docker.sock --name myrunner --pull=always eq19/lexer:id-${{ env.IMAGE_TAG }}
 
         runcmd:
+        - export PATH=/mnt/disks/deeplearning/usr/lib/google-cloud-sdk/bin:$PATH
         - gcloud secrets versions access latest --project feedmapping --secret=freqtrade-config > /etc/systemd/system/app-config.json
         - systemctl daemon-reload
         - systemctl start runner.service
