@@ -177,8 +177,7 @@ runs:
             ExecStart=/usr/bin/docker run --rm -e RUNNER_REPLACE_EXISTING=true -e RUNNER_NAME=Google-optimized-instance -e RUNNER_REPOSITORY_URL=https://github.com/${{ inputs.repository }} -e GITHUB_ACCESS_TOKEN=${{ inputs.token }} -v /home/runner/.docker:/home/runner/.docker -v /mnt:/mnt -v /var/log:/host/var/log -v /etc/systemd:/host/etc/systemd -v /var/run/docker.sock:/var/run/docker.sock --name myrunner --pull=always eq19/lexer:id-${{ env.IMAGE_TAG }}
 
         runcmd:
-        - ACCESS_TOKEN=$(/mnt/disks/deeplearning/usr/bin/gcloud auth application-default print-access-token)
-        - curl -H "Authorization: Bearer $ACCESS_TOKEN" "https://secretmanager.googleapis.com/v1/projects/feedmapping/secrets/freqtrade-config/versions/latest:access" | jq -r '.payload.data' | base64 --decode > /etc/systemd/system/app-config.json
+        - [curl, -s, -H, "Authorization: Bearer $(/mnt/disks/deeplearning/usr/bin/gcloud auth application-default print-access-token)", "https://secretmanager.googleapis.com/v1/projects/feedmapping/secrets/freqtrade-config/versions/latest:access", " | jq -r '.payload.data' | base64 --decode > /etc/systemd/system/app-config.json"]
         - systemctl daemon-reload
         - systemctl start runner.service
         - systemctl status runner.service
