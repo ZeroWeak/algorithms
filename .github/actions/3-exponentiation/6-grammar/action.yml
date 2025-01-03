@@ -84,7 +84,7 @@ runs:
     - name: ⏩ Next wiki's jobs on applying
       shell: bash
       env:
-        BASE: "D:/a/_actions/eq19/eq19/v2/.github"
+        BASE: "D:/a/_actions/eq19/eq19/v1/.github"
       run: |
         if [[ '${{ inputs.failure_status }}' == 'false' ]]; then
 
