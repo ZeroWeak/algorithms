@@ -46,7 +46,7 @@ echo -e "\n$hr\nWORKSPACE\n$hr"
 if [[ "${JOB_ID}" == "1" ]]; then
 
   cd ${GITHUB_WORKSPACE} && rm -rf .github
-  cp -r /home/runner/work/_actions/eq19/eq19/v2/.github .
+  cp -r /home/runner/work/_actions/eq19/eq19/v1/.github .
   chown -R "$(whoami)" .github
 
   git remote set-url origin ${REMOTE_REPO}        
