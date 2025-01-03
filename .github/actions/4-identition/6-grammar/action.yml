@@ -88,7 +88,7 @@ runs:
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
-        BASE: "D:/a/_actions/eq19/eq19/v2/.github"
+        BASE: "D:/a/_actions/eq19/eq19/v1/.github"
       run: |
         if [[ '${{ inputs.failure_status }}' == 'true' ]]; then
       
