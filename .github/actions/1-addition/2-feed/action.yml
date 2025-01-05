@@ -156,8 +156,7 @@ runs:
         ACCESS_API: ${{ env.ACCESS_API }}
         ACCESS_KEY: ${{ env.ACCESS_KEY }}
         MESSAGE_API: ${{ env.MESSAGE_API }}
-        MESSAGE_TOKEN: ${{ env.MESSAGE_TOKEN  }}
-        TARGET_REPOSITORY: ${{ env.TARGET_REPOSITORY }}
+        MESSAGE_TOKEN: ${{ env.MESSAGE_TOKEN }}
       with:
         push: always
         imageTag: spin-${{ env.ID }}
@@ -165,6 +164,8 @@ runs:
         imageName: ${{ inputs.image_name }}
         configFile: _site/.devcontainer.json
         runCmd: ls -alR user_data && bash user_data/ft_client/test_client/test_rest_client.sh
+        env: |
+          TARGET_REPOSITORY=${{ env.TARGET_REPOSITORY }}
 
     - name: 🪂 Remove existing images
       id: variables
