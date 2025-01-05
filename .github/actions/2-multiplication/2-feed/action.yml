@@ -108,16 +108,11 @@ runs:
         #cloud-config
         users:
         - default
-        - uid: 2000
+        - uid: 1000
           name: runner
           groups: admin,adm,video,docker,google-sudoers
 
         write_files:
-        - path: /etc/systemd/system/app-config.json
-          permissions: "0644"
-          owner: root
-          content: ""
-
         - path: /etc/systemd/system/firewall.service
           permissions: "0644"
           owner: root
@@ -141,8 +136,10 @@ runs:
 
             [Service]
             Restart=always
+            Environment="HOME=/home/runner"
             ExecStop=/usr/bin/docker exec myredis -s quit
-            ExecStart=/usr/bin/docker run --rm --name=myredis -p 6379:6379 --pull=always eq19/maps:target-${{ github.run_number }}
+            ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
+            ExecStart=/usr/bin/docker run --rm -v /mnt:/mnt --name=myredis -p 6379:6379 --pull=always eq19/maps:target-${{ github.run_number }}
 
         - path: /etc/systemd/system/postgres.service
           permissions: "0644"
@@ -155,8 +152,10 @@ runs:
 
             [Service]
             Restart=always
+            Environment="HOME=/home/runner"
             ExecStop=/usr/bin/docker exec mydb -s quit
-            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v /etc/systemd/system/app-config.json:/home/runner/config.json --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
+            ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
+            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v /mnt:/mnt --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
 
         - path: /etc/systemd/system/runner.service
           permissions: "0644"
@@ -170,7 +169,7 @@ runs:
             [Service]
             RestartSec=5s
             Restart=on-failure
-            Environment=HOME=/home/runner
+            Environment="HOME=/home/runner"
             ExecStop=/usr/bin/docker stop myrunner
             ExecStopPost=/usr/bin/docker rm myrunner
             ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
@@ -179,8 +178,6 @@ runs:
         runcmd:
         - systemctl daemon-reload
         - systemctl start runner.service
-        - /mnt/disks/deeplearning/usr/bin/gcloud info
-        - [ sh, -c, "curl -s -H 'Authorization: Bearer $(/mnt/disks/deeplearning/usr/bin/gcloud auth application-default print-access-token)' 'https://secretmanager.googleapis.com/v1/projects/feedmapping/secrets/freqtrade-config/versions/latest:access' | jq -r '.payload.data' | base64 --decode > /etc/systemd/system/app-config.json" ]
 
         bootcmd:
         - fsck.ext4 -tvy /dev/sdb1

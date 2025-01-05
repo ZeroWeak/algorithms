@@ -67,7 +67,7 @@ jobs:
           repository: ${{ env.ID != 1 && env.DOC || '' }}
 
       - name: ⚙️ Build Maps
-        uses: eq19/maps@v4
+        uses: eq19/maps@v5
         id: build-parser
         with:
           id: ${{ matrix.config.id }}
@@ -78,7 +78,7 @@ jobs:
           initiate_pauli_sum: ${{ toJSON(steps.set-lexering.outputs) }}
 
       - name: 🪂 Feed Mapping
-        uses: eq19/feed@v3
+        uses: eq19/feed@v5
         id: feed-mapping
         with:
           id: ${{ matrix.config.id }}

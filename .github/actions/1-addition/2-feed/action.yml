@@ -136,10 +136,10 @@ runs:
         EXPECTED_SSL: true
       shell: bash
       run: |
-        ##cd /home/runner/work/_actions/eq19/eq19/v1/integrations/tensorflow
+        ##cd /home/runner/work/_actions/eq19/eq19/v2/integrations/tensorflow
         ##pip install -e python_projects/* && iree-import-tflite -h && iree-import-tf -h
 
-        ##cd /home/runner/work/_actions/eq19/eq19/v1/integrations/pjrt
+        ##cd /home/runner/work/_actions/eq19/eq19/v2/integrations/pjrt
         ##pip install -e ctstools python_packages/iree_cpu_plugin
   
         ##pip install -r requirements.txt && cd python_packages/iree_cpu_plugin/build/cmake && ninja
@@ -158,7 +158,7 @@ runs:
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
         configFile: _site/.devcontainer.json
-        runCmd: bash user_data/ft_client/test_client/test_rest_client.sh
+        runCmd: ls -alR user_data && bash user_data/ft_client/test_client/test_rest_client.sh
 
     - name: 🪂 Remove existing images
       id: variables
