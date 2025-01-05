@@ -152,33 +152,25 @@ runs:
       if: runner.os != 'Windows'
       uses: devcontainers/ci@v0.3
       id: set_output
-      env:
-        ACCESS_API: ${{ env.ACCESS_API }}
-        ACCESS_KEY: ${{ env.ACCESS_KEY }}
-        MESSAGE_API: ${{ env.MESSAGE_API }}
-        MESSAGE_TOKEN: ${{ env.MESSAGE_TOKEN }}
       with:
         push: always
         imageTag: spin-${{ env.ID }}
         skipContainerUserIdUpdate: true
         imageName: ${{ inputs.image_name }}
         configFile: _site/.devcontainer.json
-        runCmd: ls -alR user_data && bash user_data/ft_client/test_client/test_rest_client.sh
         env: |
+          ACCESS_API=${{ env.ACCESS_API }}
+          ACCESS_KEY=${{ env.ACCESS_KEY }}
+          MESSAGE_API=${{ env.MESSAGE_API }}
+          MESSAGE_TOKEN=${{ env.MESSAGE_TOKEN }}
           TARGET_REPOSITORY=${{ env.TARGET_REPOSITORY }}
+        runCmd: ls -alR user_data && bash user_data/ft_client/test_client/test_rest_client.sh
 
     - name: 🪂 Remove existing images
       id: variables
       shell: bash
       run: |
         BASE_NAME=$(basename ${{ inputs.image_name }})
-        if [[ -f ${{ github.workspace }}/config.json ]]; then
-          sed -i "s|your_exchange_key|${ACCESS_API}|g" config.json
-          sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" config.json
-          sed -i "s|your_telegram_chat_id|${MESSAGE_API}|g" config.json
-          sed -i "s|your_telegram_token|${MESSAGE_TOKEN}|g" config.json
-          gh secret set CONFIG_JSON < config.json
-        fi
         IFS=', '; array=($(curl -L -s 'https://registry.hub.docker.com/v2/repositories/${{ inputs.image_name }}/tags?page_size=1024' | jq -rc '."results"[]["name"]' | yq eval -P | sed "s/ /, /g")) 
         for ((i=0; i < ${#array[@]}; i++)); do
           if [[ "${array[$i]}" != "latest" ]]; then
