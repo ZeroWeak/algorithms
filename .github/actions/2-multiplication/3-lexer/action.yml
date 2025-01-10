@@ -82,7 +82,6 @@ runs:
   using: composite
   steps:
     - name: configure
-      if: runner.os == 'Windows'
       shell: bash
       env:
         CXX: g++-12
