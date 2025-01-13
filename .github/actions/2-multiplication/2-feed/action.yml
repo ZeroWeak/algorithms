@@ -155,7 +155,7 @@ runs:
             Environment="HOME=/home/runner"
             ExecStop=/usr/bin/docker exec mydb -s quit
             ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
-            ExecStart=/usr/bin/docker run --rm -it --privileged -v /mnt:/mnt -v /proc:/proc -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
+            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -v /mnt:/mnt --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
 
         - path: /etc/systemd/system/runner.service
           permissions: "0644"
