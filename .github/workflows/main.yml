@@ -67,7 +67,7 @@ jobs:
           repository: ${{ env.ID != 1 && env.DOC || '' }}
 
       - name: ⚙️ Build Maps
-        uses: eq19/maps@v7
+        uses: eq19/maps@v8
         id: build-parser
         with:
           id: ${{ matrix.config.id }}
