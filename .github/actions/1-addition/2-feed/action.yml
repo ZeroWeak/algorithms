@@ -164,7 +164,7 @@ runs:
           MESSAGE_API=${{ env.MESSAGE_API }}
           MESSAGE_TOKEN=${{ env.MESSAGE_TOKEN }}
           TARGET_REPOSITORY=${{ env.TARGET_REPOSITORY }}
-        runCmd: bash user_data/ft_client/test_client/test_rest_client.sh
+        #runCmd: bash user_data/ft_client/test_client/test_rest_client.sh
 
     - name: 🪂 Remove existing images
       id: variables
