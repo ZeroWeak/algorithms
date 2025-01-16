@@ -135,7 +135,7 @@ jobs:
     needs: lexering
     runs-on: ${{ matrix.config.os }}
     if: ${{ contains(needs.*.result, 'success') }}
-    continue-on-error: ${{ matrix.config.id == 3 && true || false }}
+    continue-on-error: ${{ matrix.config.id == 3 && false || true }}
      
     steps:
       - name: 📂 Checkout
