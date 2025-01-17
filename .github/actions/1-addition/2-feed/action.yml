@@ -100,6 +100,9 @@ runs:
         OWNER: ${{ github.repository_owner }}
         BEARER: ${{ steps.auth.outputs.id_token }}
       run: |      
+        curl -H "Authorization: Bearer $BEARER" \
+          "https://secretmanager.googleapis.com/v1/projects/feedmapping/secrets/freqtrade-config/versions/latest:access" | \
+          jq -r '.payload.data' | base64 --decode > /home/runner/config.json
         shopt -s dotglob
         rm -rf ${{ inputs.action_path }}/.git
 
