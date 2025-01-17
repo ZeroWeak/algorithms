@@ -100,9 +100,6 @@ runs:
         OWNER: ${{ github.repository_owner }}
         BEARER: ${{ steps.auth.outputs.id_token }}
       run: |      
-        curl -H "Authorization: Bearer $BEARER" \
-          "https://secretmanager.googleapis.com/v1/projects/feedmapping/secrets/freqtrade-config/versions/latest:access" | \
-          jq -r '.payload.data' | base64 --decode > /home/runner/config.json
         shopt -s dotglob
         rm -rf ${{ inputs.action_path }}/.git
 
@@ -166,6 +163,7 @@ runs:
           ACCESS_KEY=${{ env.ACCESS_KEY }}
           MESSAGE_API=${{ env.MESSAGE_API }}
           MESSAGE_TOKEN=${{ env.MESSAGE_TOKEN }}
+          BEARER=${{ steps.auth.outputs.id_token }}
           TARGET_REPOSITORY=${{ env.TARGET_REPOSITORY }}
         runCmd: bash user_data/ft_client/test_client/test_rest_client.sh
 
