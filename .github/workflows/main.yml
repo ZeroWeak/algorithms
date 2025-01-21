@@ -18,7 +18,7 @@ name: COmpendium of RElations – Modulo 6
 # For more information on these settings, see https://www.tensorflow.org/quantum/design.
 #
 on:
-  #push:
+  push:
   workflow_run:
     types: [completed]
     workflows: ["pages-build-deployment"]
@@ -83,8 +83,8 @@ jobs:
         with:
           id: ${{ matrix.config.id }}
           token: ${{ secrets.ACCESS_TOKEN }}
-          bot_token: ${{ secrets.MESSAGE_API }}
-          chat_id: ${{ secrets.MESSAGE_TOKEN }}
+          chat_id: ${{ secrets.MESSAGE_API }}
+          bot_token: ${{ secrets.MESSAGE_TOKEN }}
           credentials: ${{ secrets.GCP_CREDENTIALS }}
           docker_hub_token: ${{ secrets.DOCKER_HUB_TOKEN }}
           docker_hub_password: ${{ secrets.DOCKER_HUB_PASSWORD }}
