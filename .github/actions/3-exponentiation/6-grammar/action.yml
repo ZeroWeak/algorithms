@@ -120,9 +120,10 @@ runs:
           cd ${{ github.workspace }}
           find -not -path "./.git/*" -not -name ".git" | grep git
           find -not -path "./.git/*" -not -name ".git" -delete
-
           shopt -s dotglob && mv -f /home/runner/_site/* .
-          #git fetch && git add . && git commit --allow-empty -m ${{ env.LATEST_COMMIT }} && git rebase && git push
-          git add . && git commit --allow-empty -m "${{ env.LATEST_COMMIT }}" && git push
+
+          COMMIT="${{ env.LATEST_COMMIT }}" 
+          # Remove double quotes using parameter extension
+          git add . && git commit --allow-empty -m "${COMMIT//\"/}" && git push
  
         fi

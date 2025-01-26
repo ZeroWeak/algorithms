@@ -18,7 +18,10 @@ TARGET_REPO="https://${GITHUB_ACTOR}:${GH_TOKEN}@github.com/${TARGET_REPOSITORY}
 REMOTE_REPO="https://${GITHUB_ACTOR}:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
 API_URL="https://api.github.com/users/eq19/events/public"
-LATEST_COMMIT=$(curl -s $API_URL | jq -r 'map(select(.type == "PushEvent")) | .[0].payload.commits[0].message')
+COMMIT=$(curl -s $API_URL | jq -r 'map(select(.type == "PushEvent")) | .[0].payload.commits[0].message')
+
+# Remove double quotes using parameter expansion
+LATEST_COMMIT="${COMMIT//\"/}"
 
 if [[ -z "$LATEST_COMMIT" ]] || [[ "$LATEST_COMMIT" == "null" ]]; then
   echo 'LATEST_COMMIT="update by workspace"' >> ${GITHUB_ENV}

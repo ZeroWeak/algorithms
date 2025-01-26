@@ -119,6 +119,9 @@ runs:
 
           echo -e "\n$hr\nFinal Pages\n$hr"
           ls -al ${GITHUB_WORKSPACE//\\//}/docs
-          git add . && git commit --allow-empty -m "${{ env.LATEST_COMMIT }}" && git push
+ 
+          COMMIT="${{ env.LATEST_COMMIT }}"
+          # Remove double quotes using parameter extension
+          git add . && git commit --allow-empty -m "${COMMIT//\"/}" && git push
 
         fi
