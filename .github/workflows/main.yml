@@ -35,10 +35,6 @@ permissions: write-all
 env:
   GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
   PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-  ACCESS_API: ${{ secrets.ACCESS_API }}
-  ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
-  MESSAGE_API: ${{ secrets.MESSAGE_API }}
-  MESSAGE_TOKEN: ${{ secrets.MESSAGE_TOKEN }}
   TARGET_REPOSITORY: ${{ vars.TARGET_REPOSITORY }}
 
 jobs:
@@ -130,6 +126,10 @@ jobs:
       fail-fast: ${{ contains(needs.*.result, 'success') && false || true }}
 
     env:
+      ACCESS_API: ${{ secrets.ACCESS_API }}
+      ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+      MESSAGE_API: ${{ secrets.MESSAGE_API }}
+      MESSAGE_TOKEN: ${{ secrets.MESSAGE_TOKEN }}
       IP_ADDRESS: '${{ needs.lexering.outputs.address }}'
       PASS: ${{ contains(needs.*.result, 'success') && true || false }}
 
