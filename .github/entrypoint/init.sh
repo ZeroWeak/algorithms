@@ -80,8 +80,11 @@ elif [[ "${JOB_ID}" == "3" ]]; then
 
   rm -rf ${RUNNER_TEMP}/Sidebar.md && cp _Sidebar.md ${RUNNER_TEMP}/Sidebar.md
   sed -i 's/0. \[\[//g' ${RUNNER_TEMP}/Sidebar.md && sed -i 's/\]\]//g' ${RUNNER_TEMP}/Sidebar.md
-
   cd /home/runner/_site && cp -R ${RUNNER_TEMP}/gistdir/* . && ls -lR .
+
+  # Bring GitHub Env Variables in to the config file on another container usong docker from the attached deeplearning image
+  /mnt/disks/deeplearning/usr/bin/docker exec mydb sed -i "s|your_exchange_key|${ACCESS_API}|g" /home/runner/config.json
+  /mnt/disks/deeplearning/usr/bin/docker exec mydb sed -i "s|your_exchange_secret|${ACCESS_KEY}|g" /home/runner/config.json
 
 else
 
