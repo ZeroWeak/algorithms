@@ -60,7 +60,7 @@ if [[ "${JOB_ID}" == "1" ]]; then
     exit 1
   else
     PARAMS=.github/entrypoint/artifact/python/src/params/spaces.json
-    mv -f ${GITHUB_WORKSPACE}/$PARAMS $1/user_data/strategies/ichiV2_15M1H.json
+    mv -f ${GITHUB_WORKSPACE}/$PARAMS $1/dataFile/user_data/strategies/ichiV2_15M1H.json
   
     mv -f $1/dataFile/user_data ${GITHUB_WORKSPACE}/
     cd ${GITHUB_WORKSPACE} && ls -al ${GITHUB_WORKSPACE}
