@@ -59,6 +59,9 @@ if [[ "${JOB_ID}" == "1" ]]; then
     git add . && git commit --allow-empty -m "rerun due to job update" && git push
     exit 1
   else
+    PARAMS=$1/.github/entrypoint/artifact/python/src/params/spaces.json
+    mv -f $PARAMS $1/user_data/strategies/ichiV2_15M1H.json
+  
     mv -f $1/dataFile/user_data ${GITHUB_WORKSPACE}/
     cd ${GITHUB_WORKSPACE} && ls -al ${GITHUB_WORKSPACE}
   fi
