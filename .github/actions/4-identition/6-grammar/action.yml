@@ -120,8 +120,19 @@ runs:
           echo -e "\n$hr\nFinal Pages\n$hr"
           ls -al ${GITHUB_WORKSPACE//\\//}/docs
  
+          # Assign the environment variable correctly
           COMMIT="${{ env.LATEST_COMMIT }}"
-          # Remove double quotes using parameter extension
-          git add . && git commit --allow-empty -m "${COMMIT//\"/}" && git push
 
+          # Remove double quotes
+          MESSAGE=$(echo "$COMMIT" | tr -d '"')
+
+          # Debug output to verify
+          echo "Original: $COMMIT"
+          echo "Processed: $MESSAGE"
+
+          # Commit and push changes
+          git add . 
+          git commit --allow-empty -m "$MESSAGE" 
+          git push
+ 
         fi

@@ -122,8 +122,19 @@ runs:
           find -not -path "./.git/*" -not -name ".git" -delete
           shopt -s dotglob && mv -f /home/runner/_site/* .
 
-          COMMIT="${{ env.LATEST_COMMIT }}" 
-          # Remove double quotes using parameter extension
-          git add . && git commit --allow-empty -m "${COMMIT//\"/}" && git push
+          # Assign the environment variable correctly
+          COMMIT="${{ env.LATEST_COMMIT }}"
+
+          # Remove double quotes
+          MESSAGE=$(echo "$COMMIT" | tr -d '"')
+
+          # Debug output to verify
+          echo "Original: $COMMIT"
+          echo "Processed: $MESSAGE"
+
+          # Commit and push changes
+          git add . 
+          git commit --allow-empty -m "$MESSAGE" 
+          git push
  
         fi
