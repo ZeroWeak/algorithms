@@ -52,7 +52,7 @@ inputs:
     description: Path for the docker cache destination
     required: false
     default: /tmp/.buildx-cache-new
-  api-key:
+  api_key:
     description: 'The api key'
     required: true
   api_secret:
