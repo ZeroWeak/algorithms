@@ -5,32 +5,32 @@
       "max_open_trades": Infinity
     },
     "buy": {
-      "buy_rsi": 28,
-      "ewo_high": 7.481,
-      "ewo_low": -11.886,
-      "volume_filter": 1.127
+      "buy_rsi": 37,
+      "ewo_high": 8.207,
+      "ewo_low": -12.816,
+      "volume_filter": 0.895
     },
     "sell": {
-      "hull_period": 10,
-      "sell_rsi": 76
+      "hull_period": 20,
+      "sell_rsi": 67
     },
     "protection": {},
     "roi": {
-      "0": 0.29700000000000004,
-      "33": 0.138,
-      "150": 0.048,
-      "459": 0
+      "0": 0.10799999999999998,
+      "34": 0.072,
+      "108": 0.043,
+      "359": 0
     },
     "stoploss": {
-      "stoploss": -0.227
+      "stoploss": -0.301
     },
     "trailing": {
       "trailing_stop": true,
-      "trailing_stop_positive": 0.311,
-      "trailing_stop_positive_offset": 0.345,
-      "trailing_only_offset_is_reached": false
+      "trailing_stop_positive": 0.128,
+      "trailing_stop_positive_offset": 0.14100000000000001,
+      "trailing_only_offset_is_reached": true
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-01-30 12:22:10.443277+00:00"
+  "export_time": "2025-01-30 15:05:47.369941+00:00"
 }
