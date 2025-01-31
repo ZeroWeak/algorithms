@@ -1,36 +1,28 @@
 {
-  "strategy_name": "ichiV2_15M1H",
+  "strategy_name": "ichiV1",
   "params": {
     "max_open_trades": {
       "max_open_trades": Infinity
     },
-    "buy": {
-      "buy_rsi": 36,
-      "ewo_high": 7.516,
-      "ewo_low": -16.953,
-      "volume_filter": 1.428
-    },
-    "sell": {
-      "hull_period": 20,
-      "sell_rsi": 81
-    },
+    "buy": {},
+    "sell": {},
     "protection": {},
     "roi": {
-      "0": 0.15999999999999998,
-      "119": 0.089,
-      "285": 0.016,
-      "530": 0
+      "0": 0.38,
+      "415": 0.099,
+      "1025": 0.053,
+      "1308": 0
     },
     "stoploss": {
-      "stoploss": -0.349
+      "stoploss": -0.242
     },
     "trailing": {
       "trailing_stop": true,
-      "trailing_stop_positive": 0.103,
-      "trailing_stop_positive_offset": 0.154,
-      "trailing_only_offset_is_reached": false
+      "trailing_stop_positive": 0.327,
+      "trailing_stop_positive_offset": 0.375,
+      "trailing_only_offset_is_reached": true
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-01-31 06:34:30.550227+00:00"
+  "export_time": "2025-01-31 11:25:46.852286+00:00"
 }
