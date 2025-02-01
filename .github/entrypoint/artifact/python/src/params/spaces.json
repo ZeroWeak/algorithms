@@ -2,42 +2,43 @@
   "strategy_name": "ichiV1",
   "params": {
     "buy": {
-      "buy_fastd": 87,
-      "buy_fishRsiNorma": 61,
-      "buy_rsi": 50,
-      "buy_volumeAVG": 71
+      "buy_fastd": 59,
+      "buy_fishRsiNorma": 57,
+      "buy_rsi": 26,
+      "buy_volumeAVG": 216
     },
     "sell": {
-      "sell_fishRsiNorma": 47,
-      "sell_minusDI": 3,
-      "sell_rsi": 33,
-      "sell_trigger": "rsi-macd-minusdi"
+      "sell_fishRsiNorma": 38,
+      "sell_minusDI": 90,
+      "sell_rsi": 72,
+      "sell_trigger": "sar-fisherRsi"
     },
     "protection": {
-      "cooldown_period": 15,
-      "lookback_period": 20,
-      "stop_duration": 9,
-      "trade_limit": 3
+      "cooldown_period": 20,
+      "lookback_period": 17,
+      "stop_duration": 44,
+      "trade_limit": 9,
+      "use_stop_protection": false
     },
     "roi": {
-      "0": 0.403,
-      "111": 0.095,
-      "206": 0.04,
-      "334": 0
+      "0": 0.15599999999999997,
+      "50": 0.11099999999999999,
+      "150": 0.025,
+      "459": 0
     },
     "stoploss": {
-      "stoploss": -0.295
+      "stoploss": -0.313
     },
     "trailing": {
       "trailing_stop": true,
-      "trailing_stop_positive": 0.3,
-      "trailing_stop_positive_offset": 0.324,
+      "trailing_stop_positive": 0.186,
+      "trailing_stop_positive_offset": 0.253,
       "trailing_only_offset_is_reached": false
     },
     "max_open_trades": {
-      "max_open_trades": -1
+      "max_open_trades": 1
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-02-01 03:45:07.834886+00:00"
+  "export_time": "2025-02-01 05:46:07.027124+00:00"
 }
