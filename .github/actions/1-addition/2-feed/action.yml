@@ -161,10 +161,6 @@ runs:
         configFile: _site/.devcontainer.json
         env: |
           TOKEN=${{ env.GH_TOKEN }}
-          ACCESS_API=${{ env.ACCESS_API }}
-          ACCESS_KEY=${{ env.ACCESS_KEY }}
-          MESSAGE_API=${{ env.MESSAGE_API }}
-          MESSAGE_TOKEN=${{ env.MESSAGE_TOKEN }}
           RERUN_RUNNER=${{ inputs.rerun_runner }}
           BEARER=${{ steps.auth.outputs.id_token }}
           TARGET_REPOSITORY=${{ env.TARGET_REPOSITORY }}
