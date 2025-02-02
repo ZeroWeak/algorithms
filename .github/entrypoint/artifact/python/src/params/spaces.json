@@ -2,54 +2,42 @@
   "strategy_name": "ichiV1",
   "params": {
     "buy": {
-      "buy_fastd": 3,
-      "buy_fishRsiNorma": 37,
-      "buy_rsi": 10,
-      "buy_volumeAVG": 73
+      "buy_additional_indicator": "BB",
+      "buy_rsi": 38
     },
     "sell": {
-      "pHSL": -0.163,
-      "pPF_1": 0.013,
-      "pPF_2": 0.093,
-      "pSL_1": 0.016,
-      "pSL_2": 0.024,
-      "sell_fishRsiNorma": 14,
-      "sell_minusDI": 16,
-      "sell_rsi": 2,
-      "sell_trigger": "rsi-macd-minusdi"
+      "sell_additional_indicator": "NONE",
+      "sell_rsi": 74
     },
     "protection": {
-      "protection_cooldown_period": 6,
-      "protection_maxdrawdown_lookback_period_candles": 8,
-      "protection_maxdrawdown_max_allowed_drawdown": 0.108,
-      "protection_maxdrawdown_stop_duration_candles": 29,
-      "protection_maxdrawdown_trade_limit": 2,
-      "protection_stoplossguard_lookback_period_candles": 1,
-      "protection_stoplossguard_stop_duration_candles": 4,
-      "protection_stoplossguard_trade_limit": 2
+      "cooldown_lookback": 8,
+      "low_profit_trade_limit": 8,
+      "max_drawdown_trade_limit": 4,
+      "stop_duration": 98,
+      "trade_limit": 7,
+      "use_low_profit": false,
+      "use_max_drawdown_protection": true,
+      "use_stop_protection": true
     },
     "roi": {
-      "0": 0.05,
-      "1": 0.04,
-      "34": 0.03,
-      "63": 0.02,
-      "103": 0.01,
-      "199": 0.0001,
-      "632": -10
+      "0": 0.10200000000000001,
+      "6": 0.032,
+      "17": 0.011,
+      "33": 0
     },
     "stoploss": {
-      "stoploss": -0.298
+      "stoploss": -0.283
     },
     "trailing": {
       "trailing_stop": true,
-      "trailing_stop_positive": 0.078,
-      "trailing_stop_positive_offset": 0.095,
+      "trailing_stop_positive": 0.179,
+      "trailing_stop_positive_offset": 0.214,
       "trailing_only_offset_is_reached": false
     },
     "max_open_trades": {
-      "max_open_trades": 6
+      "max_open_trades": 10
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-02-02 09:49:15.972017+00:00"
+  "export_time": "2025-02-02 13:07:36.950217+00:00"
 }
