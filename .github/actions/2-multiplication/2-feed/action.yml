@@ -195,6 +195,7 @@ runs:
         - mkdir -p /mnt/disks/deeplearning/home/runner
         - chmod -R 755 /mnt/disks/deeplearning/home/runner      
         - chown -R root:root /mnt/disks/deeplearning/home/runner
+        - /usr/bin/docker exec mydb systemctl enable freqtrade.service
         EOL
         
     # Ref: https://stackoverflow.com/a/47018417/4058484
