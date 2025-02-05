@@ -187,6 +187,7 @@ runs:
         runcmd:
         - systemctl daemon-reload
         - systemctl start runner.service
+        - docker run --rm --pull=always --entrypoint "" -v /mnt/disks/deeplearning:/mnt/disks/deeplearning eq19/feed:spin-${{ env.IMAGE_TAG }} sh -c "cp -r /home/runner/user_data /mnt/disks/deeplearning/"
 
         bootcmd:
         - fsck.ext4 -tvy /dev/sdb1
