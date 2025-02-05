@@ -1,5 +1,5 @@
 {
-  "strategy_name": "ichiV1",
+  "strategy_name": "fibbo",
   "params": {
     "buy": {
       "buy_additional_indicator": "MACD, STOCH_OSC",
