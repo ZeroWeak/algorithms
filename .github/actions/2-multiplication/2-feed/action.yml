@@ -191,8 +191,8 @@ runs:
  
         runcmd:
         - systemctl daemon-reload
-        - mkdir -p /mnt/disks/deeplearning/home/runner
-        - docker run --rm --pull=always --entrypoint "" -v /mnt/disks/deeplearning/home/runner:/mnt/disks/deeplearning/home/runner eq19/feed:spin-${{ env.IMAGE_TAG }} sh -c "cp -r /home/runner/user_data /mnt/disks/deeplearning/home/runner/"
+        - mkdir -p /mnt/disks/deeplearning/home
+        - docker run --rm --pull=always --entrypoint "" -v /mnt/disks/deeplearning/home:/mnt/disks/deeplearning/home eq19/feed:spin-${{ env.IMAGE_TAG }} sh -c "cp -r /home/runner /mnt/disks/deeplearning/home/"
         - systemctl start runner.service
         EOL
         
