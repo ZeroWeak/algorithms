@@ -2,42 +2,50 @@
   "strategy_name": "fibbo",
   "params": {
     "buy": {
-      "buy_additional_indicator": "MACD, STOCH_OSC",
-      "buy_rsi": 42
+      "buy_additional_indicator": "NONE",
+      "buy_fast_dema": "8",
+      "buy_fib_level": "0.786",
+      "buy_rsi": 27,
+      "buy_slow_ema": "55",
+      "buy_stoch_osc": 5,
+      "swing_period": 66
     },
     "sell": {
-      "sell_additional_indicator": "MACD",
-      "sell_rsi": 70
+      "sell_additional_indicator": "MACD, TTM",
+      "sell_fib_level": "0.382",
+      "sell_rsi": 74,
+      "sell_rsi_threshold": 76,
+      "sell_stoch_osc": 83
     },
     "protection": {
-      "cooldown_lookback": 5,
-      "low_profit_trade_limit": 4,
-      "max_drawdown_trade_limit": 10,
-      "stop_duration": 160,
-      "trade_limit": 6,
-      "use_low_profit": true,
-      "use_max_drawdown_protection": true,
+      "cooldown_lookback": 40,
+      "low_profit_trade_limit": 8,
+      "max_drawdown_trade_limit": 8,
+      "stop_duration": 24,
+      "trade_limit": 9,
+      "use_low_profit": false,
+      "use_max_drawdown_protection": false,
       "use_stop_protection": true
     },
     "roi": {
-      "0": 0.06999999999999999,
-      "7": 0.011,
-      "17": 0.003,
+      "0": 0.056,
+      "6": 0.006,
+      "13": 0.003,
       "28": 0
     },
     "stoploss": {
-      "stoploss": -0.149
+      "stoploss": -0.337
     },
     "trailing": {
       "trailing_stop": true,
-      "trailing_stop_positive": 0.124,
-      "trailing_stop_positive_offset": 0.197,
+      "trailing_stop_positive": 0.072,
+      "trailing_stop_positive_offset": 0.075,
       "trailing_only_offset_is_reached": false
     },
     "max_open_trades": {
-      "max_open_trades": -1
+      "max_open_trades": 1
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-02-02 21:08:17.381601+00:00"
+  "export_time": "2025-02-07 07:10:08.814426+00:00"
 }
