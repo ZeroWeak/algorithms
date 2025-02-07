@@ -191,11 +191,11 @@ runs:
  
         runcmd:
         - systemctl daemon-reload
-        - mkdir -p /mnt/disks/deeplearning/home
-        - docker run --rm --pull=always --entrypoint "" -v /mnt/disks/deeplearning/home:/mnt/disks/deeplearning/home eq19/feed:spin-${{ env.IMAGE_TAG }} sh -c "cp -r /home/runner /mnt/disks/deeplearning/home/"
+        - mkdir -p /mnt/disks/deeplearning/home  # Ensure target directory exists
+        - docker run --rm --pull=always --entrypoint "" -v /mnt/disks/deeplearning/home:/mnt/disks/deeplearning/home eq19/feed:spin-${{ env.IMAGE_TAG }} sh -c "rsync -av /home/ /mnt/disks/deeplearning/home/"
         - systemctl start runner.service
         EOL
-        
+
     # Ref: https://stackoverflow.com/a/47018417/4058484
     - name: 🪂 Setup Runner by Gcloud
       #if: runner.os == 'Windows'
