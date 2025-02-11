@@ -2,54 +2,54 @@
   "strategy_name": "fibbo",
   "params": {
     "buy": {
-      "base_line_period": 23,
+      "base_line_period": 19,
       "buy_additional_indicator": "STOCH_OSC",
-      "buy_fast_dema": "8",
-      "buy_fib_level": "0.382",
-      "buy_rsi": 38,
-      "buy_slow_ema": "34",
-      "buy_stoch_osc": 10,
-      "conversion_line_period": 6,
-      "displacement": 20,
-      "lagging_span": 35,
-      "swing_period": 34
+      "buy_fast_dema": "21",
+      "buy_fib_level": "0.618",
+      "buy_rsi": 32,
+      "buy_slow_ema": "55",
+      "buy_stoch_osc": 13,
+      "conversion_line_period": 8,
+      "displacement": 37,
+      "lagging_span": 77,
+      "swing_period": 98
     },
     "sell": {
-      "sell_additional_indicator": "ICHIMOKU, TTM",
-      "sell_fib_level": "0.236",
-      "sell_rsi": 73,
-      "sell_rsi_threshold": 73,
-      "sell_stoch_osc": 79
+      "sell_additional_indicator": "STOCH_OSC, TTM",
+      "sell_fib_level": "0.618",
+      "sell_rsi": 70,
+      "sell_rsi_threshold": 65,
+      "sell_stoch_osc": 92
     },
     "protection": {
-      "cooldown_lookback": 13,
-      "low_profit_trade_limit": 4,
-      "max_drawdown_trade_limit": 4,
-      "stop_duration": 148,
-      "trade_limit": 7,
+      "cooldown_lookback": 15,
+      "low_profit_trade_limit": 2,
+      "max_drawdown_trade_limit": 8,
+      "stop_duration": 147,
+      "trade_limit": 9,
       "use_low_profit": false,
       "use_max_drawdown_protection": false,
-      "use_stop_protection": false
+      "use_stop_protection": true
     },
     "roi": {
-      "0": 0.044,
-      "5": 0.020999999999999998,
-      "12": 0.012,
-      "17": 0
+      "0": 0.07300000000000001,
+      "2": 0.033,
+      "12": 0.008,
+      "27": 0
     },
     "stoploss": {
-      "stoploss": -0.179
+      "stoploss": -0.239
     },
     "trailing": {
       "trailing_stop": true,
-      "trailing_stop_positive": 0.349,
-      "trailing_stop_positive_offset": 0.39399999999999996,
-      "trailing_only_offset_is_reached": false
+      "trailing_stop_positive": 0.07,
+      "trailing_stop_positive_offset": 0.083,
+      "trailing_only_offset_is_reached": true
     },
     "max_open_trades": {
       "max_open_trades": -1
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-02-11 08:17:06.673807+00:00"
+  "export_time": "2025-02-11 21:19:29.837668+00:00"
 }
