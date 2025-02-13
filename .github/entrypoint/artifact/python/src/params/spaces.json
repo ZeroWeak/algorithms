@@ -2,48 +2,48 @@
   "strategy_name": "fibbo",
   "params": {
     "buy": {
-      "base_line_period": 31,
+      "base_line_period": 12,
       "buy_additional_indicator": "STOCH_OSC",
-      "buy_fast_dema": "13",
+      "buy_fast_dema": "21",
       "buy_fib_level": "0.618",
-      "buy_rsi": 16,
-      "buy_slow_ema": "55",
-      "buy_stoch_osc": 11,
+      "buy_rsi": 42,
+      "buy_slow_ema": "34",
+      "buy_stoch_osc": 6,
       "conversion_line_period": 10,
-      "displacement": 24,
-      "lagging_span": 40,
-      "swing_period": 53
+      "displacement": 26,
+      "lagging_span": 74,
+      "swing_period": 45
     },
     "sell": {
-      "sell_additional_indicator": "MACD, TTM",
-      "sell_fib_level": "0.236",
-      "sell_rsi": 87,
-      "sell_rsi_threshold": 79,
+      "sell_additional_indicator": "ICHIMOKU, MACD",
+      "sell_fib_level": "0.382",
+      "sell_rsi": 91,
+      "sell_rsi_threshold": 69,
       "sell_stoch_osc": 73
     },
     "protection": {
-      "cooldown_lookback": 19,
-      "low_profit_trade_limit": 9,
-      "max_drawdown_trade_limit": 4,
-      "stop_duration": 20,
-      "trade_limit": 5,
+      "cooldown_lookback": 3,
+      "low_profit_trade_limit": 4,
+      "max_drawdown_trade_limit": 3,
+      "stop_duration": 142,
+      "trade_limit": 8,
       "use_low_profit": true,
-      "use_max_drawdown_protection": true,
-      "use_stop_protection": true
+      "use_max_drawdown_protection": false,
+      "use_stop_protection": false
     },
     "roi": {
-      "0": 0.094,
-      "7": 0.02,
-      "16": 0.013,
-      "27": 0
+      "0": 0.05,
+      "3": 0.03,
+      "12": 0.004,
+      "20": 0
     },
     "stoploss": {
-      "stoploss": -0.294
+      "stoploss": -0.216
     },
     "trailing": {
       "trailing_stop": true,
-      "trailing_stop_positive": 0.235,
-      "trailing_stop_positive_offset": 0.32799999999999996,
+      "trailing_stop_positive": 0.224,
+      "trailing_stop_positive_offset": 0.299,
       "trailing_only_offset_is_reached": false
     },
     "max_open_trades": {
@@ -51,5 +51,5 @@
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-02-12 15:14:44.465027+00:00"
+  "export_time": "2025-02-13 08:24:19.608950+00:00"
 }
