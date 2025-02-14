@@ -15,7 +15,7 @@
       "swing_period": 45
     },
     "sell": {
-      "sell_additional_indicator": "ICHIMOKU, MACD",
+      "sell_additional_indicator": "MACD",
       "sell_fib_level": "0.382",
       "sell_rsi": 91,
       "sell_rsi_threshold": 69,
