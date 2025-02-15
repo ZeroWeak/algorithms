@@ -2,54 +2,50 @@
   "strategy_name": "fibbo",
   "params": {
     "buy": {
-      "base_line_period": 12,
       "buy_additional_indicator": "STOCH_OSC",
-      "buy_fast_dema": "21",
-      "buy_fib_level": "0.618",
-      "buy_rsi": 42,
+      "buy_fast_dema": "8",
+      "buy_fib_level": "0.382",
+      "buy_rsi": 41,
       "buy_slow_ema": "34",
-      "buy_stoch_osc": 6,
-      "conversion_line_period": 10,
-      "displacement": 26,
-      "lagging_span": 74,
-      "swing_period": 45
+      "buy_stoch_osc": 24,
+      "swing_period": 67
     },
     "sell": {
-      "sell_additional_indicator": "MACD",
+      "sell_additional_indicator": "STOCH_OSC",
       "sell_fib_level": "0.382",
-      "sell_rsi": 91,
-      "sell_rsi_threshold": 69,
-      "sell_stoch_osc": 73
+      "sell_rsi": 87,
+      "sell_rsi_threshold": 64,
+      "sell_stoch_osc": 98
     },
     "protection": {
-      "cooldown_lookback": 3,
-      "low_profit_trade_limit": 4,
-      "max_drawdown_trade_limit": 3,
-      "stop_duration": 142,
-      "trade_limit": 8,
+      "cooldown_lookback": 7,
+      "low_profit_trade_limit": 6,
+      "max_drawdown_trade_limit": 4,
+      "stop_duration": 156,
+      "trade_limit": 9,
       "use_low_profit": true,
       "use_max_drawdown_protection": false,
-      "use_stop_protection": false
+      "use_stop_protection": true
     },
     "roi": {
-      "0": 0.05,
-      "3": 0.03,
-      "12": 0.004,
-      "20": 0
+      "0": 0.07999999999999999,
+      "4": 0.028999999999999998,
+      "11": 0.006,
+      "19": 0
     },
     "stoploss": {
-      "stoploss": -0.216
+      "stoploss": -0.337
     },
     "trailing": {
       "trailing_stop": true,
-      "trailing_stop_positive": 0.224,
-      "trailing_stop_positive_offset": 0.299,
+      "trailing_stop_positive": 0.099,
+      "trailing_stop_positive_offset": 0.178,
       "trailing_only_offset_is_reached": false
     },
     "max_open_trades": {
-      "max_open_trades": -1
+      "max_open_trades": 8
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-02-13 08:24:19.608950+00:00"
+  "export_time": "2025-02-14 16:45:39.292122+00:00"
 }
