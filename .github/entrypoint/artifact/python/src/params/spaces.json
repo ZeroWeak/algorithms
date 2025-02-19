@@ -2,20 +2,18 @@
   "strategy_name": "fibbo",
   "params": {
     "buy": {
-      "buy_additional_indicator": "STOCH_OSC",
-      "buy_fast_dema": "8",
-      "buy_fib_level": "0.382",
+      "buy_additional_indicator": "DEMA, TTM",
+      "buy_fast_dema": "13",
+      "buy_fib_level": "0.618",
       "buy_rsi": 41,
       "buy_slow_ema": "34",
-      "buy_stoch_osc": 24,
       "swing_period": 67
     },
     "sell": {
-      "sell_additional_indicator": "STOCH_OSC",
+      "sell_additional_indicator": "FIBBO, MACD",
       "sell_fib_level": "0.382",
       "sell_rsi": 87,
-      "sell_rsi_threshold": 64,
-      "sell_stoch_osc": 98
+      "sell_rsi_threshold": 64
     },
     "protection": {
       "cooldown_lookback": 7,
@@ -28,13 +26,13 @@
       "use_stop_protection": true
     },
     "roi": {
-      "0": 0.07999999999999999,
-      "4": 0.028999999999999998,
+      "0": 0.0786,
+      "4": 0.0238,
       "11": 0.006,
       "19": 0
     },
     "stoploss": {
-      "stoploss": -0.337
+      "stoploss": -0.137
     },
     "trailing": {
       "trailing_stop": true,
