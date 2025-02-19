@@ -119,7 +119,7 @@ jobs:
     ## ✔️ Completeness status
     needs: lexering
     runs-on: ${{ matrix.config.os }}
-    if: ${{ always() && (needs.lexering.result == 'success') }}
+    if: ${{ needs.lexering.result == 'success' }}
     continue-on-error: ${{ matrix.config.id == 3 && false || true }}
      
     steps:
