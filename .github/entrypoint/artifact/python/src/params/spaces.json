@@ -20,6 +20,7 @@
       "max_open_trades": Infinity
     },
     "buy": {
+      "SmoothK": 2,
       "buy_additional_indicator": "NONE",
       "buy_fast_dema": "13",
       "buy_fib_level": "0.618",
@@ -27,9 +28,8 @@
       "buy_slow_ema": "34",
       "buy_stoch_osc": 10,
       "buy_swing_period": 50,
-      "period": 14,
-      "SmoothK": 2,
-      "smoothD": 2
+      "smoothD": 2,
+      "period": 46
     },
     "sell": {
       "sell_additional_indicator": "NONE",
@@ -50,5 +50,5 @@
     }
   },
   "ft_stratparam_v": 1,
-  "export_time": "2025-02-20 10:25:41.340327+00:00"
+  "export_time": "2025-02-20 12:57:00.374889+00:00"
 }
