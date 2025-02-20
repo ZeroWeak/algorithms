@@ -20,7 +20,7 @@
       "max_open_trades": Infinity
     },
     "buy": {
-      "buy_additional_indicator": "NONE",
+      "buy_additional_indicator": "STOCHRSI",
       "buy_fast_dema": "13",
       "buy_fib_level": "0.618",
       "buy_slow_ema": "34",
@@ -28,7 +28,7 @@
       "buy_rsi": 45
     },
     "sell": {
-      "sell_additional_indicator": "NONE",
+      "sell_additional_indicator": "STOCHRSI",
       "sell_fib_level": "0.382",
       "sell_rsi_threshold": 64,
       "sell_rsi": 70
