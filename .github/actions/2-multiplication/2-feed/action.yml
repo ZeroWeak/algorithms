@@ -192,9 +192,11 @@ runs:
         runcmd:
         - systemctl stop docker
         - mkdir -p /mnt/disks/deeplearning/var/lib/docker/cos /mnt/disks/deeplearning/home
-        - mv /var/lib/docker/* /mnt/disks/deeplearning/var/lib/docker/cos/
-        - rm -rf /var/lib/docker
-        - ln -s /mnt/disks/deeplearning/var/lib/docker/cos /var/lib/docker
+        - mv /var/lib/docker/* /mnt/disks/deeplearning/var/lib/docker/cos/ || true
+        - find /var/lib/docker -mindepth 1 -delete
+        - rmdir /var/lib/docker || true
+        - chattr +i /var/lib/docker
+        - mount --bind /mnt/disks/deeplearning/var/lib/docker/cos /var/lib/docker
         - systemctl daemon-reload
         - systemctl start docker
         - docker run --rm --pull=always --entrypoint "" -v /mnt/disks/deeplearning/home:/mnt/disks/deeplearning/home eq19/feed:spin-${{ env.IMAGE_TAG }} sh -c "cp -r /home/runner /mnt/disks/deeplearning/home/"
