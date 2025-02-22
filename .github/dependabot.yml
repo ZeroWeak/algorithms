@@ -1,8 +1,10 @@
-# Keep GitHub Actions up to date with Dependabot...
-# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "daily"
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: saturday
+    time: "15:00"
+    timezone: Asia/Shanghai
+  open-pull-requests-limit: 10
