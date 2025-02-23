@@ -32,7 +32,7 @@ jobs:
           - { os: macos-latest, id: 2 }
     env:
       ID: ${{ matrix.config.id }}
-      DOC: '${{ vars.TARGET_REPOSITORY }}.wiki'
+      DOC: '${{ GITHUB_REPOSITORY }}.wiki'
 
     # 🔧 Commutation relations
     runs-on: ${{ matrix.config.os }}
