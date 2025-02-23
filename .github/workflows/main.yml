@@ -44,7 +44,7 @@ jobs:
         with:
           submodules: recursive
           token: ${{ secrets.ACCESS_TOKEN }}
-          repository: ${{ env.ID != 1 && env.DOC || '' }}
+          repository: ${{ env.ID == 1 && env.DOC || '' }}
 
       - name: ⚙️ Build Maps
         uses: eq19/maps@v8
