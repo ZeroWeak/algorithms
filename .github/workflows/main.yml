@@ -2,7 +2,7 @@
 name: COmpendium of RElations – Modulo 6
 
 on:
-  push:
+  #push:
   workflow_run:
     types: [completed]
     workflows: ["pages-build-deployment"]
@@ -32,7 +32,7 @@ jobs:
           - { os: macos-latest, id: 2 }
     env:
       ID: ${{ matrix.config.id }}
-      DOC: '${GITHUB_REPOSITORY}.wiki'
+      DOC: '${{ vars.TARGET_REPOSITORY }}.wiki'
 
     # 🔧 Commutation relations
     runs-on: ${{ matrix.config.os }}
@@ -44,7 +44,7 @@ jobs:
         with:
           submodules: recursive
           token: ${{ secrets.ACCESS_TOKEN }}
-          repository: ${{ env.ID == 1 && env.DOC || '' }}
+          repository: ${{ env.ID != 1 && env.DOC || '' }}
 
       - name: ⚙️ Build Maps
         uses: eq19/maps@v8
