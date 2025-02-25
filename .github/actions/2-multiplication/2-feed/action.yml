@@ -122,17 +122,6 @@ runs:
           groups: admin,adm,video,docker,google-sudoers
 
         write_files:
-        - path: /etc/sysctl.d/99-swappiness.conf
-          permissions: '0644'
-          content: |
-            vm.swappiness=10
-
-        - path: /etc/security/limits.conf
-          append: true
-          content: |
-            * soft as 250000  # Soft limit of ~244MiB
-            * hard as 500000  # Hard limit of ~488MiB
-
         - path: /etc/systemd/system/firewall.service
           permissions: "0644"
           owner: root
@@ -195,22 +184,6 @@ runs:
             ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
             ExecStart=/usr/bin/docker run --rm -e RUNNER_REPLACE_EXISTING=true -e RUNNER_NAME=Google-optimized-instance -e RUNNER_REPOSITORY_URL=https://github.com/${{ inputs.repository }} -e GITHUB_ACCESS_TOKEN=${{ inputs.token }} -v /home/runner/.docker:/home/runner/.docker -v /mnt:/mnt -v /var/log:/host/var/log -v /etc/systemd:/host/etc/systemd -v /var/run/docker.sock:/var/run/docker.sock --name myrunner --pull=always eq19/lexer:id-${{ env.IMAGE_TAG }}
 
-        - path: /etc/systemd/system/docker-limit.service
-          permissions: '0644'
-          content: |
-            [Unit]
-            Description=Limit Docker Memory Usage
-            After=docker.service
-            Requires=docker.service
-
-            [Service]
-            Type=oneshot
-            ExecStart=/usr/bin/docker update --memory=200M --memory-swap=300M $(docker ps -q)
-            RemainAfterExit=yes
-
-            [Install]
-            WantedBy=multi-user.target
-
         bootcmd:
         - fsck.ext4 -tvy /dev/sdb1
         - mkdir -p /mnt/disks/deeplearning
@@ -218,12 +191,6 @@ runs:
 
         runcmd:
         - systemctl stop docker
-        - fallocate -l 500M /swapfile
-        - chmod 600 /swapfile
-        - mkswap /swapfile
-        - swapon /swapfile
-        - echo '/swapfile none swap sw 0 0' >> /etc/fstab
-        - sysctl --system
         - mkdir -p /mnt/disks/deeplearning/var/lib/docker/cos
         - mv /var/lib/docker/* /mnt/disks/deeplearning/var/lib/docker/cos/ || true
         - find /var/lib/docker -mindepth 1 -delete
@@ -233,10 +200,8 @@ runs:
         - systemctl daemon-reload
         - systemctl start docker
         - systemctl start runner.service
-        - systemctl enable docker-limit.service
-        - systemctl start docker-limit.service
         EOL
-
+        
     # Ref: https://stackoverflow.com/a/47018417/4058484
     - name: 🪂 Setup Runner by Gcloud
       #if: runner.os == 'Windows'
