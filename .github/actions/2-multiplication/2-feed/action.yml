@@ -164,7 +164,7 @@ runs:
             Environment="HOME=/home/runner"
             ExecStop=/usr/bin/docker exec mydb -s quit
             ExecStartPre=/usr/bin/docker-credential-gcr configure-docker
-            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e TELEGRAM_CHAT_ID=${{ inputs.chat_id }} -e MONITOR_BOT_TOKEN=${{ inputs.bot_token }} -e WARNING_BOT_TOKEN=${{ inputs.logs_token }} -v /mnt:/mnt --memory-swap=2G --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
+            ExecStart=/usr/bin/docker run --rm -e POSTGRES_DB=postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e TELEGRAM_CHAT_ID=${{ inputs.chat_id }} -e MONITOR_BOT_TOKEN=${{ inputs.bot_token }} -e WARNING_BOT_TOKEN=${{ inputs.logs_token }} -v /mnt:/mnt --name=mydb -p 5432:5432 --pull=always eq19/feed:spin-${{ env.IMAGE_TAG }}
 
         - path: /etc/systemd/system/runner.service
           permissions: "0644"
@@ -200,7 +200,6 @@ runs:
         - systemctl daemon-reload
         - systemctl start docker
         - systemctl start runner.service
-        - /usr/bin/docker exec mydb sh -c 'if [ ! -f /swapfile ]; then fallocate -l 2G /swapfile || dd if=/dev/zero of=/swapfile bs=1M count=2048; chmod 600 /swapfile; mkswap /swapfile; swapon /swapfile; sysctl vm.swappiness=10; fi'
         EOL
         
     # Ref: https://stackoverflow.com/a/47018417/4058484
