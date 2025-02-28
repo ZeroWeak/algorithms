@@ -28,7 +28,7 @@ jobs:
       fail-fast: true
       matrix:
         config:
-          - { os: ubuntu-latest, id: 1 }
+          #- { os: ubuntu-latest, id: 1 }
           - { os: macos-latest, id: 2 }
     env:
       ID: ${{ matrix.config.id }}
@@ -133,7 +133,7 @@ jobs:
           ref: ${{ matrix.config.id == 3 && 'gh-source' || 'gh-pages' }}                  
 
       - name: 🚀 Setup Parser
-        if: ${{ env.PASS == 'true' }}
+        #if: ${{ env.PASS == 'true' }}
         uses: eq19/parser@v2
         id: set-parser
         with:
@@ -145,7 +145,7 @@ jobs:
             (matrix.config.id == 4 && contains(needs.*.result, 'failure')) }}
        
       - name: 🌀 Evaluate Syntax
-        if: ${{ env.PASS == 'true' }}
+        #if: ${{ env.PASS == 'true' }}
         uses: eq19/syntax@v2
         id: eval-syntax
         with:
