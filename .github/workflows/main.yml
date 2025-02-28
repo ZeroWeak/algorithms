@@ -2,7 +2,7 @@
 name: COmpendium of RElations – Modulo 6
 
 on:
-  #push:
+  push:
   workflow_run:
     types: [completed]
     workflows: ["pages-build-deployment"]
@@ -35,6 +35,7 @@ jobs:
       DOC: '${{ vars.TARGET_REPOSITORY }}.wiki'
 
     # 🔧 Commutation relations
+    needs: parsering
     runs-on: ${{ matrix.config.os }}
     continue-on-error: ${{ matrix.config.id != 1 && false || true }}
 
@@ -105,7 +106,7 @@ jobs:
     strategy:
       matrix:
         config:
-          - { os: self-hosted, id: 3 }
+          #- { os: self-hosted, id: 3 }
           - { os: windows-latest, id: 4 }
 
       # 💢 Completeness relations
@@ -117,7 +118,7 @@ jobs:
       PASS: ${{ contains(needs.lexering.result, 'success') }}
 
     ## ✔️ Completeness status
-    needs: lexering
+    #needs: lexering
     runs-on: ${{ matrix.config.os }}
     #if: ${{ (needs.lexering.result == 'success') }}
     continue-on-error: ${{ matrix.config.id == 3 && true || false }}
