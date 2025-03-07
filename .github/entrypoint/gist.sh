@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
+hr='------------------------------------------------------------------------------------'
+
 # Clean up
 rm -rf ${RUNNER_TEMP}/*dir
+rm -rf ${RUNNER_TEMP}/README.md
 
 # Clone wiki
 git clone $1 ${RUNNER_TEMP}/wikidir
-mv -f ${RUNNER_TEMP}/wikidir/Home.md ${RUNNER_TEMP}/wikidir/README.md
+mv -f ${RUNNER_TEMP}/wikidir/Home.md ${RUNNER_TEMP}/README.md
 
 # Take titles from _Sidebar.md of wiki
 sed -i 's/0. \[\[//g' ${RUNNER_TEMP}/wikidir/_Sidebar.md
@@ -46,5 +49,6 @@ cat ${RUNNER_TEMP}/spin.txt
 cp -R ${RUNNER_TEMP}/gistdir/* ${RUNNER_TEMP}/wikidir/
 find ${RUNNER_TEMP}/wikidir -iname '*.md' -print0 | sort -zn | xargs -0 -I '{}' front.sh '{}'
 
+echo -e "\n$hr\nWiki Dir: $2\n$hr"
 cp -R ${RUNNER_TEMP}/wikidir/* $2/
-ls -al $2
+cat ${RUNNER_TEMP}/README.md >> $2/README.md && ls -al $2
