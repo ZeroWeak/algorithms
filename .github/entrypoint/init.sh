@@ -67,7 +67,7 @@ if [[ "${JOB_ID}" == "1" ]]; then
   else
     #PARAMS=.github/entrypoint/artifact/python/src/params/spaces.json
     #mv -f ${GITHUB_WORKSPACE}/$PARAMS $1/dataFile/user_data/strategies/fibbo.json
-    echo "${PARAMS_JSON}" | jq '.' > output.json> $1/dataFile/user_data/strategies/fibbo.json
+    echo "${PARAMS_JSON}" | jq '.' > $1/dataFile/user_data/strategies/fibbo.json
 
     if jq empty < $1/dataFile/user_data/strategies/fibbo.json; then
       echo "Valid JSON" && cat $1/dataFile/user_data/strategies/fibbo.json
