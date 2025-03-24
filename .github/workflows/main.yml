@@ -120,7 +120,7 @@ jobs:
     needs: lexering
     runs-on: ${{ matrix.config.os }}
     #if: ${{ (needs.lexering.result == 'success') }}
-    continue-on-error: ${{ env.JOBS_ID == 3 && true || false }}
+    continue-on-error: ${{ matrix.config.jobs_id == 3 && true || false }}
      
     steps:
       - name: 📂 Checkout
