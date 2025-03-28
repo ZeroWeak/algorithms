@@ -120,7 +120,7 @@ runs:
         
         ##Ref: https://github.com/tsoding/JelloVM
         cd ${{ inputs.action_path }} && javac -d dataFile/user_data/ft_client/test_client javaCode/Main.java
-        python app.py output.txt && cat dataFile/results/output.txt
+        cd dataFile/user_data/ft_client/test_client && python app.py output.txt && cat results/output.txt
 
         ##Ref: https://github.com/eq19/maps/tree/v3/pythonCode
         ##python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
