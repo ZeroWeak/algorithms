@@ -77,8 +77,9 @@ if [[ "${JOBS_ID}" == "1" ]]; then
       echo "Invalid JSON"
     fi
 
-    cd ${GITHUB_WORKSPACE} && mv -f $1/dataFile/user_data . && ls -al . 
     if [[ "${RERUN_RUNNER}" != "false" ]]; then gh variable set RERUN_RUNNER --body "false"; fi
+    cd $1 && javac -d dataFile/user_data/ft_client/test_client javaCode/Main.java
+    cd ${GITHUB_WORKSPACE} && mv -f $1/dataFile/user_data . && ls -al . 
 
   fi
 
