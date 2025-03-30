@@ -96,19 +96,19 @@ runs:
         username: ${{ inputs.hub_username }}
         password: ${{ inputs.hub_token }}
         
-    - uses: actions/setup-python@v5
-      with:
-        python-version: 3.12
-        allow-prereleases: true
+    #- uses: actions/setup-python@v5
+      #with:
+        #python-version: 3.12
+        #allow-prereleases: true
 
-    - uses: actions/cache@v4
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip
+    #- uses: actions/cache@v4
+      #with:
+        #path: ~/.cache/pip
+        #key: ${{ runner.os }}-pip
 
-    - name: Install dependencies
-      shell: bash
-      run: |
+    #- name: Install dependencies
+      #shell: bash
+      #run: |
         #python -m pip -q install --upgrade pip
         #python -m pip -q install -r ${{ inputs.action_path }}/dataFile/requirements.txt
   
@@ -120,9 +120,6 @@ runs:
         
         ##Ref: https://github.com/tsoding/JelloVM
         #cd ${{ inputs.action_path }} && javac javaCode/Main.java
-
-        cd user_data/ft_client/test_client && ls -al .
-        python app.py output.txt && cat results/output.txt
 
         ##Ref: https://github.com/eq19/maps/tree/v3/pythonCode
         ##python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
