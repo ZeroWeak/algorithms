@@ -34,6 +34,8 @@ $RECYCLE.BIN/
 
 # bundler
 *.gem
+vendor/
+.bundle/
 Gemfile.lock
 
 
@@ -48,16 +50,18 @@ package-lock.json
 
 # lighthouse
 *.report.html
+gha-creds-*.json
 
 
 # build
-.github/
-.devcontainer/
-.devcontainer.json
+#.env
+#.github
+#.devcontainer/
+#.devcontainer.json
 
 
 # action
-action.yml
+#action.yml
 action.changelog.md
 
 
