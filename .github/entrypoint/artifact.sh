@@ -111,7 +111,7 @@ jekyll_build() {
   echo 'ID='${SITEID} >> ${GITHUB_ENV}
   cat ${RUNNER_TEMP}/_config.yml
 
-  if [[ "$(next_repo "${TARGET_REPOSITORY}")" != *"eq19/"* ]]; then
+  if [[ "${TARGET_REPOSITORY}" != *"eq19/"* ]]; then
 
     echo -e "\nTest Module Structure:"
     echo "1. ${OWNER}/maps → $(next_repo "${OWNER}/maps")"
