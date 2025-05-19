@@ -2,7 +2,7 @@
 # Structure: Cell Types – Modulo 6
 # https://www.hexspin.com/proof-of-confinement/
 
-export hr='------------------------------------------------------------------------------------'
+hr='------------------------------------------------------------------------------------'
 
 set_config() {
   echo -e "\n$hr\nCONFIG\n$hr"
@@ -23,9 +23,8 @@ set_config() {
   else
     echo "Invalid JSON"
   fi
-    
-  echo -e "\n$hr\nENVIRONTMENT\n$hr"
-  printenv | sort
+
+  echo -e "\n$hr\nENVIRONTMENT\n$hr" && printenv | sort
 }
 
 git config --global user.name "${GITHUB_ACTOR}"
@@ -65,13 +64,10 @@ if [[ "${JOBS_ID}" == "1" ]]; then
 
   BASE_FOLDER="/home/runner/work/_actions/eq19/eq19/v2/.github"
   if diff -qr ${GITHUB_WORKSPACE}/.github ${BASE_FOLDER} > /dev/null; then set_config $1; fi
-
-  cd ${GITHUB_WORKSPACE} && rm -rf .github
-  cp -r /home/runner/work/_actions/eq19/eq19/v2/.github .
-  chown -R "$(whoami)" .github
+  cd ${GITHUB_WORKSPACE} && rm -rf .github && cp -r ${BASE_FOLDER} . && chown -R "$(whoami)" .github
 
   git remote set-url origin ${REMOTE_REPO}        
-  git add . && git commit -m "update workflows" --quiet && git push --quiet
+  CLEAN_STATUS=$(git add . && git commit -m "update workflows" --quiet && git push --quiet)
 
   if [[ $? -eq 0 ]]; then
 
@@ -110,14 +106,12 @@ if [[ "${JOBS_ID}" == "1" ]]; then
 
 elif [[ "${JOBS_ID}" == "2" ]]; then
 
-  ls -alR $GITHUB_WORKSPACE
+  echo -e "\n$hr\nENVIRONTMENT\n$hr" && printenv | sort
+  echo -e "\n$hr\nWORKSPACE\n$hr" && ls -alR $GITHUB_WORKSPACE
 
   echo -e "\n$hr\nGH BRANCHES\n$hr"
   cd $RUNNER_TEMP && mkdir my-project && cd my-project && git init -q
   git remote add source "$REMOTE_REPO" && git remote add origin "$TARGET_REPO"
-
-  # Get fresh branch lists
-  git fetch --all
 
   # Get list of existing target branches
   existing_target_branches=$(git ls-remote --heads origin | awk -F'/' '{print $3}')
@@ -140,8 +134,9 @@ elif [[ "${JOBS_ID}" == "2" ]]; then
     else
       # Existing branch case
       if [[ "$local_branch" == "gh-pages" ]]; then
+        git fetch origin gh-pages
         # Check if 'docs/' exists in remote
-        if ! git ls-tree --name-only "origin/gh-pages" | grep -q "^docs/"; then
+        if ! git ls-tree --name-only "origin/gh-pages" | grep -q "^docs"; then
           echo "No docs/ found - recreating gh-pages"
           # Ensure local branch exists
           if ! git show-ref --verify --quiet "refs/heads/gh-pages"; then
