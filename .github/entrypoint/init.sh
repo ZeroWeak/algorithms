@@ -7,7 +7,7 @@ hr='----------------------------------------------------------------------------
 set_config() {
   echo -e "\n$hr\nCONFIG\n$hr"
   cat /home/runner/work/_actions/eq19/eq19/v2/.github/templates/jekyll_config.yml > $RUNNER_TEMP/_config.yml
-  export PATH=/home/runner/work/_actions/eq19/eq19/v2/.github/entrypoint:$PATH && source artifact.sh
+  export PATH=/home/runner/work/_actions/eq19/eq19/v2/.github/entrypoint:$PATH && bash artifact.sh
 
   cat $RUNNER_TEMP/orgs.json > $1/user_data/ft_client/test_client/results/orgs.json
   gh variable set JEKYLL_CONFIG --body "$(cat $RUNNER_TEMP/_config.yml)"
