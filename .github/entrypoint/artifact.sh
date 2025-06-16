@@ -8,7 +8,6 @@ set_target() {
   # Get Structure
   if [[ $2 == *"github.io"* ]]; then
     [[ -n "$CELL" ]] && SPIN=$(( $CELL * 13 ))
-echo "SPIN=$SPIN"
     if [[ "${OWNER}" == "eq19" ]]; then
       echo "maps, feed, lexer, parser, syntax, grammar" > ${RUNNER_TEMP}/pinned_repos
     else
@@ -38,6 +37,7 @@ echo "SPIN=$SPIN"
     SPAN=0; echo ${array[0]}
   elif [[ "${array[-1]}" == "$1" ]]; then
     SPAN=${#array[@]}; echo $2 | sed "s|${OWNER}.github.io|${ENTRY}.github.io|g"
+echo "SPAN1=$SPAN"
     if [[ -n "$CELL" ]]; then
       if [[ "${ENTRY}" == "eq19" ]]; then
         echo "maps, feed, lexer, parser, syntax, grammar" > ${RUNNER_TEMP}/pinned_repos
@@ -53,6 +53,7 @@ echo "SPIN=$SPIN"
         SPAN=$(( $i + 1 )); echo ${array[$SPAN]}
       fi
     done
+echo "SPAN2=$SPAN"
   fi
   
   # Generate id from the Structure
