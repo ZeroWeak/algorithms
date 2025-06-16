@@ -36,7 +36,6 @@ set_target() {
   if [[ ! "${array_str},," =~ ",,$1,," ]]; then
     SPAN=0; echo ${array[0]}
   elif [[ "${array[-1]}" == "$1" ]]; then
-    echo "var1=$1"
     SPAN=${#array[@]}; echo $2 | sed "s|${OWNER}.github.io|${ENTRY}.github.io|g"
     if [[ -n "$CELL" ]]; then
       if [[ "${ENTRY}" == "eq19" ]]; then
@@ -56,7 +55,9 @@ set_target() {
   fi
   
   # Generate id from the Structure
+echo "SPIN1=$SPIN"
   [[ -z "$SPIN" ]] && if [[ "$1" != "$2" ]]; then SPIN=0; else SPIN=13; fi
+echo "SPIN2=$SPIN"
   if [[ -n "$CELL" ]]; then
     SPANPLUS=$(($SPAN + 1))
     if (( $CELL == 0 )); then MOD=7; else MOD=13; fi
