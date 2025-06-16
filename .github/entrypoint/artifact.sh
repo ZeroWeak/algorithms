@@ -36,7 +36,6 @@ set_target() {
   if [[ ! "${array_str},," =~ ",,$1,," ]]; then
     SPAN=0; echo ${array[0]}
   elif [[ "${array[-1]}" == "$1" ]]; then
-echo "SPIN1=$SPIN"
     SPAN=${#array[@]}; echo $2 | sed "s|${OWNER}.github.io|${ENTRY}.github.io|g"
     if [[ -n "$CELL" ]]; then
       if [[ "${ENTRY}" == "eq19" ]]; then
@@ -78,10 +77,9 @@ echo "SPIN1=$SPIN"
 }
 
 jekyll_build() {
-echo "var3=$3"
   
   [[ $1 == *"github.io"* ]] && OWNER=$2
-  [[ $1 != "eq19.github.io" ]] && SITEID=$(( $3 + 2 ))
+  [[ $1 == "eq19.github.io" ]] && SITEID=169 || SITEID=$(( $3 + 2 )) 
   
   if  [[ "${OWNER}" == "eq19" ]]; then
     sed -i "1s|^|description: An attempt to discover the Final Theory\n\n|" ${RUNNER_TEMP}/_config.yml
