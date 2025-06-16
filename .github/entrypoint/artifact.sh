@@ -49,7 +49,7 @@ set_target() {
   else
     for ((i=0; i < ${#array[@]}; i++)); do
       if [[ "${array[$i]}" == "$1" && "$i" -lt "${#array[@]}-1" ]]; then 
-        SPAN=$(( $i + 1 )); echo ${array[$SPAN]}
+        SPAN=$i; echo ${array[$SPAN]}
       fi
     done
   fi
