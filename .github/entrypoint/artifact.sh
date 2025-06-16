@@ -77,6 +77,7 @@ set_target() {
 }
 
 jekyll_build() {
+  echo "var3=$3"
   
   [[ $1 == *"github.io"* ]] && OWNER=$2
   [[ $1 != "eq19.github.io" ]] && SITEID=$(( $3 + 2 ))
