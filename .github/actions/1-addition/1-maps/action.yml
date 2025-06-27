@@ -224,3 +224,10 @@ runs:
         MAX_DELETIONS: 15
       run: |
         ./.github/entrypoint/remote.sh
+
+    - name: ⚧️ Rerun workflow if failed
+      if: ${{ failure() }}
+      shell: bash
+      run: |
+        [[ "$GITHUB_JOB" == "lexering" ]] && gh workflow run "main.yml"
+        exit 1
