@@ -114,9 +114,9 @@ runs:
         DOCKER_HUB_PASSWORD: ${{ inputs.hub_password }}
         GCP_CREDENTIALS: ${{ inputs.credentials }}
       run: |
+        gh variable set ORGS_JSON --body "$(cat $RUNNER_TEMP/orgs.json)"
         secrets=$(curl -s -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${{ github.repository }}/actions/secrets" | jq -r '.secrets[].name')
         for secret in $secrets; do gh secret set $secret --repo ${{ env.TARGET_REPOSITORY }} --body "${!secret}"; done
-        gh variable set ORGS_JSON --body "$(cat $RUNNER_TEMP/orgs.json)"
 
         mv -f .github/entrypoint/dockerfile/* ${{ inputs.action_path }}/
         cd ${{ github.workspace }}/_site && rm -rf .git .devcontainer.json Dockerfile*
