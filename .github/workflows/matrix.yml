@@ -55,10 +55,21 @@ jobs:
           ./install_ta-lib.sh > /dev/null 2>&1 && rm -rf *.txt
 
           # Download requirement files from Freqtrade 2025.10 (corrected)
-          curl -s https://api.github.com/repos/freqtrade/freqtrade/contents?ref=2025.10 \
+          #curl -s https://api.github.com/repos/freqtrade/freqtrade/contents?ref=2025.10 \
+            #| jq -r '.[] | select(.name | test("^requirements(-.*)?\\.txt$")) | .path' \
+            #| xargs -I{} curl -sO "https://raw.githubusercontent.com/freqtrade/freqtrade/2025.10/{}"
+
+          for i in {1..20}; do
+            response=$(curl -s https://api.github.com/repos/freqtrade/freqtrade/contents?ref=2025.10)
+            echo "$response" | jq -e 'type=="array"' >/dev/null && break
+            echo "GitHub API returned non-array. Retrying..."
+            sleep 2
+          done
+
+          echo "$response" \
             | jq -r '.[] | select(.name | test("^requirements(-.*)?\\.txt$")) | .path' \
             | xargs -I{} curl -sO "https://raw.githubusercontent.com/freqtrade/freqtrade/2025.10/{}"
-
+          
           pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-plot.txt
           pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-hyperopt.txt
           pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-freqai-rl.txt
