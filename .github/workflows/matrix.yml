@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: ⚙️ Build Maps
         uses: eq19/maps@v8
@@ -79,7 +79,7 @@ jobs:
 
       - name: ⚙️ Get artifact ID
         id: get-artifact-id
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
