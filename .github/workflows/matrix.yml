@@ -81,22 +81,34 @@ jobs:
         id: get-artifact-id
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const matrix = JSON.parse(context.payload.inputs.matrix_json);
             const artifactName = 'freqtrade-data';
             const runId = matrix.run_id;
 
-            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: runId,
-            });
+            for (let i = 0; i < 20; i++) {
+              try {
+                const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  run_id: runId,
+                });
 
-            const match = artifacts.data.artifacts.find(a => a.name === artifactName);
-            if (!match) {
-              throw new Error(`Artifact '${artifactName}' not found in run ${runId}`);
+                const match = artifacts.data.artifacts.find(a => a.name === artifactName);
+
+                if (match) {
+                  core.setOutput('artifact_id', match.id);
+                  return;
+                }
+
+              } catch (e) {
+                console.log(`Attempt ${i + 1} failed: ${e.message}`);
+                await new Promise(r => setTimeout(r, 2000));
+              }
             }
-            core.setOutput('artifact_id', match.id);
+
+            throw new Error("Artifact lookup failed after retries");
 
       - name: Download artifact zip using curl
         run: |
