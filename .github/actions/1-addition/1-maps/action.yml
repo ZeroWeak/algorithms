@@ -154,12 +154,12 @@ runs:
 
         echo "📌 Workspace successfully expanded." && df -h
 
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@v6
       with:
         python-version: 3.11
         allow-prereleases: true
 
-    - uses: actions/cache@v4
+    - uses: actions/cache@v5
       if: runner.os == 'Redis'
       with:
         path: ~/.cache/pip
@@ -167,7 +167,7 @@ runs:
 
     - name: 💎 Set ID Token
       if:  ${{ env.RERUN_RUNNER == 'false' }}
-      uses: 'google-github-actions/auth@v2'
+      uses: 'google-github-actions/auth@v3'
       id: 'auth'
       with:
         token_format: 'id_token'
