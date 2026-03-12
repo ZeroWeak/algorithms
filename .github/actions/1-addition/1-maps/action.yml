@@ -176,7 +176,7 @@ runs:
         id_token_audience: 'https://us-central1-marketleader.cloudfunctions.net/function'
 
     - name: Install dependencies
-      if:  ${{ env.RERUN_RUNNER == 'false' }}
+      if: ${{ env.RERUN_RUNNER == 'false' }}
       shell: bash
       env:
         BEARER: ${{ steps.auth.outputs.id_token }}
@@ -184,16 +184,24 @@ runs:
         ARTIFACT: "user_data/ft_client/test_client/results/orgs.json"
       run: |
         python -m pip -q install --upgrade pip
-        python -m pip -qqq install "tensorflow-cpu==2.20.0"
-        #python -m pip -qqq install -r ${{ inputs.action_path }}/dataFile/requirements.txt
 
-        ##Ref: https://iree.dev/guides/ml-frameworks/tensorflow/
-        python -m pip -q install --pre iree-base-compiler iree-base-runtime iree-tools-tf -f https://iree.dev/pip-release-links.html
+        # Retry install TensorFlow
+        for i in {1..20}; do
+          python -m pip -qqq install "tensorflow-cpu==2.20.0" && break
+          echo "TensorFlow install failed. retry $i..."
+          sleep 5
+        done
+
+        # Retry install IREE packages
+        for i in {1..20}; do
+          python -m pip -q install --pre iree-base-compiler iree-base-runtime iree-tools-tf -f https://iree.dev/pip-release-links.html && break
+          echo "IREE install failed. retry $i..."
+          sleep 5
+        done
+
+        # Run your pipeline
         python user_data/ft_client/test_client/app.py user_data ${{ env.ID }} ${{ env.PARAM || 'nil' }} ${{ env.EPOCHS || 100 }}
         bash user_data/ft_client/test_client/maps.sh
-  
-        ##python -m pip -q install -e ./.github/entrypoint/artifact/python
-        ##iree-compile --iree-llvmcpu-list-targets && iree-run-module --list_drivers
 
         ##Ref: https://github.com/iree-org/iree-experimental
         ##python ${{ inputs.action_path }}/pythonCode/testIREE.py
