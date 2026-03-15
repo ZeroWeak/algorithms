@@ -55,7 +55,7 @@ jobs:
           ./install_ta-lib.sh > /dev/null 2>&1 && rm -rf *.txt
 
           # Download requirement files from Freqtrade 2025.10 (corrected)
-          for f in requirements.txt requirements-dev.txt requirements-hyperopt.txt requirements-plot.txt requirements-freqai.txt; do
+          for f in requirements.txt requirements-dev.txt requirements-hyperopt.txt requirements-plot.txt requirements-freqai.txt requirements-freqai-rl.txt; do
             curl -fsSLO --retry 5 --retry-delay 2 \
             https://raw.githubusercontent.com/freqtrade/freqtrade/2025.10/$f || true
           done          
