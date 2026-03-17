@@ -121,9 +121,10 @@ runs:
         ./install_ta-lib.sh > /dev/null 2>&1 && rm -rf *.txt
 
         # Download requirement files from Freqtrade 2025.10 (corrected)
-        curl -s https://api.github.com/repos/freqtrade/freqtrade/contents?ref=2025.10 \
-          | jq -r '.[] | select(.name | test("^requirements(-.*)?\\.txt$")) | .path' \
-          | xargs -I{} curl -sO "https://raw.githubusercontent.com/freqtrade/freqtrade/2025.10/{}"
+        for f in requirements.txt requirements-dev.txt requirements-hyperopt.txt requirements-plot.txt requirements-freqai.txt requirements-freqai-rl.txt; do
+          curl -fsSLO --retry 5 --retry-delay 2 \
+          https://raw.githubusercontent.com/freqtrade/freqtrade/2025.10/$f || true
+        done
 
         pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-plot.txt
         pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-hyperopt.txt
