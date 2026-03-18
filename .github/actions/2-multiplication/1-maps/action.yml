@@ -117,7 +117,15 @@ runs:
 
         if [ "$job1_status" = "cancelled" ]; then
           echo "Job 1 was cancelled (timeout confirmed)."
-          gh workflow run "main.yml" --repo $REPO_NAME --raw-field "FREQAI_MODEL=$FREQAI_MODEL" --raw-field "REDUCE_EPOCH=true"
+
+          if [ "$REDUCE_EPOCH" = "false" ]; then
+            REDUCE_EPOCH="2"
+          else
+          # Multiply by 2 (assuming it's a number)
+            REDUCE_EPOCH=$((REDUCE_EPOCH * 2))
+          fi
+          
+          gh workflow run "main.yml" --repo $REPO_NAME --raw-field "FREQAI_MODEL=$FREQAI_MODEL" --raw-field "REDUCE_EPOCH=$REDUCE_EPOCH"
         else
           echo "Job 1 was NOT cancelled."
         fi
