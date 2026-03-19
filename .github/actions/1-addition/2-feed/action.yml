@@ -134,7 +134,7 @@ runs:
         cd ${{ github.workspace }} && bash user_data/ft_client/test_client/feed.sh
 
     - name: Upload downloaded data as artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       if: env.RERUN_RUNNER == 'false'
       with:
         name: freqtrade-data
