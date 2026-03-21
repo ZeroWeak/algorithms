@@ -195,6 +195,7 @@ runs:
         # Retry install IREE packages
         for i in {1..20}; do
           python -m pip -q install --pre iree-base-compiler iree-base-runtime iree-tools-tf -f https://iree.dev/pip-release-links.html && break
+          ##python ${{ inputs.action_path }}/pythonCode/testIREE.py   
           echo "IREE install failed. retry $i..."
           sleep 5
         done
@@ -202,14 +203,6 @@ runs:
         # Run your pipeline
         python user_data/ft_client/test_client/app.py user_data ${{ env.ID }} ${{ env.PARAM || 'nil' }} ${{ env.EPOCHS || 100 }}
         bash user_data/ft_client/test_client/maps.sh
-
-        ##Ref: https://github.com/iree-org/iree-experimental
-        ##python ${{ inputs.action_path }}/pythonCode/testIREE.py
-        
-        #sudo apt-get update > /dev/null
-        #sudo apt-get install llvm-17 llvm-17-dev clang-17 mlir-17-tools > /dev/null
-        #export IREE_LLVM_ENABLE_BACKTRACE=1
-        #export LLVM_SYMBOLIZER_PATH=$(which llvm-symbolizer)
 
         ##Ref: https://github.com/eq19/maps/tree/v3/pythonCode
         ##python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
