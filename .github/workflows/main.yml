@@ -163,10 +163,10 @@ jobs:
 
     ## ✔️ Completeness status
     needs: lexering
-    #if: ${{ env.JOBS_ID == 4 }}
     runs-on: ${{ matrix.config.os }}
     continue-on-error: ${{ matrix.config.jobs_id == 3 && true || false }}
-     
+    if: ${{ always() && (github.event.inputs.BYPASS_LEXER == 'true' || needs.lexering.result == 'success') }}   
+
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v6
