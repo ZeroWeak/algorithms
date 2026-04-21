@@ -177,6 +177,7 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
     "strategies/fibbo.py"
     "strategies/__init__.py"
     "strategies/utils/__init__.py"
+    "strategies/utils/ccxt_patch.py"
     "strategies/utils/indodax_patch.py"
     "ft_client/test_client/results/results.txt"
     "config_examples/config_freqai.example.json"
@@ -192,6 +193,7 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
   GCLOUD="/mnt/disks/deeplearning/usr/bin/gcloud"  
   STATUS=$($DOCKER exec mydb supervisorctl status freqtrade_live)
   BASE_URL="https://raw.githubusercontent.com/eq19/maps/$MAP_BRANCH/user_data"
+  PARAMS_URL="https://raw.githubusercontent.com/eq19/maps/$MAP_BRANCH/pythonCode/params.py"
 
   # Get the config value and save to file.json
   curl -s -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github.v3+json" \
@@ -214,6 +216,7 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
   CONFIG_BASIC="$BASE_URL/config_examples/config_basic.example.json"
   CONFIG_PAIRLIST="$BASE_URL/config_examples/config_pairlist.example.json"
   CONFIG_EXCHANGE="$BASE_URL/config_examples/config_exchange.example.json"
+  BASE_PARAMS="/home/runner/user_data/ft_client/test_client/pythonCode/params.py"
   EXCHANGE_DRY="/home/runner/data_dry/config_examples/config_exchange.example.json"
   EXCHANGE_LIVE="/home/runner/data_live/config_examples/config_exchange.example.json"
   SIGNATURE=$(echo -n "$METHODS" | openssl sha512 -hmac "$API_SECRET" | cut -d' ' -f2)
@@ -225,9 +228,10 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
   set -euo pipefail
   $DOCKER exec mydb rm -rf "$CONFIG"
   $DOCKER exec mydb curl -sf -o "$CONFIG" "$CONFIG_BASIC"
+  $DOCKER exec mydb curl -sf -o "$BASE_PARAMS" "$PARAMS_URL"  
   $DOCKER exec mydb sed -i "s|your_telegram_chat_id|$TELEGRAM_CHAT_ID|g" $CONFIG
 
-  if [[ "$RERUN_RUNNER" == "true" ]]; then
+  if [[ "$RERUN_RUNNER" == "true" || $BYPASS_LEXER == "true" ]]; then
     DIRS=(
       "data_dry"
       "data_live"
