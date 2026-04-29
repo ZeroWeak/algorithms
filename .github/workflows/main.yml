@@ -27,7 +27,7 @@ on:
         required: false
         type: string
       BYPASS_LEXERING:
-        description: 'bypass lexer if is set true'
+        description: 'bypass lexering if is set true'
         default: 'false'
         required: false
         type: string
