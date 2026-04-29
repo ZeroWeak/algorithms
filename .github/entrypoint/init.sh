@@ -231,7 +231,7 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
   $DOCKER exec mydb curl -sf -o "$BASE_PARAMS" "$PARAMS_URL"  
   $DOCKER exec mydb sed -i "s|your_telegram_chat_id|$TELEGRAM_CHAT_ID|g" $CONFIG
 
-  if [[ "$RERUN_RUNNER" == "true" || $BYPASS_LEXER == "true" ]]; then
+  if [[ "$RERUN_RUNNER" == "true" || $BYPASS_LEXERING == "true" ]]; then
     DIRS=(
       "data_dry"
       "data_live"
