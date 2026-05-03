@@ -1,8 +1,14 @@
 name: Freqtrade Hyperopt Matrix
+run-name: "Freqtrade Matrix: ${{ inputs.run_name }}"
 
 on:
   workflow_dispatch:
     inputs:
+      run_name:
+        description: 'Custom run name'
+        default: 'Hyperopt'
+        required: false
+        type: string
       matrix_json:
         description: "Matrix JSON (as string)"
         required: true
