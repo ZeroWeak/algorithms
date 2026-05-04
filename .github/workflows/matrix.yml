@@ -1,10 +1,10 @@
-name: Freqtrade Hyperopt Matrix
-run-name: "Freqtrade Matrix: ${{ inputs.run_name }}"
+name: Freqtrade Matrix Jobs
+run-name: "Freqtrade Matrix: ${{ inputs.run_mode }}"
 
 on:
   workflow_dispatch:
     inputs:
-      run_name:
+      run_mode:
         description: 'Custom run name'
         default: 'Hyperopt'
         required: false
@@ -26,9 +26,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        hyperopts: ${{ fromJson(inputs.matrix_json).hyperopts }}
+        fields: ${{ fromJson(inputs.matrix_json).fields }}
 
     env:
+      RUN_MODE: ${{ inputs.run_mode }}
       GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       RUNNER_TITLE: "Google-optimized-instance"
       TARGET_REPOSITORY: ${{ vars.TARGET_REPOSITORY }}
@@ -123,7 +124,7 @@ jobs:
       - name: 🧠 Run Hyperopt
         timeout-minutes: 360
         env:
-          HYPEROPT: ${{ matrix.hyperopts }}
+          HYPEROPT: ${{ matrix.fields }}
           ID: ${{ fromJson(inputs.matrix_json).repo_id }}
           SPACE: ${{ fromJson(inputs.matrix_json).space }}
           SCORE: ${{ fromJson(inputs.matrix_json).score }}
@@ -134,4 +135,4 @@ jobs:
           echo "Score: $SCORE"
           echo "Running hyperopt..."
           echo "Reduce epoch: $REDUCE_EPOCH"
-          bash user_data/ft_client/test_client/feed.sh hyperopt
+          bash user_data/ft_client/test_client/feed.sh $RUN_MODE
