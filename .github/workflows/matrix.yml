@@ -1,5 +1,5 @@
 name: Freqtrade Matrix Jobs
-run-name: "Freqtrade Matrix: ${{ inputs.run_mode }}"
+run-name: "Freqtrade Matrix: ${{ inputs.run_mode }} (${{ vars.SCORE}})"
 
 on:
   workflow_dispatch:
