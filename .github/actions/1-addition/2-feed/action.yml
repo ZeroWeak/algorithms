@@ -152,7 +152,7 @@ runs:
         EXPECTED_SERVER_VERSION: 17
         EXPECTED_SSL: true
       run: |
-        bash user_data/ft_client/test_client/feed.sh hyperopt
+        bash user_data/ft_client/test_client/feed.sh $RUN_MODE
         ##cd /home/runner/work/_actions/eq19/eq19/v2/integrations/tensorflow
         ##pip install -e python_projects/* && iree-import-tflite -h && iree-import-tf -h
 
