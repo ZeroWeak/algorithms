@@ -125,14 +125,13 @@ jobs:
         timeout-minutes: 360
         env:
           HYPEROPT: ${{ matrix.fields }}
+          FREQAI_MODEL: ${{ matrix.fields }}
           ID: ${{ fromJson(inputs.matrix_json).repo_id }}
           SPACE: ${{ fromJson(inputs.matrix_json).space }}
           SCORE: ${{ fromJson(inputs.matrix_json).score }}
-          FREQAI_MODEL: ${{ fromJson(inputs.matrix_json).freqai }}
-          FREQAI_NEXT: ${{ fromJson(inputs.matrix_json).freqai_next }}
           REDUCE_EPOCH: ${{ fromJson(inputs.matrix_json).reduce_epoch }}
         run: |
           echo "Score: $SCORE"
-          echo "Running hyperopt..."
+          echo "Running $RUN_MODE..."
           echo "Reduce epoch: $REDUCE_EPOCH"
           bash user_data/ft_client/test_client/feed.sh $RUN_MODE
