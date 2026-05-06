@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        hyperopts: ${{ fromJson(inputs.matrix_json).hyperopts }}
+        fields: ${{ fromJson(inputs.matrix_json).fields }}
 
     env:
       GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
@@ -117,7 +117,7 @@ jobs:
       - name: 🧠 Run Hyperopt
         timeout-minutes: 360
         env:
-          HYPEROPT: ${{ matrix.hyperopts }}
+          MATRIX_INPUT: ${{ matrix.fields }}
           ID: ${{ fromJson(inputs.matrix_json).repo_id }}
           SPACE: ${{ fromJson(inputs.matrix_json).space }}
           SCORE: ${{ fromJson(inputs.matrix_json).score }}
