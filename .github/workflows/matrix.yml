@@ -1,14 +1,8 @@
-name: Freqtrade Matrix Jobs
-run-name: "Freqtrade Matrix: ${{ inputs.run_mode }} (${{ vars.SCORE}})"
+name: Freqtrade Hyperopt Matrix
 
 on:
   workflow_dispatch:
     inputs:
-      run_mode:
-        description: 'Custom run name'
-        default: 'Hyperopt'
-        required: false
-        type: string
       matrix_json:
         description: "Matrix JSON (as string)"
         required: true
@@ -26,10 +20,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        fields: ${{ fromJson(inputs.matrix_json).fields }}
+        hyperopts: ${{ fromJson(inputs.matrix_json).hyperopts }}
 
     env:
-      RUN_MODE: ${{ inputs.run_mode }}
       GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       RUNNER_TITLE: "Google-optimized-instance"
       TARGET_REPOSITORY: ${{ vars.TARGET_REPOSITORY }}
@@ -68,8 +61,8 @@ jobs:
           done          
 
           pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-plot.txt
-          [[ "$RUN_MODE" != "FreqAI" ]] && pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-hyperopt.txt
-          [[ "$RUN_MODE" == "FreqAI" ]] && pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-freqai-rl.txt
+          pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-hyperopt.txt
+          pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-freqai-rl.txt
 
           #pip install -qq --no-cache-dir --no-build-isolation --upgrade freqtrade
           pip install -qq --no-cache-dir ta "numpy<3.0" "aiodns<3.0" "freqtrade==2025.10"
@@ -124,13 +117,15 @@ jobs:
       - name: 🧠 Run Hyperopt
         timeout-minutes: 360
         env:
-          MATRIX_INPUT: ${{ matrix.fields }}
+          HYPEROPT: ${{ matrix.hyperopts }}
           ID: ${{ fromJson(inputs.matrix_json).repo_id }}
           SPACE: ${{ fromJson(inputs.matrix_json).space }}
           SCORE: ${{ fromJson(inputs.matrix_json).score }}
+          FREQAI_MODEL: ${{ fromJson(inputs.matrix_json).freqai }}
+          FREQAI_NEXT: ${{ fromJson(inputs.matrix_json).freqai_next }}
           REDUCE_EPOCH: ${{ fromJson(inputs.matrix_json).reduce_epoch }}
         run: |
           echo "Score: $SCORE"
-          echo "Running $RUN_MODE..."
+          echo "Running hyperopt..."
           echo "Reduce epoch: $REDUCE_EPOCH"
-          bash user_data/ft_client/test_client/feed.sh $RUN_MODE
+          bash user_data/ft_client/test_client/feed.sh hyperopt

@@ -127,8 +127,8 @@ runs:
         done
 
         pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-plot.txt
-        [[ "$RUN_MODE" != "FreqAI" ]] && pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-hyperopt.txt
-        [[ "$RUN_MODE" == "FreqAI" ]] && pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-freqai-rl.txt
+        pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-hyperopt.txt
+        pip install -qq --no-cache-dir -r ${{ github.workspace }}/user_data/build_helpers/requirements-freqai-rl.txt
 
         pip install -qq --no-cache-dir ta "numpy<3.0" "aiodns<3.0" "freqtrade==2025.10"
         cd ${{ github.workspace }} && bash user_data/ft_client/test_client/feed.sh
@@ -152,7 +152,7 @@ runs:
         EXPECTED_SERVER_VERSION: 17
         EXPECTED_SSL: true
       run: |
-        bash user_data/ft_client/test_client/feed.sh $RUN_MODE
+        bash user_data/ft_client/test_client/feed.sh hyperopt
         ##cd /home/runner/work/_actions/eq19/eq19/v2/integrations/tensorflow
         ##pip install -e python_projects/* && iree-import-tflite -h && iree-import-tf -h
 
@@ -202,4 +202,4 @@ runs:
       if: ${{ failure() }}
       shell: bash
       run: |
-        [[ "$GITHUB_JOB" == "lexering" ]] && gh workflow run "main.yml" --raw-field "RUN_MODE=$RUN_MODE" --raw-field "REDUCE_EPOCH=$REDUCE_EPOCH"
+        [[ "$GITHUB_JOB" == "lexering" ]] && gh workflow run "main.yml" --raw-field "FREQAI_MODEL=$FREQAI_MODEL" --raw-field "REDUCE_EPOCH=$REDUCE_EPOCH"
