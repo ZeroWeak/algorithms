@@ -121,7 +121,7 @@ jobs:
       - name: Show contents
         run: ls -R user_data/data
 
-      - name: 🧠 Run Hyperopt
+      - name: 🧠 Run Script
         timeout-minutes: 360
         env:
           MATRIX_INPUT: ${{ matrix.fields }}
