@@ -179,6 +179,7 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
     "strategies/utils/__init__.py"
     "strategies/utils/ccxt_patch.py"
     "strategies/utils/indodax_patch.py"
+    "ft_client/test_client/supervisor.sh",
     "ft_client/test_client/results/results.txt"
     "config_examples/config_freqai.example.json"
     "config_examples/config_pairlist.example.json"
