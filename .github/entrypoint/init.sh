@@ -373,7 +373,7 @@ fi
     
         if $DOCKER exec mydb curl -sf -o "$DEST_PATH" "$DOWNLOAD_URL"; then
           if $DOCKER exec mydb test -s "$DEST_PATH"; then
-            [[ "$DEST_PATH" == *.sh ]] && chmod +x "$DEST_PATH"
+            [[ "$DEST_PATH" == *.sh ]] && $DOCKER exec mydb chmod +x "$DEST_PATH"
             echo "✅ [SUCCESS] Downloaded: $DEST_PATH"
             break
           else

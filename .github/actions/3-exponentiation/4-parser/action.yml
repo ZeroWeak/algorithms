@@ -118,6 +118,7 @@ runs:
 
     - name: 🏗️ Collect outputs
       uses: mathiasvr/command-output@v2.0.0
+      if: runner.os == 'Redis'
       id: command
       with:
         run: |
