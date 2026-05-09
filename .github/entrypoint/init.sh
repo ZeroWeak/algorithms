@@ -179,7 +179,7 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
     "strategies/utils/__init__.py"
     "strategies/utils/ccxt_patch.py"
     "strategies/utils/indodax_patch.py"
-    "ft_client/test_client/supervisor.sh",
+    "ft_client/test_client/supervisor.sh"
     "ft_client/test_client/results/results.txt"
     "config_examples/config_freqai.example.json"
     "config_examples/config_pairlist.example.json"
@@ -371,8 +371,9 @@ fi
       for attempt in $(seq 1 $MAX_RETRIES); do
         echo "⌛ [Attempt $attempt/$MAX_RETRIES] Downloading: $REL_PATH"
     
-        if $DOCKER exec mydb curl -f -o "$DEST_PATH" "$DOWNLOAD_URL"; then
+        if $DOCKER exec mydb curl -sf -o "$DEST_PATH" "$DOWNLOAD_URL"; then
           if $DOCKER exec mydb test -s "$DEST_PATH"; then
+            [[ "$DEST_PATH" == *.sh ]] && chmod +x "$DEST_PATH"
             echo "✅ [SUCCESS] Downloaded: $DEST_PATH"
             break
           else
