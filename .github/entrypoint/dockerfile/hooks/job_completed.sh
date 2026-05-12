@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Structure: Cell Types – Modulo 6
 
+set -Eeuo pipefail
+
 hr='----------------------------------------------------------------------------------'
 
 DOCKER="/mnt/disks/deeplearning/usr/bin/docker"
@@ -12,15 +14,32 @@ df -h
 set_monitor() {
   # Max retries
   max_retries=10
-  # Interval between checks (10 retries in 10 minutes -> 60s each)
+  # Interval between checks
   interval=60
 
   for ((i=1; i<=max_retries; i++)); do
     echo "Check $i of $max_retries..."
 
     if $DOCKER exec mydb test -f "$FILE_PATH"; then
-      $DOCKER exec mydb supervisorctl start monitor_freqtrade
-      $DOCKER exec mydb service cron start
+
+      echo -e "\n$hr\nRestart mydb container\n$hr"
+
+      $DOCKER restart mydb
+
+      echo "Waiting container stabilization..."
+      sleep 20
+
+      $DOCKER exec mydb supervisorctl reread
+      $DOCKER exec mydb supervisorctl update
+
+      $DOCKER exec mydb supervisorctl start freqtrade_live || true
+      $DOCKER exec mydb supervisorctl start freqtrade_dry || true
+      $DOCKER exec mydb supervisorctl start monitor_freqtrade || true
+
+      $DOCKER exec mydb service cron start || true
+
+      echo -e "\n$hr\nSupervisor Status\n$hr"
+      $DOCKER exec mydb supervisorctl status
 
       #echo -e "\n$hr\nMemory Usage\n$hr"
       #$DOCKER exec mydb free -h
@@ -60,12 +79,17 @@ if [ -d /mnt/disks/deeplearning/usr/local/sbin ]; then
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/variables/TARGET_REPOSITORY" | jq -r '.value')
 
   echo -e "\n$hr\nStart Network\n$hr"
+
   $DOCKER exec mydb supervisorctl reread
   $DOCKER exec mydb supervisorctl update
+
   if [[ "$RERUN_RUNNER" == "true" ]]; then
+
     echo "🚀 Start all applications."
-    $DOCKER exec mydb supervisorctl start freqtrade_live
-    $DOCKER exec mydb supervisorctl start freqtrade_dry
+
+    $DOCKER exec mydb supervisorctl start freqtrade_live || true
+    $DOCKER exec mydb supervisorctl start freqtrade_dry || true
+
     set_monitor
 
   #Check if ✅ freqtrade_live is running
@@ -73,24 +97,27 @@ if [ -d /mnt/disks/deeplearning/usr/local/sbin ]; then
     $DOCKER exec mydb supervisorctl status freqtrade_live | grep -q "RUNNING"; then
 
     if [[ "$CONTAINER_NAME" == "runner1" ]]; then
-      $DOCKER exec runner2 /home/runner/scripts/exitpoint.sh $REMOVE_REPOSITORY $TARGET_REPOSITORY
+      $DOCKER exec runner2 /home/runner/scripts/exitpoint.sh "$REMOVE_REPOSITORY" "$TARGET_REPOSITORY"
     elif [[ "$CONTAINER_NAME" == "runner2" ]]; then
-      $DOCKER exec runner1 /home/runner/scripts/exitpoint.sh $REMOVE_REPOSITORY $TARGET_REPOSITORY
+      $DOCKER exec runner1 /home/runner/scripts/exitpoint.sh "$REMOVE_REPOSITORY" "$TARGET_REPOSITORY"
     fi
 
     echo "🌀 Reload all application's configs upon the updated configuration."
-    if $DOCKER exec mydb supervisorctl status freqtrade_dry | grep -q "STOPPED"; then       
-      $DOCKER exec mydb supervisorctl start freqtrade_dry
+
+    if $DOCKER exec mydb supervisorctl status freqtrade_dry | grep -q "STOPPED"; then
+      $DOCKER exec mydb supervisorctl start freqtrade_dry || true
     fi
 
   else
-    # Optionally reload:
+
     echo "🏃 Rerun all applications upon the given configuration."
-    if $DOCKER exec mydb supervisorctl status freqtrade_dry | grep -q "STOPPED"; then       
-      $DOCKER exec mydb supervisorctl start freqtrade_dry
+
+    if $DOCKER exec mydb supervisorctl status freqtrade_dry | grep -q "STOPPED"; then
+      $DOCKER exec mydb supervisorctl start freqtrade_dry || true
     fi
-    if $DOCKER exec mydb supervisorctl status freqtrade_live | grep -q "STOPPED"; then       
-      $DOCKER exec mydb supervisorctl start freqtrade_live
+
+    if $DOCKER exec mydb supervisorctl status freqtrade_live | grep -q "STOPPED"; then
+      $DOCKER exec mydb supervisorctl start freqtrade_live || true
       set_monitor
     fi
   fi
