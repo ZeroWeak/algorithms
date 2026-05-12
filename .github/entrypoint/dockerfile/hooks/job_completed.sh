@@ -32,8 +32,8 @@ set_monitor() {
       $DOCKER exec mydb supervisorctl reread
       $DOCKER exec mydb supervisorctl update
 
-      $DOCKER exec mydb supervisorctl start freqtrade_live || true
       $DOCKER exec mydb supervisorctl start freqtrade_dry || true
+      $DOCKER exec mydb supervisorctl start freqtrade_live || true
       $DOCKER exec mydb supervisorctl start monitor_freqtrade || true
 
       $DOCKER exec mydb service cron start || true
