@@ -22,20 +22,7 @@ set_monitor() {
 
     if $DOCKER exec mydb test -f "$FILE_PATH"; then
 
-      echo -e "\n$hr\nRestart mydb container\n$hr"
-
-      $DOCKER restart mydb
-
-      echo "Waiting container stabilization..."
-      sleep 20
-
-      $DOCKER exec mydb supervisorctl reread
-      $DOCKER exec mydb supervisorctl update
-
-      $DOCKER exec mydb supervisorctl start freqtrade_dry || true
-      $DOCKER exec mydb supervisorctl start freqtrade_live || true
       $DOCKER exec mydb supervisorctl start monitor_freqtrade || true
-
       $DOCKER exec mydb service cron start || true
 
       echo -e "\n$hr\nSupervisor Status\n$hr"
@@ -53,6 +40,23 @@ set_monitor() {
       sleep $wait
     fi
   done
+}
+
+restart_mydb() {
+
+  echo -e "\n$hr\nRestart mydb container\n$hr"
+  $DOCKER restart mydb
+
+  echo "Waiting container stabilization..."
+  sleep 20
+
+  $DOCKER exec mydb supervisorctl reread
+  $DOCKER exec mydb supervisorctl update
+
+  $DOCKER exec mydb supervisorctl start freqtrade_dry || true
+  $DOCKER exec mydb supervisorctl start freqtrade_live || true
+  set_monitor
+
 }
 
 if [ -d /mnt/disks/deeplearning/usr/local/sbin ]; then
@@ -78,14 +82,12 @@ if [ -d /mnt/disks/deeplearning/usr/local/sbin ]; then
     -H "Accept: application/vnd.github.v3+json" \
     "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/variables/TARGET_REPOSITORY" | jq -r '.value')
 
-  echo -e "\n$hr\nStart Network\n$hr"
-
-  $DOCKER exec mydb supervisorctl reread
-  $DOCKER exec mydb supervisorctl update
-
   if [[ "$RERUN_RUNNER" == "true" ]]; then
 
     echo "🚀 Start all applications."
+
+    $DOCKER exec mydb supervisorctl reread
+    $DOCKER exec mydb supervisorctl update
 
     $DOCKER exec mydb supervisorctl start freqtrade_live || true
     $DOCKER exec mydb supervisorctl start freqtrade_dry || true
@@ -93,8 +95,9 @@ if [ -d /mnt/disks/deeplearning/usr/local/sbin ]; then
     set_monitor
 
   #Check if ✅ freqtrade_live is running
-  elif $DOCKER ps --format '{{.Names}}' | grep -q mydb && \
-    $DOCKER exec mydb supervisorctl status freqtrade_live | grep -q "RUNNING"; then
+  elif $DOCKER exec mydb supervisorctl status freqtrade_live | grep -q "RUNNING"; then
+
+    echo -e "\n$hr\nStart Network\n$hr"
 
     if [[ "$CONTAINER_NAME" == "runner1" ]]; then
       $DOCKER exec runner2 /home/runner/scripts/exitpoint.sh "$REMOVE_REPOSITORY" "$TARGET_REPOSITORY"
@@ -103,22 +106,12 @@ if [ -d /mnt/disks/deeplearning/usr/local/sbin ]; then
     fi
 
     echo "🌀 Reload all application's configs upon the updated configuration."
-
-    if $DOCKER exec mydb supervisorctl status freqtrade_dry | grep -q "STOPPED"; then
-      $DOCKER exec mydb supervisorctl start freqtrade_dry || true
-    fi
+    restart_mydb
 
   else
 
     echo "🏃 Rerun all applications upon the given configuration."
+    restart_mydb
 
-    if $DOCKER exec mydb supervisorctl status freqtrade_dry | grep -q "STOPPED"; then
-      $DOCKER exec mydb supervisorctl start freqtrade_dry || true
-    fi
-
-    if $DOCKER exec mydb supervisorctl status freqtrade_live | grep -q "STOPPED"; then
-      $DOCKER exec mydb supervisorctl start freqtrade_live || true
-      set_monitor
-    fi
   fi
 fi
