@@ -2,8 +2,7 @@
 # Structure: Cell Types – Modulo 6
 
 hr='----------------------------------------------------------------------------------'
-CONTAINER="mydb"
-APP="freqtrade_live"
+
 DOCKER="/mnt/disks/deeplearning/usr/bin/docker"
 FILE_PATH="/home/runner/data_live/logs/freqtrade.log"
 
@@ -69,9 +68,9 @@ if [ -d /mnt/disks/deeplearning/usr/local/sbin ]; then
     $DOCKER exec mydb supervisorctl start freqtrade_dry
     set_monitor
 
-  #Check if ✅ $APP is running inside $CONTAINER
-  elif $DOCKER ps --format '{{.Names}}' | grep -q "^${CONTAINER}$" && \
-    $DOCKER exec "$CONTAINER" supervisorctl status "$APP" | grep -q "RUNNING"; then
+  #Check if ✅ freqtrade_live is running
+  elif $DOCKER ps --format '{{.Names}}' | grep -q mydb && \
+    $DOCKER exec mydb supervisorctl status freqtrade_live | grep -q "RUNNING"; then
 
     if [[ "$CONTAINER_NAME" == "runner1" ]]; then
       $DOCKER exec runner2 /home/runner/scripts/exitpoint.sh $REMOVE_REPOSITORY $TARGET_REPOSITORY
