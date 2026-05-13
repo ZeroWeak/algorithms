@@ -92,12 +92,13 @@ jekyll_build() {
     SITEID=1
   # the 7 units of user is not part of orgs
   #elif [[ $1 == "eq19.github.io" ]]; then
-    #SITEID=170
+    #SITEID=30
   else
     SITEID=$(( $3 + 2 ))
   fi
 
   if  [[ "${OWNER}" == "eq19" ]]; then
+    SITEID=$(( $3 + 2 - 140 ))
     sed -i "1s|^|description: An endeavor to discover the Final Theory\n\n|" ${RUNNER_TEMP}/_config.yml
   else
     DESCRIPTION=$(gh api -H "${HEADER}" /orgs/${OWNER} --jq '.description')
