@@ -94,6 +94,7 @@ jekyll_build() {
     SITEID=$(( $3 + 2 ))
   fi
 
+  # the id's of 7 user repos are one higher level of MEC30 dust start from id = 30'
   if  [[ "${OWNER}" == "eq19" ]]; then
     SITEID=$(( $SITEID - 140 ))
     sed -i "1s|^|description: An endeavor to discover the Final Theory\n\n|" ${RUNNER_TEMP}/_config.yml

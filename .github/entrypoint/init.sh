@@ -47,8 +47,6 @@ export MAP_BRANCH=$(curl -s -H "Authorization: token $GH_TOKEN" \
   https://api.github.com/repos/eq19/maps | jq -r .default_branch)
 export DEFAULT_BRANCH=$(curl -s -H "Authorization: token $GH_TOKEN" \
   https://api.github.com/repos/$GITHUB_REPOSITORY | jq -r .default_branch)
-export PAIRS=$(curl -s -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github.v3+json" \
-  "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/variables/PAIRS" | jq -r '.value')
 export FREQAIMODEL_DRY=$(curl -s -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github.v3+json" \
   "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/variables/FREQAIMODEL" | jq -r '.value')
 export FREQAIMODEL_LIVE=$(curl -s -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github.v3+json" \
@@ -229,6 +227,7 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
   BEARER=$($GCLOUD auth print-identity-token --audiences=https://us-central1-marketleader.cloudfunctions.net/function)
   BALANCE=$(curl -s -X POST -H "Key: $API_KEY" -H "Sign: $SIGNATURE" -d "method=$METHOD" -d "nonce=$NONCE" "https://indodax.com/tapi/")
   ASSET_COUNT=$(echo "$BALANCE" | jq -r '.return.balance | to_entries | map(select(.value != 0 and .value != "0")) | length')
+  PAIRS=$(curl -s -H "Authorization: token $GH_TOKEN" -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/variables/PAIRS" | jq -r '.value')
 
   # Strict handling
   set -euo pipefail
