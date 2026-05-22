@@ -9,6 +9,8 @@ USER="eq19"
 REPO="ZeroWeak/algorithms"
 ACTOR="eq19"
 OWNER="ZeroWeak"
+GITHUB_GRAPHQL_URL="https://api.github.com/graphql"
+RUNNER_TEMP="/tmp"
 
 set_target() {
   
