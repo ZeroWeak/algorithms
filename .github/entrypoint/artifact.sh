@@ -21,7 +21,8 @@ set_target() {
       echo "maps, feed, lexer, parser, syntax, grammar" > ${RUNNER_TEMP}/pinned_repos
     else
       QUERY='{"query":"{\n organization(login: \"'${OWNER}'\") {\n pinnedItems(first: 6, types: REPOSITORY) {\n nodes {\n ... on Repository {\n name\n }\n }\n }\n }\n}"'
-      curl -s -X POST "${GITHUB_GRAPHQL_URL}" -H "Authorization: bearer ${GH_TOKEN}" --data-raw "${QUERY}" | jq --raw-output '.data.organization.pinnedItems.nodes[].name' | yq eval -P | sed "s/ /, /g" > ${RUNNER_TEMP}/pinned_repos
+      #curl -s -X POST "${GITHUB_GRAPHQL_URL}" -H "Authorization: bearer ${GH_TOKEN}" --data-raw "${QUERY}" | jq --raw-output '.data.organization.pinnedItems.nodes[].name' | yq eval -P | sed "s/ /, /g" > ${RUNNER_TEMP}/pinned_repos
+      echo "1maps, 2feed, 3lexer, 4parser, 5syntax, 6grammar" > ${RUNNER_TEMP}/pinned_repos
       sed -i "1s|^|maps, feed, lexer, parser, syntax, grammar, |" ${RUNNER_TEMP}/pinned_repos
     fi
     IFS=', '; array=($(cat ${RUNNER_TEMP}/pinned_repos))
