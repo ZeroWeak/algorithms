@@ -15,7 +15,6 @@ RUNNER_TEMP="/tmp"
 piined_repos() {
   QUERY='{"query":"{\n organization(login: \"'$1'\") {\n pinnedItems(first: 6, types: REPOSITORY) {\n nodes {\n ... on Repository {\n name\n }\n }\n }\n }\n}"'
   curl -s -X POST "${GITHUB_GRAPHQL_URL}" -H "Authorization: bearer ${GH_TOKEN}" --data-raw "${QUERY}" | jq --raw-output '.data.organization.pinnedItems.nodes[].name' | yq eval -P | sed "s/ /, /g" > ${RUNNER_TEMP}/pinned_repos
-  sed -i "1s|^|maps, feed, lexer, parser, syntax, grammar, |" ${RUNNER_TEMP}/pinned_repos
 }
 
 set_target() {
@@ -27,6 +26,7 @@ set_target() {
       echo "maps, feed, lexer, parser, syntax, grammar" > ${RUNNER_TEMP}/pinned_repos
     else
       pinned_repos ${OWNER}
+      sed -i "1s|^|maps, feed, lexer, parser, syntax, grammar, |" ${RUNNER_TEMP}/pinned_repos
     fi
     IFS=', '; array=($(cat ${RUNNER_TEMP}/pinned_repos))
   else
@@ -34,8 +34,8 @@ set_target() {
     IFS=', '; array=($(cat ${RUNNER_TEMP}/user_orgs))
     echo "[" > ${RUNNER_TEMP}/orgs.json
     for ((i=0; i < ${#array[@]}; i++)); do
-      QUERY='{"query":"{\n organization(login: \"'${array[$i]}'\") {\n pinnedItems(first: 6, types: REPOSITORY) {\n nodes {\n ... on Repository {\n name\n }\n }\n }\n }\n}"'
-      IFS=', '; pr=($(curl -s -X POST "${GITHUB_GRAPHQL_URL}" -H "Authorization: bearer ${GH_TOKEN}" --data-raw "${QUERY}" | jq --raw-output '.data.organization.pinnedItems.nodes[].name' | yq eval -P | sed "s/ /, /g"))
+      pinned_repos ${array[$i]}
+      IFS=', '; pr=($(cat ${RUNNER_TEMP}/pinned_repos)
       gh api -H "${HEADER}" /orgs/${array[$i]} | jq '. +
         {"key1": ["maps","feed","lexer","parser","syntax","grammar"]} +
         {"key2": ["'${pr[0]}'","'${pr[1]}'","'${pr[2]}'","'${pr[3]}'","'${pr[4]}'","'${pr[5]}'"]}' >> ${RUNNER_TEMP}/orgs.json
@@ -55,6 +55,7 @@ set_target() {
         echo "maps, feed, lexer, parser, syntax, grammar" > ${RUNNER_TEMP}/pinned_repos
       else
         pinned_repos ${ENTRY}
+        sed -i "1s|^|maps, feed, lexer, parser, syntax, grammar, |" ${RUNNER_TEMP}/pinned_repos
       fi
     fi
   else
