@@ -12,6 +12,12 @@ OWNER="ZeroWeak"
 GITHUB_GRAPHQL_URL="https://api.github.com/graphql"
 RUNNER_TEMP="/tmp"
 
+piined_repos() {
+  QUERY='{"query":"{\n organization(login: \"'$1'\") {\n pinnedItems(first: 6, types: REPOSITORY) {\n nodes {\n ... on Repository {\n name\n }\n }\n }\n }\n}"'
+  curl -s -X POST "${GITHUB_GRAPHQL_URL}" -H "Authorization: bearer ${GH_TOKEN}" --data-raw "${QUERY}" | jq --raw-output '.data.organization.pinnedItems.nodes[].name' | yq eval -P | sed "s/ /, /g" > ${RUNNER_TEMP}/pinned_repos
+  sed -i "1s|^|maps, feed, lexer, parser, syntax, grammar, |" ${RUNNER_TEMP}/pinned_repos
+}
+
 set_target() {
   
   # Get Structure
@@ -20,10 +26,7 @@ set_target() {
     if [[ "${OWNER}" == "eq19" ]]; then
       echo "maps, feed, lexer, parser, syntax, grammar" > ${RUNNER_TEMP}/pinned_repos
     else
-      QUERY='{"query":"{\n organization(login: \"'${OWNER}'\") {\n pinnedItems(first: 6, types: REPOSITORY) {\n nodes {\n ... on Repository {\n name\n }\n }\n }\n }\n}"'
-      #curl -s -X POST "${GITHUB_GRAPHQL_URL}" -H "Authorization: bearer ${GH_TOKEN}" --data-raw "${QUERY}" | jq --raw-output '.data.organization.pinnedItems.nodes[].name' | yq eval -P | sed "s/ /, /g" > ${RUNNER_TEMP}/pinned_repos
-      echo "1maps, 2feed, 3lexer, 4parser, 5syntax, 6grammar" > ${RUNNER_TEMP}/pinned_repos
-      sed -i "1s|^|maps, feed, lexer, parser, syntax, grammar, |" ${RUNNER_TEMP}/pinned_repos
+      pinned_repos ${OWNER}
     fi
     IFS=', '; array=($(cat ${RUNNER_TEMP}/pinned_repos))
   else
@@ -51,9 +54,7 @@ set_target() {
       if [[ "${ENTRY}" == "eq19" ]]; then
         echo "maps, feed, lexer, parser, syntax, grammar" > ${RUNNER_TEMP}/pinned_repos
       else
-        QUERY='{"query":"{\n organization(login: \"'${ENTRY}'\") {\n pinnedItems(first: 6, types: REPOSITORY) {\n nodes {\n ... on Repository {\n name\n }\n }\n }\n }\n}"'
-        curl -s -X POST "${GITHUB_GRAPHQL_URL}" -H "Authorization: bearer ${GH_TOKEN}" --data-raw "${QUERY}" | jq --raw-output '.data.organization.pinnedItems.nodes[].name' | yq eval -P | sed "s/ /, /g" > ${RUNNER_TEMP}/pinned_repos
-        sed -i "1s|^|maps, feed, lexer, parser, syntax, grammar, |" ${RUNNER_TEMP}/pinned_repos
+        pinned_repos ${ENTRY}
       fi
     fi
   else
