@@ -3,6 +3,13 @@
 # Structure: Cell Types – Modulo 6
 # https://www.hexspin.com/proof-of-confinement/
 
+REPO_NAME="ZeroWeak/algorithms"
+TARGET_REPOSITORY="eq19/eq19.github.io"
+USER="eq19"
+REPO="ZeroWeak/algorithms"
+ACTOR="eq19"
+OWNER="ZeroWeak"
+
 set_target() {
   
   # Get Structure
