@@ -34,8 +34,8 @@ set_target() {
     IFS=', '; array=($(cat ${RUNNER_TEMP}/user_orgs))
     echo "[" > ${RUNNER_TEMP}/orgs.json
     for ((i=0; i < ${#array[@]}; i++)); do
-      pinned_repos ${array[$i]}
-      IFS=', '; pr=($(cat ${RUNNER_TEMP}/pinned_repos))
+      QUERY='{"query":"{\n organization(login: \"'${array[$i]}'\") {\n pinnedItems(first: 6, types: REPOSITORY) {\n nodes {\n ... on Repository {\n name\n }\n }\n }\n }\n}"'
+      IFS=', '; pr=($(curl -s -X POST "${GITHUB_GRAPHQL_URL}" -H "Authorization: bearer ${GH_TOKEN}" --data-raw "${QUERY}" | jq --raw-output '.data.organization.pinnedItems.nodes[].name' | yq eval -P | sed "s/ /, /g"))
       gh api -H "${HEADER}" /orgs/${array[$i]} | jq '. +
         {"key1": ["maps","feed","lexer","parser","syntax","grammar"]} +
         {"key2": ["'${pr[0]}'","'${pr[1]}'","'${pr[2]}'","'${pr[3]}'","'${pr[4]}'","'${pr[5]}'"]}' >> ${RUNNER_TEMP}/orgs.json
