@@ -35,7 +35,7 @@ set_target() {
     echo "[" > ${RUNNER_TEMP}/orgs.json
     for ((i=0; i < ${#array[@]}; i++)); do
       pinned_repos ${array[$i]}
-      IFS=', '; pr=($(cat ${RUNNER_TEMP}/pinned_repos)
+      IFS=', '; pr=($(cat ${RUNNER_TEMP}/pinned_repos))
       gh api -H "${HEADER}" /orgs/${array[$i]} | jq '. +
         {"key1": ["maps","feed","lexer","parser","syntax","grammar"]} +
         {"key2": ["'${pr[0]}'","'${pr[1]}'","'${pr[2]}'","'${pr[3]}'","'${pr[4]}'","'${pr[5]}'"]}' >> ${RUNNER_TEMP}/orgs.json
