@@ -104,7 +104,7 @@ runs:
       run: |
         if [[ "$GITHUB_JOB" == "lexering" ]]; then
           gh variable set RERUN_RUNNER --body "false"
-          if [[ "$RUN_MODE" != "MEC30" ]]; then
+          if [[ "$RUN_MODE" == "MEC30" ]]; then
             HEADER="Accept: application/vnd.github+json"
             RESPONSE=$(gh api -H "${HEADER}" repos/${{ github.repository }}/actions/runners)
             TOTAL_COUNT=$(gh api -H "${HEADER}" /repos/${{ github.repository }}/actions/runners --jq '.total_count')
