@@ -3,15 +3,6 @@
 # Structure: Cell Types – Modulo 6
 # https://www.hexspin.com/proof-of-confinement/
 
-REPO_NAME="ZeroWeak/algorithms"
-TARGET_REPOSITORY="eq19/eq19.github.io"
-USER="eq19"
-REPO="ZeroWeak/algorithms"
-ACTOR="eq19"
-OWNER="ZeroWeak"
-GITHUB_GRAPHQL_URL="https://api.github.com/graphql"
-RUNNER_TEMP="/tmp"
-
 pinned_repos() {
   QUERY='{"query":"{\n organization(login: \"'$1'\") {\n pinnedItems(first: 6, types: REPOSITORY) {\n nodes {\n ... on Repository {\n name\n }\n }\n }\n }\n}"}'
   
