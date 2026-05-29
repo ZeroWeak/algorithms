@@ -326,7 +326,7 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
         https://api.github.com/repos/$GITHUB_REPOSITORY/actions/variables/PARAMS_LIVE
 
     elif echo "$STATUS" | grep -q "RUNNING"; then
-      echo -e "$hr\nLive mode is better than dry-run.\nLet dry-run to challenge a new config."
+      echo -e "$hr\nDry-run is not better than Live mode.\nLet dry-run to challenge a new config."
 
       DIRS=(
         "data_dry"
@@ -350,6 +350,7 @@ fi
   for idx in "${!DIRS[@]}"; do
     PARAM_NAME="${PARAMS[$idx]}"
     DIR_PATH="/home/runner/${DIRS[$idx]}"
+    APP_PATH="/home/runner/user_data/ft_client/test_client/app.py"
     ARTIFACT="${DIR_PATH}/ft_client/test_client/results/orgs.json"
     $DOCKER exec mydb mkdir -p "$(dirname "$ARTIFACT")"
     echo -e "$hr\nFolder: ${DIR_PATH} → Params: ${PARAM_NAME}"
@@ -364,8 +365,9 @@ fi
       | jq -r '.value' > ${DIR_PATH}/strategies/fibbo.json"
 
     HYPEROPT_PARAM="${DIR_PATH}/strategies/hyperopt_params.json"
-    $DOCKER exec mydb bash -c "python /home/runner/user_data/ft_client/test_client/app.py \"$DIR_PATH\" \"${ID:-1}\" \"${PARAM_NAME:-nil}\" \"${EPOCHS:-100}\""
-    $DOCKER exec mydb bash -c "curl -s -X POST -H 'Authorization: Bearer $BEARER' -H 'Content-Type: application/json' https://us-central1-marketleader.cloudfunctions.net/function --data @'$ARTIFACT' | jq '.' > '$HYPEROPT_PARAM'"
+    $DOCKER exec mydb bash -c "bash /home/runner/user_data/ft_client/test_client/maps.sh $APP_PATH $DIR_PATH"
+    #$DOCKER exec mydb bash -c "python /home/runner/user_data/ft_client/test_client/app.py \"$DIR_PATH\" \"${ID:-1}\" \"${PARAM_NAME:-nil}\" \"${EPOCHS:-100}\""
+    #$DOCKER exec mydb bash -c "curl -s -X POST -H 'Authorization: Bearer $BEARER' -H 'Content-Type: application/json' https://us-central1-marketleader.cloudfunctions.net/function --data @'$ARTIFACT' | jq '.' > '$HYPEROPT_PARAM'"
 
     for REL_PATH in "${FILES[@]}"; do
       DOWNLOAD_URL="${BASE_URL}/${REL_PATH}"

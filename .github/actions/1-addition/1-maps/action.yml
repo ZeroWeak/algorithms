@@ -204,12 +204,10 @@ runs:
         done
 
         # Run your pipeline
-        python user_data/ft_client/test_client/app.py user_data ${{ env.ID }} ${{ env.PARAM || 'nil' }} ${{ env.EPOCHS || 100 }}
-        bash user_data/ft_client/test_client/maps.sh
-
         ##Ref: https://github.com/eq19/maps/tree/v3/pythonCode
         ##python ${{ github.workspace }}/.github/entrypoint/artifact/python/gellmann.py
         ##cd ${{ inputs.action_path }}/pythonCode && python npreader.py -h && python map.py -h
+        bash user_data/ft_client/test_client/maps.sh user_data/ft_client/test_client/app.py user_data
 
     - name: Login to DockerHub
       uses: docker/login-action@v3
