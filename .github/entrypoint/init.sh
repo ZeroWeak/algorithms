@@ -111,7 +111,7 @@ if [[ "${JOBS_ID}" == "1" ]]; then
 
     cd $GITHUB_WORKSPACE
     mv -f $1/pythonCode $1/user_data/ft_client/test_client/
-    gcc -Wall -Wextra $1/gccCode/src/decoder.c -o float_decoder
+    gcc -Wall -Wextra $1/gccCode/src/decoder.c -o $1/user_data/ft_client/test_client/float_decoder
 
     #Ref: https://github.com/tsoding/JelloVM
     javac -d $1/user_data/ft_client/test_client $1/javaCode/Main.java
@@ -242,14 +242,14 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
   if ! $DOCKER exec mydb ls "$LIVE_LOG" &>/dev/null; then
 
     DIRS=(
-      "data_dry"
-      "data_live"
       "user_data"
+      "data_live"
+      "data_dry"
     )
     PARAMS=(
-      "PARAMS_DRY"
-      "PARAMS_LIVE"
       "PARAMS_JSON"
+      "PARAMS_LIVE"
+      "PARAMS_DRY"
     )
 
     WALLET=$(echo $BALANCE | jq '.return.balance.idr')
@@ -330,12 +330,12 @@ elif [[ "${JOBS_ID}" == "3" ]]; then
       echo -e "$hr\nDry-run is not better than Live mode.\nLet dry-run to challenge a new config."
 
       DIRS=(
-        "data_dry"
         "user_data"
+        "data_dry"
       )
       PARAMS=(
-        "PARAMS_JSON"
         "PARAMS_DRY"
+        "PARAMS_JSON"
       )
 
       $DOCKER exec mydb bash -c "jq '.telegram.enabled = true | .api_server.listen_port = 8081' $CONFIG > $CONFIG_DRY"
@@ -402,18 +402,11 @@ fi
       | jq -r '.value' > ${DIR_PATH}/strategies/fibbo.json"
     $DOCKER exec -e BEARER="$BEARER" mydb bash -c \
       "bash /home/runner/user_data/ft_client/test_client/maps.sh \
-      $ID $JOBS_ID $APP_PATH $DIR_PATH $PARAM_NAME $ARTIFACT $HYPEROPT_PARAM"
+      ${ID:-30} $JOBS_ID $APP_PATH $DIR_PATH $PARAM_NAME $ARTIFACT $HYPEROPT_PARAM"
 
   done
 
   echo -e "\n🚀 All files updated (forced overwrite)!"
-
-  gist.sh ${BASE} $(pwd)
-  if [[ "${WIKI}" != "${BASE}" ]]; then
-    find . -type d -name "$(yq '.span' _config.yml)" -prune -exec sh -c 'gist.sh ${WIKI} "$1"' sh {} \;
-  fi
-
-  echo -e "\n$hr\nWORKSPACE\n$hr" && ls -alR .
 
 else
 
