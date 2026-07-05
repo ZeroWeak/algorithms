@@ -4,13 +4,13 @@ span: span-150
 title: eQuantum
 baseurl: /algorithms
 repository: ZeroWeak/algorithms
-action: ZeroWeak/spectral/actions/runs/15930385453
+action: ZeroWeak/spectral/actions/runs/28736887403
 description: eQuantum Project - Zero Weak Boson
 
-#debug:
-#  dist: false
-#  compress: true
-#  shortcodes: true
+debug:
+  dist: false
+  compress: true
+  shortcodes: true
 
 lsi: false
 incremental: true
@@ -34,7 +34,6 @@ exclude:
   - Dockerfile
 
 plugins:
-  - jemoji
   - jekyll-gist
   - jekyll-avatar
   - jekyll-mentions
