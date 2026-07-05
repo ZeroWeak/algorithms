@@ -48,6 +48,12 @@ Einstein’s theory of General Relativity states that spacetime is curved by the
 ## Gravitating Objects
 
 ```note
+Despite being perhaps the most familiar fundamental interaction, gravity is not described by the Standard Model, due to contradictions that arise when combining general relativity—the modern theory of gravity—and quantum mechanics.[56][57] However, gravity is so weak at microscopic scales, that it is essentially unmeasurable. The graviton is postulated to be the mediating particle, but has not yet been proved to exist. _([Wikipedia](https://en.wikipedia.org/wiki/Standard_Model#Gravity))_
+```
+
+[![Fundamental Interactions of the Standard Model including the hypothetical graviton](https://github.com/user-attachments/assets/82de00f2-e014-47b0-9560-fa0226f00d4a)](https://en.wikipedia.org/wiki/Standard_Model#Gravity)
+
+```note
 A lot number of positive color-charges move from the positive charged particle toward the negative charged particles, and negative color-charges move from negative charged particle toward the positive charged particle and they combine in each other _([Gravity in Time space - pdf](https://github.com/eq19/maps/files/13950511/Descriptiongravityinteractwithspace-timeatthequantumlevel.pdf))_
 ```
 
@@ -116,6 +122,24 @@ There are two groups of scientists (called collaborations) looking for evidence 
 [![fully-expanded-incl-matrices](https://github.com/eq19/maps/assets/8466209/48f7eccd-64e3-41a9-bc16-588c17cdd887)
 ](https://diracfortherestofus.wordpress.com/2018/06/02/10-on-not-spin/)
 
+We are focusing to MEC30 so we end up this exponentiation by the famous quote from _WD Gann_ himself stating an important changes by certain ***repetition of 30***.
+
+```tip
+W.D. Gann: “Stocks make important changes in trend every ***30, 60, 120, 150, 210, 240, 300, 330, 360*** days or degrees from any important top or bottom.”
+```
+
+[![WD Gann - Hexagonal Chart](https://github.com/eq19/maps/assets/8466209/defe3aa5-ab70-4fd6-9412-b19c21a4ffaf)](https://eq19.github.io/identition/)
+
+***In line with 168 there is 330 located of 10th layer***. Since the base unit of 30 repeats it self on the center then this `11 x 30 = 330` is pushed to the `10 + 1 = 11th layer`. 
+
+```tip
+***There are 7 hidden dimensions in 11-d Supergravity, which is the low energy approximation to M theory, which also has 7 hidden dimensions***. _([Prime Curios!](https://t5k.org/curios/page.php?curio_id=20686))_
+```
+
+***(11x7) + (29+11) + (25+6) + (11+7) + (4+1) = 77+40+31+18+5 = 171***
+
+[![extended branes](https://github.com/eq19/maps/assets/8466209/deb0e309-2178-4dc5-a1d6-30c81c4a8305)](https://eq19.github.io/addition/)
+
 ## Constructing the tableaux
 
 [![Young_tableaux_1](https://github.com/eq19/maps/assets/8466209/b67b90d8-6b5e-435e-8f5c-ade27ec0d9e8)](https://en.m.wikipedia.org/wiki/Clebsch%E2%80%93Gordan_coefficients_for_SU(3)#Constructing_the_tableaux)
@@ -124,9 +148,51 @@ The 10 ranks will coordinate with the 18 to raise up the symmetrical behaviour o
 
 ![](https://user-images.githubusercontent.com/36441664/275302565-33186ad7-adf7-4ce3-baa5-c5359d7aa90d.png)
 
- and let the 2 and 3 out of 2,3,5,7 to begin a new cycle while the 5,7 will pair the 11,13 and 17,19 as _[True Prime Pairs](https://www.eq19.com/addition/file02.html#true-prime-pairs)_.
+ and let the 2 and 3 out of 2,3,5,7 to begin a new cycle while the 5,7 will pair the 11,13 and 17,19 as _[True Prime Pairs](https://eq19.github.io/addition/file02.html#true-prime-pairs)_.
 
 ![](https://user-images.githubusercontent.com/8466209/225830554-007fbd06-9d7d-44e8-867d-c7b0188bf488.png)
+
+```
+E = mc²
+m = E/c²
+
+c = 1 light-second
+  = 1000 years x L / t
+  = 12,000 months x 2152612.336257 km / 86164.0906 sec
+  = 299,792.4998 km / sec
+
+Note:
+1 year = 12 months
+1000 years = 12,000 months 👈
+Te = earth revolution = 365,25636 days
+R = radius of moon rotation to earth = 384,264 km
+V = moon rotation speed = 2πR/Tm = 3682,07 km/hours
+Ve = excact speed = V cos (360° x Tm/Te) = V cos 26,92848°
+Tm = moon revolution (sidereal) = 27,321661 days = 655,719816 hours ✔️
+t = earth rotation (sinodik) = 24 hours = 24 x 3600 sec = 86164.0906 sec
+L = Ve x Tm = 3682,07 km/hours x cos 26,92848° x 655,71986 = 2152612.336257 km
+
+Conclusion:
+π(π(π(π(π(32(109²-89²)))))) Universe vs Parallel vs Multiverse (via blackhole)
+   👇
+π(π(π(π(32(109²-89²))))) Galaxies vs Universe vs Parallel (gap via expansion)
+   👇
+π(π(π(32(109²-89²)))) Sun vs Galaxies vs Universe (2nd gap via dark energy)
+   👇
+π(π(32(109²-89²))) Moon vs Sun vs Galaxies (1st-gap via dark matter)
+   👇
+|--👇---------------------------- 2x96 ---------------------|
+|--👇----------- 7¤ ---------------|---------- 5¤ ----------|
+|- π(32(109²-89²))=109² -|-- {36} -|-------- {103} ---------|
++----+----+----+----+----+----+----+----+----+----+----+----+
+|  5 |  7 | 11 |{13}| 17 | 19 | 17 |{12}| 11 | 19 | 18 |{43}|           
++----+----+----+----+----+----+----+----+----+----+----+----+       Particle's
+|--------- {53} ---------|{19}|--------- {77} ---------|109²-89² 👉 Multiverses
+|---------- 5¤ ----------|------------ {96} -----------|-1¤-|      (Untouchable)
+|-------- Bosons --------|---------- Fermions ---------|-- Graviton
+|-- Sun Orbit (7 days) --|--- Moon Orbit (12 months) --| (11 Galaxies)
+|------------ Part of 1 Galaxy (Milky Way) ------------| Non Milky Way 👉 Sum=12
+```
 
 [![Screenshotgoogle](https://github.com/eq19/maps/assets/8466209/e1e09c8a-de60-4724-ac01-bac09fe31426)](https://arxiv.org/pdf/1812.07680.pdf)
 
